@@ -1,0 +1,25 @@
+{
+  "name": "sec",
+  "version": "0.0.1",
+  "description": "Sec",
+  "author": "Harold Waterkeyn",
+  "private": true,
+  "main": "main.js",
+  "dependencies": {
+    "exponent": "^13.1.0",
+    "react": "~15.4.0",
+    "react-native": "https://github.com/exponent/react-native/archive/sdk-13.0.3.tar.gz",
+    "react-native-vector-icons": "^4.0.0",
+    "react-navigation": "github:react-community/react-navigation",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-persist": "^4.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.15.0",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-react": "^6.9.0",
+    "flow-bin": "^0.39.0"
+  }
+}
