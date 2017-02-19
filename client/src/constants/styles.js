@@ -35,4 +35,14 @@ export const globalStyles = StyleSheet.create({
     color: 'white',
     paddingLeft: 10
   },
+
+  rowSeparator: {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    height: 1,
+    marginHorizontal: 10,
+  },
+
+  rowSeparatorHide: {
+    opacity: 0.0,
+  }
 });
