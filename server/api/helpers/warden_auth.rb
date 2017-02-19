@@ -1,0 +1,14 @@
+class User
+
+end
+
+Warden::Strategies.add(:token) do
+  def authenticate!
+    token = env['HTTP_AUTH_TOKEN'] || env['rack.request.query_hash']['AUTH_TOKEN']
+    if token == ENV['WARDEN_TOKEN']
+      success!(User.new)
+    else
+      throw :warden
+    end
+  end
+end

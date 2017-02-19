@@ -1,0 +1,23 @@
+source 'https://rubygems.org'
+
+gem 'thin'
+gem 'sinatra', :require => 'sinatra/base'
+gem 'sinatra-contrib'
+gem 'json'
+gem 'sequel'
+gem 'sequel_enum'
+gem 'sqlite3'
+gem 'grape'
+gem 'roar'
+gem 'grape-roar'
+gem 'activesupport'
+gem 'warden'
+
+group :test do
+  gem 'rspec'
+  gem 'rack-test', :require => 'rack/test'
+end
+
+group :development do
+  gem 'rerun'
+end
