@@ -1,12 +1,44 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View, StatusBar, AsyncStorage} from 'react-native';
+import {SecTabNavigator} from './TabNavigator';
+import {appReducer} from '../reducers';
+import {persistStore, autoRehydrate} from 'redux-persist';
+import {createStore, applyMiddleware, compose} from 'redux';
+import {connect, Provider} from 'react-redux';
+import {addNavigationHelpers} from 'react-navigation';
+import thunk from 'redux-thunk';
+import {colors} from '../constants/colors';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancers = composeEnhancers(applyMiddleware(thunk));
+
+// Creation of Redux store
+const store = createStore(
+  appReducer,
+  enhancers,
+  autoRehydrate()
+);
+
+// Connecting the TabNavigation to Redux
+const ConnectedSecTabNavigator = connect(
+  state => ({nav: state.navigation}))(({dispatch, nav}) => (
+  <SecTabNavigator navigation={addNavigationHelpers({dispatch, state: nav})} />
+));
 
 export class App extends React.Component {
+
+  componentDidMount() {
+    persistStore(store, {storage: AsyncStorage, blacklist: ['navigation', 'form']});
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Just need to implement stuff now.</Text>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <StatusBar backgroundColor="blue" barStyle="light-content" />
+          <ConnectedSecTabNavigator />
+        </View>
+      </Provider>
     );
   }
 }
@@ -14,7 +46,7 @@ export class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundColor,
     alignItems: 'center',
     justifyContent: 'center',
   },
