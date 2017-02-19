@@ -5,6 +5,7 @@ import {Ionicons} from 'react-native-vector-icons';
 import {ExercisesNavigation} from './exercises/ExercisesNavigation';
 import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
 import {colors} from '../constants/colors';
+import {WorkoutSetsSummary} from './workout_sets/WorkoutSetsSummary';
 
 ExercisesNavigation.navigationOptions = {
   tabBar: {
@@ -32,6 +33,19 @@ WorkoutSetsNavigation.navigationOptions = {
   },
 };
 
+WorkoutSetsSummary.navigationOptions = {
+  tabBar: {
+    label: 'History',
+    icon: ({tintColor, focused}) => (
+      <Ionicons
+        name={focused ? 'ios-book' : 'ios-book-outline'}
+        size={26}
+        style={{color: tintColor}}
+      />
+    ),
+  },
+};
+
 SettingsScreen.navigationOptions = {
   tabBar: {
     label: 'Settings',
@@ -51,6 +65,9 @@ export const SecTabNavigator = TabNavigator({
   },
   Sets: {
     screen: WorkoutSetsNavigation
+  },
+  Summary: {
+    screen: WorkoutSetsSummary
   },
   Settings: {
     screen: SettingsScreen
