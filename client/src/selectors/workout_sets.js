@@ -34,6 +34,7 @@ export const workoutSetsByDayAndExerciseSelector = createSelector(
   workoutSetsByDaySelector,
   workoutSetsByDay => {
     const byExercise = R.groupBy(R.prop('exercise_uuid'));
-    return R.map(byExercise)(workoutSetsByDay);
+    const sortByDate = R.map(R.sortBy(R.prop('executed_at')));
+    return R.map(byExercise)(sortByDate(workoutSetsByDay));
   }
 );
