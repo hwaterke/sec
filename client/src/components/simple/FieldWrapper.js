@@ -4,7 +4,7 @@ import {colors} from '../../constants/colors';
 
 export class FieldWrapper extends React.Component {
   static propTypes = {
-    label: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string,
     children: React.PropTypes.element,
     row: React.PropTypes.bool,
   };
@@ -12,7 +12,9 @@ export class FieldWrapper extends React.Component {
   render() {
     return (
       <View style={styles.wrapper}>
+        { this.props.label &&
         <Text style={styles.label}>{this.props.label}</Text>
+        }
         <View style={styles.field}>
           {this.props.children}
         </View>

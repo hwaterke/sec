@@ -1,7 +1,6 @@
 // @flow
 import {Component, PropTypes, createElement} from 'react';
-import asyncActionCreatorsFor from './api';
-import {connect} from 'react-redux';
+import {api} from './api';
 import {reduxForm} from 'redux-form';
 
 /**
@@ -32,21 +31,19 @@ export function resourceForm(resourcePath: string,
         updatedResource: PropTypes.shape({
           uuid: PropTypes.string.isRequired
         }),
-        create: PropTypes.func,
-        update: PropTypes.func,
-        delete: PropTypes.func,
+        createResource: PropTypes.func,
+        updateResource: PropTypes.func,
+        deleteResource: PropTypes.func,
         postSubmit: PropTypes.func,
-        url: PropTypes.string.isRequired,
-        password: PropTypes.string.isRequired,
       };
 
       onSubmit = (data) => {
         const entity = formToResource(data, this.props);
         if (this.props.updatedResource && this.props.updatedResource.uuid) {
           entity.id = this.props.updatedResource.uuid;
-          this.props.update(this.props.url, this.props.password, entity);
+          this.props.updateResource(resourcePath, entity);
         } else {
-          this.props.create(this.props.url, this.props.password, entity);
+          this.props.createResource(resourcePath, entity);
         }
         this.props.postSubmit && this.props.postSubmit();
       };
@@ -55,9 +52,8 @@ export function resourceForm(resourcePath: string,
        * Delete the updatedResource
        */
       deleteResource = () => {
-        this.props.delete(
-          this.props.url,
-          this.props.password,
+        this.props.deleteResource(
+          resourcePath,
           {
             uuid: this.props.updatedResource.uuid
           }
@@ -67,10 +63,10 @@ export function resourceForm(resourcePath: string,
 
       getPassThroughProps = () => {
         const passThroughProps = {...this.props};
-        delete passThroughProps.fetch;
-        delete passThroughProps.create;
-        delete passThroughProps.update;
-        delete passThroughProps.delete;
+        delete passThroughProps.fetchAll;
+        delete passThroughProps.createResource;
+        delete passThroughProps.updateResource;
+        delete passThroughProps.deleteResource;
         delete passThroughProps.postSubmit;
         return passThroughProps;
       };
@@ -95,11 +91,6 @@ export function resourceForm(resourcePath: string,
     // Name the WrapperComponent accordingly
     ResourceForm.displayName = `ResourceForm(${wrappedComponentName})`;
 
-    const mapStateToProps = (state) => ({
-      url: state.backend.url,
-      password: state.backend.password
-    });
-
-    return connect(mapStateToProps, asyncActionCreatorsFor(resourcePath))(ResourceForm);
+    return api()(ResourceForm);
   };
 }

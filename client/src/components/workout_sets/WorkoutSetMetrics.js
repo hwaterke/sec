@@ -15,11 +15,11 @@ export class WorkoutSetMetrics extends React.Component {
 
     return (
       <View style={styles.row}>
-        {set.repetitions && <Text>{set.repetitions}</Text>}
+        {set.repetitions != null && <Text>{set.repetitions}</Text>}
 
-        {set.weight && <Text style={styles.discretePush}>x</Text>}
-        {set.weight && <Text>{toKilo(set.weight)}</Text>}
-        {set.weight && <Text style={styles.discretePushLeft}>kg</Text>}
+        {set.weight != null && <Text style={styles.discretePush}>x</Text>}
+        {set.weight != null && <Text>{toKilo(set.weight)}</Text>}
+        {set.weight != null && <Text style={styles.discretePushLeft}>kg</Text>}
 
         {set.time && <Text style={styles.discretePushRight}>{set.time}</Text>}
 

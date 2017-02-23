@@ -11,10 +11,12 @@ DB.create_table? :workout_sets do
   DateTime :created_at, null: false
   DateTime :updated_at, null: false
   foreign_key :exercise_uuid, :exercises, null: false, type: 'uuid'
+  foreign_key :user_uuid, :users, null: false, type: 'uuid'
 end
 
 class WorkoutSet < Sequel::Model
   many_to_one :exercise, key: :exercise_uuid
+  many_to_one :user, key: :user_uuid
 
   def before_create
     self.updated_at = Time.now

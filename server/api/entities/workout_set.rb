@@ -14,10 +14,10 @@ module Sec
 
     class WorkoutSets < Grape::API
       before do
-        env['warden'].authenticate :token
+        authenticate!
       end
 
-      crud(WorkoutSet, WorkoutSetRepresenter) do
+      crud(WorkoutSet, WorkoutSetRepresenter, :uuid, :user_uuid) do
         optional :repetitions, type: Integer
         optional :weight, type: Integer
         optional :time, type: Time

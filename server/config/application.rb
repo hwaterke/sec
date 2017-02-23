@@ -14,10 +14,11 @@ DB.loggers << Logger.new(STDOUT) if ENV['RACK_ENV'] == 'development'
 require 'roar/json'
 
 # Load all models
+require_relative File.join('..', 'auth', 'models', 'users')
 require_relative File.join('..', 'models', 'exercises')
 require_relative File.join('..', 'models', 'workout_sets')
 
-require_relative '../api/helpers/warden_auth'
+require_relative '../api/helpers/warden_helpers'
 require_relative '../api/helpers/crud_helpers'
 require_relative '../api/helpers/crud_extension'
 
@@ -25,6 +26,10 @@ require_relative '../api/helpers/crud_extension'
 Dir['api/entities/*.rb'].each do |f|
   require_relative File.join('..', f)
 end
+
+require_relative '../auth/warden/strategy/password'
+require_relative '../auth/warden/jwt'
+require_relative '../auth/api/api'
 
 require_relative '../api/api'
 

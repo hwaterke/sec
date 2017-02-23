@@ -13,10 +13,10 @@ module Sec
 
     class Exercises < Grape::API
       before do
-        env['warden'].authenticate :token
+        authenticate!
       end
 
-      crud(Exercise, ExerciseRepresenter) do
+      crud(Exercise, ExerciseRepresenter, :uuid, :user_uuid) do
         requires :name, type: String
         optional :repetitions, type: Boolean
         optional :weight, type: Boolean

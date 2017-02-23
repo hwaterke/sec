@@ -3,17 +3,16 @@ export const setBackendUrl = (url) => ({
   payload: url
 });
 
-export const setBackendPassword = (value) => ({
-  type: 'SET_BACKEND_PASSWORD',
-  payload: value
+export const clearBackendUrl = () => ({
+  type: 'CLEAR_BACKEND_URL'
 });
 
-export const backendReducer = (state = {}, action) => {
+export const backendReducer = (state = null, action) => {
   if (action.type === 'SET_BACKEND_URL') {
-    return {...state, url: action.payload};
+    return action.payload;
   }
-  if (action.type === 'SET_BACKEND_PASSWORD') {
-    return {...state, password: action.payload};
+  if (action.type === 'CLEAR_BACKEND_URL') {
+    return null;
   }
   return state;
 };

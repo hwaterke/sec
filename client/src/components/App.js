@@ -8,6 +8,7 @@ import {connect, Provider} from 'react-redux';
 import {addNavigationHelpers} from 'react-navigation';
 import thunk from 'redux-thunk';
 import {colors} from '../constants/colors';
+import {LoginDispatcher} from './LoginDispatcher';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancers = composeEnhancers(applyMiddleware(thunk));
@@ -18,12 +19,6 @@ const store = createStore(
   enhancers,
   autoRehydrate()
 );
-
-// Connecting the TabNavigation to Redux
-const ConnectedSecTabNavigator = connect(
-  state => ({nav: state.navigation}))(({dispatch, nav}) => (
-  <SecTabNavigator navigation={addNavigationHelpers({dispatch, state: nav})} />
-));
 
 export class App extends React.Component {
 
@@ -36,7 +31,7 @@ export class App extends React.Component {
       <Provider store={store}>
         <View style={styles.container}>
           <StatusBar backgroundColor="blue" barStyle="light-content" />
-          <ConnectedSecTabNavigator />
+          <LoginDispatcher />
         </View>
       </Provider>
     );
@@ -46,8 +41,6 @@ export class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundColor,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: colors.backgroundColor
   },
 });

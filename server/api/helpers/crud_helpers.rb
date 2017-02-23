@@ -1,14 +1,6 @@
 module CrudHelpers
-  def create(type, options = {})
-    present type.create(options[:from]), with: options[:with]
-  end
-
-  def present_instance(type, options = {})
-    present find_instance(type, params[:id]), with: options[:with]
-  end
-
-  def find_instance(type, primary_key)
-    instance = type.with_pk(primary_key)
+  def find_instance(type, primary_key, primary_key_property_name, owner_property_name)
+    instance = type.first({primary_key_property_name => primary_key, owner_property_name => connected_user[primary_key_property_name]})
     error! :not_found, 404 unless instance
     instance
   end
