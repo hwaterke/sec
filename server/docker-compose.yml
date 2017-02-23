@@ -11,5 +11,3 @@ services:
     volumes:
       - .:/app/server
       - ./database:/db
-    environment:
-      - WARDEN_TOKEN=some_secure_password
