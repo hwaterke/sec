@@ -56,6 +56,7 @@ export class LoginScreen extends React.Component {
               name="backend"
               component={TextInputField}
               placeholder="Backend"
+              autoCapitalize="none"
             />
           </FieldWrapper>
 
@@ -64,6 +65,8 @@ export class LoginScreen extends React.Component {
               name="email"
               component={TextInputField}
               placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
             />
           </FieldWrapper>
 
