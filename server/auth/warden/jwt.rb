@@ -12,7 +12,8 @@ end
 
 Warden::JWTAuth.configure do |config|
   config.secret = 'super-secret'
-  config.mappings = { default: UserRepo }
+  config.expiration_time = 31 * 24 * 60 * 60
+  config.mappings = {default: UserRepo}
   config.dispatch_requests = [['POST', %r{^/api/login$}]]
-  config.revocation_strategies = { default: RevocationStrategy }
+  config.revocation_strategies = {default: RevocationStrategy}
 end
