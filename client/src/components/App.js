@@ -11,13 +11,12 @@ import {colors} from '../constants/colors';
 import {LoginDispatcher} from './LoginDispatcher';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancers = composeEnhancers(applyMiddleware(thunk));
+const enhancers = composeEnhancers(applyMiddleware(thunk), autoRehydrate());
 
 // Creation of Redux store
 const store = createStore(
   appReducer,
-  enhancers,
-  autoRehydrate()
+  enhancers
 );
 
 export class App extends React.Component {
