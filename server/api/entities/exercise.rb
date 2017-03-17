@@ -12,9 +12,7 @@ module Sec
     end
 
     class Exercises < Grape::API
-      before do
-        authenticate!
-      end
+      before {authenticate!}
 
       crud(Exercise, ExerciseRepresenter, :uuid, :user_uuid) do
         requires :name, type: String
