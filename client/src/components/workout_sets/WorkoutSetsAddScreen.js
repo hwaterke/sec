@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Screen} from '@shoutem/ui';
 import WorkoutSetsForm from './WorkoutSetsForm';
 import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
 import {connect} from 'react-redux';
-import {globalStyles} from '../../constants/styles';
 
 const mapStateToProps = (state) => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
@@ -36,13 +35,16 @@ export class WorkoutSetsAddScreen extends React.Component {
   }
 
   render() {
+    const template = this.getTemplate();
+
     return (
-      <View style={globalStyles.flexContainer}>
+      <Screen>
         <WorkoutSetsForm
           postSubmit={() => this.props.navigation.goBack()}
-          templateResource={this.getTemplate()}
+          exercise_uuid={template.exercise_uuid}
+          templateResource={template}
         />
-      </View>
+      </Screen>
     );
   }
 }

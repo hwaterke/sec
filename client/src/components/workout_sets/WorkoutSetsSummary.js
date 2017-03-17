@@ -1,12 +1,11 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView} from 'react-native';
 import {workoutSetsByDayAndExerciseSelector} from '../../selectors/workout_sets';
 import {connect} from 'react-redux';
-import {globalStyles} from '../../constants/styles';
 import {Banner} from '../simple/Banner';
-import {Title} from '../simple/Title';
 import {exercisesByIdSelector} from '../../selectors/exercices';
 import {WorkoutSetMetrics} from './WorkoutSetMetrics';
+import {Text, Caption, Divider, Screen, View} from '@shoutem/ui';
 
 const mapStateToProps = (state) => ({
   ws: workoutSetsByDayAndExerciseSelector(state),
@@ -16,7 +15,7 @@ const mapStateToProps = (state) => ({
 @connect(mapStateToProps)
 export class WorkoutSetsSummary extends React.Component {
   renderSets = (sets) => (
-    <View style={styles.repsView}>
+    <View styleName="sm-gutter">
       {sets.map(ws => (
         <WorkoutSetMetrics key={ws.uuid} workoutSet={ws} />
       ))}
@@ -25,9 +24,9 @@ export class WorkoutSetsSummary extends React.Component {
 
   renderExercises = (exercises) => {
     return (
-      <View style={styles.card}>
+      <View styleName="md-gutter" style={{backgroundColor: 'white'}}>
         {Object.keys(exercises).map(exercise_uuid =>
-          <View key={exercise_uuid} style={styles.exerciseView}>
+          <View key={exercise_uuid} styleName="sm-gutter">
             <Text>{this.props.exercisesById[exercise_uuid].name}</Text>
             {this.renderSets(exercises[exercise_uuid])}
           </View>
@@ -39,37 +38,19 @@ export class WorkoutSetsSummary extends React.Component {
   render() {
     const {ws} = this.props;
     return (
-      <View style={globalStyles.flexContainer}>
+      <Screen>
         <Banner />
-        <ScrollView style={styles.container}>
+        <ScrollView>
           {Object.keys(ws).map(day =>
             <View key={day}>
-              <Title content={day} />
+              <Divider styleName="section-header">
+                <Caption>{day}</Caption>
+              </Divider>
               {this.renderExercises(ws[day])}
             </View>
           )}
         </ScrollView>
-      </View>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fafafa'
-  },
-  card: {
-    paddingHorizontal: 12,
-    backgroundColor: 'white',
-    borderColor: '#e5e5e5',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
-  },
-  exerciseView: {
-    marginVertical: 8
-  },
-  repsView: {
-    marginHorizontal: 12,
-    marginVertical: 4
-  }
-});

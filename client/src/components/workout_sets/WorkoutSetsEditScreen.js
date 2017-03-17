@@ -16,11 +16,14 @@ export class WorkoutSetsEditScreen extends React.Component {
   };
 
   render() {
+    const ws = this.props.workoutSetsById[this.props.navigation.state.params.resourceId];
+
     return (
       <View style={globalStyles.flexContainer}>
         <WorkoutSetsForm
-          updatedResource={this.props.workoutSetsById[this.props.navigation.state.params.resourceId]}
+          updatedResource={ws}
           postSubmit={() => this.props.navigation.goBack()}
+          exercise_uuid={ws.exercise_uuid}
         />
       </View>
 

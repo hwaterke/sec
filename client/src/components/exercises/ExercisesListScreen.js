@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {ExercisesList} from './ExercisesList';
 import {globalStyles} from '../../constants/styles';
+import {Button, Text} from '@shoutem/ui';
 
 export class ExercisesListScreen extends React.Component {
 
@@ -27,10 +28,9 @@ export class ExercisesListScreen extends React.Component {
       <View style={globalStyles.flexContainer}>
         {
           this.isEdit() &&
-          <Button
-            title="Add"
-            onPress={() => this.props.navigation.navigate('ExercisesAdd')}
-          />
+          <Button onPress={() => this.props.navigation.navigate('ExercisesAdd')}>
+            <Text>Add</Text>
+          </Button>
         }
         <ExercisesList
           onRowPress={this.onRowPress}

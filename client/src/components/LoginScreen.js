@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {FieldWrapper} from './simple/FieldWrapper';
@@ -7,7 +7,8 @@ import TextInputField from './simple/TextInputField';
 import axios from 'axios';
 import {saveToken} from '../reducers/authentication';
 import {setBackendUrl} from '../reducers/backend';
-import {colors} from '../constants/colors';
+import {Button, Text} from '@shoutem/ui';
+import {Components} from 'exponent';
 
 @connect(state =>
   ({
@@ -50,13 +51,19 @@ export class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.loginView}>
+        <Image
+          style={styles.bgImage}
+          source={require('../assets/dbg.jpg')}
+        />
+
+        <Components.BlurView tint="default" intensity={50} style={[StyleSheet.absoluteFill, styles.gradient]}>
           <FieldWrapper>
             <Field
               name="backend"
               component={TextInputField}
               placeholder="Backend"
               autoCapitalize="none"
+              style={{backgroundColor: 'rgba(0,0,0,.4)'}}
             />
           </FieldWrapper>
 
@@ -67,6 +74,7 @@ export class LoginScreen extends React.Component {
               placeholder="Email"
               autoCapitalize="none"
               keyboardType="email-address"
+              style={{backgroundColor: 'rgba(0,0,0,.4)'}}
             />
           </FieldWrapper>
 
@@ -76,14 +84,17 @@ export class LoginScreen extends React.Component {
               component={TextInputField}
               placeholder="Password"
               secureTextEntry
+              style={{backgroundColor: 'rgba(0,0,0,.4)'}}
             />
           </FieldWrapper>
 
           <Button
+            styleName="sm-gutter dark"
             onPress={this.props.handleSubmit(this.onSubmit)}
-            title="Login"
-          />
-        </View>
+          >
+            <Text>Login</Text>
+          </Button>
+        </Components.BlurView>
       </View>
     );
   }
@@ -91,16 +102,15 @@ export class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  bgImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  gradient: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: colors.headerColor,
-  },
-  loginView: {
-    paddingVertical: 20,
-
-    backgroundColor: '#fafafa',
-    borderColor: '#e5e5e5',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
   }
 });

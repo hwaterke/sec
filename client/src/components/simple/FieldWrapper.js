@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {colors} from '../../constants/colors';
+import {Caption, View} from '@shoutem/ui';
 
 export class FieldWrapper extends React.Component {
   static propTypes = {
@@ -11,29 +10,14 @@ export class FieldWrapper extends React.Component {
 
   render() {
     return (
-      <View style={styles.wrapper}>
+      <View styleName="sm-gutter-vertical">
         { this.props.label &&
-        <Text style={styles.label}>{this.props.label}</Text>
+        <Caption>{this.props.label}</Caption>
         }
-        <View style={styles.field}>
+        <View>
           {this.props.children}
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  label: {
-    color: colors.discreteTextColor
-  },
-  field: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.veryDarkPrimaryColor
-  },
-  wrapper: {
-    paddingHorizontal: 12,
-    paddingBottom: 4,
-    marginBottom: 8
-  }
-});

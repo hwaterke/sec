@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
-import {Button, View, Alert} from 'react-native';
+import {Alert} from 'react-native';
 import {resourceForm} from '../../api/resourceForm';
-import {Field, formValueSelector} from 'redux-form';
-import {ExerciseSelectField} from '../simple/ExerciseSelectField';
+import {Field} from 'redux-form';
 import {connect} from 'react-redux';
 import {exercisesByIdSelector} from '../../selectors/exercices';
 import TextInputField from '../simple/TextInputField';
@@ -14,47 +13,38 @@ import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
 import {fromKilo, toKilo} from '../../utils/conversion';
 import {JsonDebug} from '../simple/JsonDebug';
 import {FieldWrapper} from '../simple/FieldWrapper';
-
-const selector = formValueSelector(WorkoutSetResource.path);
+import {NumberInputWithButtonsField} from '../simple/NumberInputWithButtonsField';
+import {View, Button, Text, Title} from '@shoutem/ui';
+import {ExerciseResource} from '../../entities/ExerciseResource';
 
 const mapStateToProps = (state) => ({
   exercises: exercisesByIdSelector(state),
-  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state),
-  exercise_uuid: selector(state, 'exercise_uuid')
+  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
 });
 
 @connect(mapStateToProps)
 class WorkoutSetsForm extends React.Component {
   static propTypes = {
+    exercise_uuid: React.PropTypes.string.isRequired,
     updatedResource: WorkoutSetResource.propType,
     handleSubmit: React.PropTypes.func.isRequired,
     deleteResource: React.PropTypes.func,
     autofill: React.PropTypes.func,
-    isUpdate: React.PropTypes.bool.isRequired
-  };
-
-  onExerciseChange = (exercise_uuid) => {
-    const exercise = this.props.exercises[exercise_uuid];
-    const lastSet = this.props.lastWorkoutSetByExercise[exercise_uuid];
-
-    this.props.autofill('repetitions', (lastSet && exercise.repetitions) ? lastSet.repetitions.toString() : null);
-    this.props.autofill('weight', (lastSet && exercise.weight) ? toKilo(lastSet.weight).toString() : null);
-    this.props.autofill('time', (lastSet && exercise.time) ? lastSet.time : null);
-    this.props.autofill('distance', (lastSet && exercise.distance) ? toKilo(lastSet.distance).toString() : null);
-    this.props.autofill('notes', null);
+    isUpdate: React.PropTypes.bool.isRequired,
+    exercises: React.PropTypes.objectOf(ExerciseResource.propType).isRequired
   };
 
   render() {
-    return (
-      <View>
+    const exercise = this.props.exercises[this.props.exercise_uuid];
 
-        <FieldWrapper label="Exercise">
-          <Field
-            name="exercise_uuid"
-            component={ExerciseSelectField}
-            onExerciseSelected={this.onExerciseChange}
-          />
-        </FieldWrapper>
+    if (!exercise) {
+      return (<View><Text>Exercise not found</Text></View>);
+    }
+
+    return (
+      <View styleName="md-gutter">
+
+        <Title>{exercise.name}</Title>
 
         <FieldWrapper label="When">
           <Field
@@ -65,32 +55,29 @@ class WorkoutSetsForm extends React.Component {
         </FieldWrapper>
 
         {
-          this.props.exercise_uuid &&
-          this.props.exercises[this.props.exercise_uuid].repetitions &&
+          exercise.repetitions &&
           <FieldWrapper label="Repetitions">
             <Field
               name="repetitions"
-              component={NumberInputField}
+              component={NumberInputWithButtonsField}
               placeholder="Repetitions"
             />
           </FieldWrapper>
         }
 
         {
-          this.props.exercise_uuid &&
-          this.props.exercises[this.props.exercise_uuid].weight &&
+          exercise.weight &&
           <FieldWrapper label="Weight">
             <Field
               name="weight"
-              component={NumberInputField}
+              component={NumberInputWithButtonsField}
               placeholder="Weight"
             />
           </FieldWrapper>
         }
 
         {
-          this.props.exercise_uuid &&
-          this.props.exercises[this.props.exercise_uuid].time &&
+          exercise.time &&
           <FieldWrapper label="Time">
             <Field
               name="time"
@@ -101,8 +88,7 @@ class WorkoutSetsForm extends React.Component {
         }
 
         {
-          this.props.exercise_uuid &&
-          this.props.exercises[this.props.exercise_uuid].distance &&
+          exercise.distance &&
           <FieldWrapper label="Distance">
             <Field
               name="distance"
@@ -121,15 +107,13 @@ class WorkoutSetsForm extends React.Component {
           />
         </FieldWrapper>
 
-        <Button
-          title="Save"
-          onPress={this.props.handleSubmit}
-        />
+        <Button onPress={this.props.handleSubmit}>
+          <Text>Save</Text>
+        </Button>
 
         {
           this.props.isUpdate &&
           <Button
-            title="Delete"
             onPress={() => Alert.alert(
               'Delete',
               null,
@@ -138,7 +122,9 @@ class WorkoutSetsForm extends React.Component {
                 {text: 'Cancel'}
               ]
             )}
-          />
+          >
+            <Text>Delete</Text>
+          </Button>
         }
 
         {this.props.isUpdate && <JsonDebug value={this.props.updatedResource} />}
