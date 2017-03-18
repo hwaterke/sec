@@ -51,6 +51,7 @@ module Grape
           entry = find_instance(type, params[:id], primary_key_property_name, owner_property_name)
 
           update_keys = declared(params).dup
+          update_keys.delete(:id)
           update_keys.delete(primary_key_property_name)
 
           entry.update(update_keys)
