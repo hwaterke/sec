@@ -89,7 +89,7 @@ export function api() {
         promise.then(response => {
           this.props.dispatch(baseActionCreators.updateSuccess(response.data));
         }, error => {
-          this.props.dispatch(baseActionCreators.updateError(error.response.data.error));
+          this.props.dispatch(baseActionCreators.updateError(error.response.data.error, resource));
           this.clearTokenOnAuthError(error.response.status);
           alert('Update error.' + error.response.data.error);
         }).catch(err => {
