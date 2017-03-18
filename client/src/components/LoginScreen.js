@@ -8,7 +8,7 @@ import axios from 'axios';
 import {saveToken} from '../reducers/authentication';
 import {setBackendUrl} from '../reducers/backend';
 import {Button, Text} from '@shoutem/ui';
-import {Components} from 'exponent';
+import {Components} from 'expo';
 
 @connect(state =>
   ({

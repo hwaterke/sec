@@ -1,5 +1,5 @@
 import React from 'react';
-import Exponent from 'exponent';
+import Expo from 'expo';
 import {App} from './src/components/App';
 
 class AssetLoaderApp extends React.Component {
@@ -8,7 +8,7 @@ class AssetLoaderApp extends React.Component {
   };
 
   async componentWillMount() {
-    await Exponent.Font.loadAsync({
+    await Expo.Font.loadAsync({
       'Rubik': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
       'Rubik-Black': require('./node_modules/@shoutem/ui/fonts/Rubik-Black.ttf'),
       'Rubik-BlackItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-BlackItalic.ttf'),
@@ -28,7 +28,7 @@ class AssetLoaderApp extends React.Component {
 
   render() {
     if (!this.state.fontsAreLoaded) {
-      return <Exponent.Components.AppLoading />;
+      return <Expo.Components.AppLoading />;
     }
 
     return (
@@ -37,4 +37,4 @@ class AssetLoaderApp extends React.Component {
   }
 }
 
-Exponent.registerRootComponent(AssetLoaderApp);
+Expo.registerRootComponent(AssetLoaderApp);
