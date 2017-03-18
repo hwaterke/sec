@@ -2,10 +2,9 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {workoutSetsByDayAndExerciseSelector} from '../../selectors/workout_sets';
 import {connect} from 'react-redux';
-import {Banner} from '../simple/Banner';
 import {exercisesByIdSelector} from '../../selectors/exercices';
-import {WorkoutSetMetrics} from './WorkoutSetMetrics';
-import {Text, Caption, Divider, Screen, View} from '@shoutem/ui';
+import {WorkoutSetMetrics} from '../workout_sets/WorkoutSetMetrics';
+import {Text, Title, Screen, View} from '@shoutem/ui';
 
 const mapStateToProps = (state) => ({
   ws: workoutSetsByDayAndExerciseSelector(state),
@@ -36,19 +35,17 @@ export class WorkoutSetsSummary extends React.Component {
   };
 
   render() {
-    const {ws} = this.props;
+    const date = this.props.navigation.state.params.date;
+    const workSets = this.props.ws[date];
     return (
       <Screen>
-        <Banner />
         <ScrollView>
-          {Object.keys(ws).map(day =>
-            <View key={day}>
-              <Divider styleName="section-header">
-                <Caption>{day}</Caption>
-              </Divider>
-              {this.renderExercises(ws[day])}
-            </View>
-          )}
+
+          <View>
+            <Title>{date}</Title>
+            {this.renderExercises(workSets)}
+          </View>
+
         </ScrollView>
       </Screen>
     );

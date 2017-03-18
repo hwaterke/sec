@@ -23,7 +23,7 @@ export const lastWorkoutSetByExerciseSelector = createSelector(
 export const workoutSetsByDaySelector = createSelector(
   workoutSetsByDateSelector,
   workoutSets => {
-    const day = (ws) => moment(ws.executed_at, 'YYYY-MM-DD').format('D MMM');
+    const day = (ws) => moment(ws.executed_at, 'YYYY-MM-DD').format('dddd, D MMMM');
     const byDate = R.groupBy(day);
     return byDate(workoutSets);
   }
