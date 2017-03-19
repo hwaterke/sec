@@ -12,16 +12,21 @@ module Sec
     end
 
     class Exercises < Grape::API
-      before {authenticate!}
+      before { authenticate! }
 
-      crud(Exercise, ExerciseRepresenter, :uuid, :user_uuid) do
-        requires :name, type: String
-        optional :repetitions, type: Boolean
-        optional :weight, type: Boolean
-        optional :time, type: Boolean
-        optional :distance, type: Boolean
-        optional :description, type: String
+      helpers CrudHelpersBuilder.create_for_user Exercise
+      helpers do
+        params :instance_params do
+          requires :name, type: String
+          optional :repetitions, type: Boolean
+          optional :weight, type: Boolean
+          optional :time, type: Boolean
+          optional :distance, type: Boolean
+          optional :description, type: String
+        end
       end
+
+      crud_routes Exercise.name, ExerciseRepresenter
     end
   end
 end

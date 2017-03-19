@@ -19,8 +19,8 @@ require_relative File.join('..', 'models', 'exercises')
 require_relative File.join('..', 'models', 'workout_sets')
 
 require_relative '../api/helpers/warden_helpers'
-require_relative '../api/helpers/crud_helpers'
-require_relative '../api/helpers/crud_extension'
+require_relative '../api/helpers/crud_api_extention'
+require_relative '../api/helpers/crud_helpers_builder'
 
 # Load all entities API
 Dir['api/entities/*.rb'].each do |f|

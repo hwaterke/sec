@@ -10,16 +10,18 @@ module Sec
     use Warden::Manager do |manager|
       manager.default_strategies :jwt
       manager.failure_app = lambda do |env|
+        content = {error: 'Not authorized'}
+        warden_message = env['warden.options'][:message]
+        content[:message] = warden_message if warden_message
         [
           401,
           {'Content-Type' => 'application/json'},
-          [{error: 'Not authorized', message: env['warden.options'][:message]}.to_json]
+          [content.to_json]
         ]
       end
     end
 
     helpers WardenHelpers
-    helpers CrudHelpers
 
     mount ::Auth::API
     mount ::Sec::Entities::Exercises

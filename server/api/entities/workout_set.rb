@@ -13,19 +13,22 @@ module Sec
     end
 
     class WorkoutSets < Grape::API
-      before do
-        authenticate!
+      before { authenticate! }
+
+      helpers CrudHelpersBuilder.create_for_user WorkoutSet
+      helpers do
+        params :instance_params do
+          optional :repetitions, type: Integer
+          optional :weight, type: Integer
+          optional :time, type: Time
+          optional :distance, type: Integer
+          optional :notes, type: String
+          optional :executed_at
+          requires :exercise_uuid, type: String
+        end
       end
 
-      crud(WorkoutSet, WorkoutSetRepresenter, :uuid, :user_uuid) do
-        optional :repetitions, type: Integer
-        optional :weight, type: Integer
-        optional :time, type: Time
-        optional :distance, type: Integer
-        optional :notes, type: String
-        optional :executed_at
-        requires :exercise_uuid, type: String
-      end
+      crud_routes WorkoutSet.name, WorkoutSetRepresenter
     end
   end
 end
