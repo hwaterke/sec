@@ -44,7 +44,6 @@ export class ExercisesList extends React.Component {
   };
 
   render() {
-    console.log(this.props.exercises)
     return (
       <ListView
         data={this.props.exercises}
