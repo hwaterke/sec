@@ -28,7 +28,6 @@ export class SummaryListScreen extends React.Component {
         <ListView
           data={Object.keys(this.props.workoutSetsByDay)}
           renderRow={this.renderRow}
-          renderSeparator={this._renderSeparator}
         />
       </Screen>
     );
