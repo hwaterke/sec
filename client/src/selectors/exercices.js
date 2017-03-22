@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import R from 'ramda';
 
-export const exercisesByIdSelector = state => state.exercises;
+export const exercisesByIdSelector = state => state.resources.exercises;
 
 export const exercisesArraySelector = createSelector(
   exercisesByIdSelector,

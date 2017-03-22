@@ -2,7 +2,7 @@ import {createSelector} from 'reselect';
 import R from 'ramda';
 import moment from 'moment';
 
-export const workoutSetsByIdSelector = state => state.workout_sets;
+export const workoutSetsByIdSelector = state => state.resources.workout_sets;
 
 export const workoutSetsArraySelector = createSelector(
   workoutSetsByIdSelector,

@@ -5,8 +5,21 @@ import {Ionicons} from 'react-native-vector-icons';
 import {ExercisesNavigation} from './exercises/ExercisesNavigation';
 import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
 import {colors} from '../constants/colors';
-import {WorkoutSetsSummary} from './summary/WorkoutSetsSummary';
 import {SummaryNavigator} from './summary/SummaryNavigator';
+import {MusclesListScreen} from './muscles/MusclesListScreen';
+
+MusclesListScreen.navigationOptions = {
+  tabBar: {
+    label: 'Muscles',
+    icon: ({tintColor, focused}) => (
+      <Ionicons
+        name={focused ? 'ios-body' : 'ios-body-outline'}
+        size={26}
+        style={{color: tintColor}}
+      />
+    ),
+  },
+};
 
 ExercisesNavigation.navigationOptions = {
   tabBar: {
@@ -61,6 +74,9 @@ SettingsScreen.navigationOptions = {
 };
 
 export const SecTabNavigator = TabNavigator({
+  Muscles: {
+    screen: MusclesListScreen
+  },
   Exercises: {
     screen: ExercisesNavigation
   },

@@ -5,16 +5,11 @@ import {Banner} from './simple/Banner';
 import {globalStyles} from '../constants/styles';
 import {clearToken} from '../reducers/authentication';
 import {api} from '../api/api';
-import {ExerciseResource} from '../entities/ExerciseResource';
-import {WorkoutSetResource} from '../entities/WorkoutSetResource';
-import {exercisesArraySelector} from '../selectors/exercices';
-import {workoutSetsArraySelector} from '../selectors/workout_sets';
+import {SettingsResources} from './SettingsResources';
 
 @api()
 @connect(state => ({
-  backend: state.backend,
-  exercises: exercisesArraySelector(state).length,
-  workoutSets: workoutSetsArraySelector(state).length
+  backend: state.backend
 }))
 export class SettingsScreen extends React.Component {
 
@@ -22,8 +17,6 @@ export class SettingsScreen extends React.Component {
     backend: React.PropTypes.string,
     dispatch: React.PropTypes.func.isRequired,
     fetchAll: React.PropTypes.func.isRequired,
-    exercises: React.PropTypes.number.isRequired,
-    workoutSets: React.PropTypes.number.isRequired
   };
 
   render() {
@@ -40,28 +33,8 @@ export class SettingsScreen extends React.Component {
             />
           </View>
 
-          <View style={styles.box}>
-            <Text>{this.props.exercises} exercises</Text>
-            <Text>{this.props.workoutSets} sets</Text>
-          </View>
+          <SettingsResources />
 
-          <View style={styles.box}>
-            <Button
-              title="Clear local state"
-              onPress={() => this.props.dispatch({type:'RESET_RESOURCES'})}
-            />
-          </View>
-
-          <View style={styles.box}>
-            <Button
-              title="Fetch from server"
-              onPress={() => {
-                this.props.fetchAll(ExerciseResource.path).then(() => {
-                  this.props.fetchAll(WorkoutSetResource.path);
-                });
-              }}
-            />
-          </View>
         </View>
       </View>
     );
