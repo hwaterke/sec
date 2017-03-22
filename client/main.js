@@ -28,7 +28,7 @@ class AssetLoaderApp extends React.Component {
 
   render() {
     if (!this.state.fontsAreLoaded) {
-      return <Expo.Components.AppLoading />;
+      return <Expo.AppLoading />;
     }
 
     return (

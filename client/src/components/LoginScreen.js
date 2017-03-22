@@ -8,7 +8,7 @@ import axios from 'axios';
 import {saveToken} from '../reducers/authentication';
 import {setBackendUrl} from '../reducers/backend';
 import {Button, Text} from '@shoutem/ui';
-import {Components} from 'expo';
+import {BlurView} from 'expo';
 
 @connect(state =>
   ({
@@ -56,7 +56,7 @@ export class LoginScreen extends React.Component {
           source={require('../assets/dbg.jpg')}
         />
 
-        <Components.BlurView tint="default" intensity={50} style={[StyleSheet.absoluteFill, styles.gradient]}>
+        <BlurView tint="default" intensity={50} style={[StyleSheet.absoluteFill, styles.gradient]}>
           <FieldWrapper>
             <Field
               name="backend"
@@ -94,7 +94,7 @@ export class LoginScreen extends React.Component {
           >
             <Text>Login</Text>
           </Button>
-        </Components.BlurView>
+        </BlurView>
       </View>
     );
   }
