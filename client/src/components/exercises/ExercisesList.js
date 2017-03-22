@@ -1,105 +1,58 @@
 import React from 'react';
-import {View, ListView, Text} from 'react-native';
+import {View, Text as RNText, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {ExerciseRow} from './ExercisesRow';
-import {exercisesByNameSelector} from '../../selectors/exercices';
+import {exercisesByMuscleThenNameSelector} from '../../selectors/exercices';
 import {globalStyles} from '../../constants/styles';
+import {Row, Text, ListView} from '@shoutem/ui';
+import {ExerciseResource} from '../../entities/ExerciseResource';
 
 const mapStateToProps = (state) => ({
-  exercises: exercisesByNameSelector(state),
+  exercises: exercisesByMuscleThenNameSelector(state),
 });
 
 @connect(mapStateToProps)
 export class ExercisesList extends React.Component {
-  constructor(props) {
-    super(props);
 
-    const dataSource = new ListView.DataSource({
-      sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
-    this.state = {
-      dataSource
-    };
-
-    this.renderRow = this.renderRow.bind(this);
-  }
-
-  updateDatasource(exercises) {
-    let {data, sectionIds} = this._getListViewData(exercises);
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRowsAndSections(data, sectionIds)
-    });
-  }
-
-  // Also do it on first mount ...
-  componentDidMount() {
-    this.updateDatasource(this.props.exercises);
-  }
-
-  // Only called in updates
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.exercises != this.props.exercises) {
-      this.updateDatasource(nextProps.exercises);
-    }
-  }
-
-  _getListViewData(exercises) {
-    let data = {};
-    let sectionIds = [];
-
-    exercises.forEach(e => {
-      let section = e.name.charAt(0);
-      if (sectionIds.indexOf(section) === -1) {
-        sectionIds.push(section);
-        data[section] = [];
-      }
-      data[section].push(e);
-    });
-
-    return {data, sectionIds};
-  }
-
-  onPress = (row) => {
-    this.props.onRowPress(row);
+  static propTypes = {
+    exercises: React.PropTypes.arrayOf(ExerciseResource.propType).isRequired,
+    onRowPress: React.PropTypes.func.isRequired
   };
 
-  renderRow(rowData) {
+  renderRow = (exercise) => {
     return (
-      <ExerciseRow
-        item={rowData}
-        onPress={() => this.onPress(rowData)}
-      />
+      <TouchableOpacity onPress={() => this.props.onRowPress(exercise)}>
+        <Row style={{borderColor: '#ddd', borderBottomWidth: StyleSheet.hairlineWidth}}>
+          <Text>{exercise.name}</Text>
+        </Row>
+      </TouchableOpacity>
     );
-  }
+  };
 
-  _renderSectionHeader(_, sectionId) {
+  renderHeader = (h) => {
     return (
       <View style={globalStyles.listSectionHeader}>
-        <Text style={globalStyles.listSectionHeaderText}>{sectionId}</Text>
+        <RNText style={globalStyles.listSectionHeaderText}>{h}</RNText>
       </View>
     );
-  }
+  };
 
-  _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-    let style = globalStyles.rowSeparator;
-    if (adjacentRowHighlighted) {
-      style = [style, globalStyles.rowSeparatorHide];
+  getSectionId = (e) => {
+    if (e.cardio) {
+      return 'Cardio';
     }
-    return (
-      <View key={'SEP_' + sectionID + '_' + rowID} style={style} />
-    );
-  }
+    return e.main_muscle || 'Other';
+  };
 
   render() {
+    console.log(this.props.exercises)
     return (
       <ListView
-        dataSource={this.state.dataSource}
+        data={this.props.exercises}
         renderRow={this.renderRow}
-        renderSectionHeader={this._renderSectionHeader}
-        renderSeparator={this._renderSeparator}
+        renderSectionHeader={this.renderHeader}
+        getSectionId={this.getSectionId}
       />
+
     );
   }
 }
