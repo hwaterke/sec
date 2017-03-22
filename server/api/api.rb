@@ -24,6 +24,7 @@ module Sec
     helpers WardenHelpers
 
     mount ::Auth::API
+    mount ::Sec::Entities::Muscles
     mount ::Sec::Entities::Exercises
     mount ::Sec::Entities::WorkoutSets
   end

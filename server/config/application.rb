@@ -15,8 +15,9 @@ require 'roar/json'
 
 # Load all models
 require_relative File.join('..', 'auth', 'models', 'users')
-require_relative File.join('..', 'models', 'exercises')
-require_relative File.join('..', 'models', 'workout_sets')
+Dir['models/*.rb'].each do |f|
+  require_relative File.join('..', f)
+end
 
 require_relative '../api/helpers/warden_helpers'
 require_relative '../api/helpers/crud_api_extention'
