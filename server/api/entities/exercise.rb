@@ -8,6 +8,8 @@ module Sec
       property :weight
       property :time
       property :distance
+      property :main_muscle
+      property :cardio
       property :description
     end
 
@@ -22,6 +24,8 @@ module Sec
           optional :weight, type: Boolean
           optional :time, type: Boolean
           optional :distance, type: Boolean
+          optional :main_muscle, type: String
+          optional :cardio, type: Boolean
           optional :description, type: String
         end
       end
