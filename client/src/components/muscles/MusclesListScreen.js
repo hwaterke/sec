@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Screen, Row, Text, ListView} from '@shoutem/ui';
 import {musclesArraySelector} from '../../selectors/muscles';
 import {Banner} from '../simple/Banner';
+import {MuscleResource} from '../../entities/MuscleResource';
 
 const mapStateToProps = (state) => ({
   muscles: musclesArraySelector(state),
@@ -11,6 +12,11 @@ const mapStateToProps = (state) => ({
 
 @connect(mapStateToProps)
 export class MusclesListScreen extends React.Component {
+
+  static propTypes = {
+    muscles: React.PropTypes.arrayOf(MuscleResource.propType).isRequired
+  };
+
   renderRow = (muscle) => {
     return (
       <Row style={{borderColor: '#ddd', borderBottomWidth: StyleSheet.hairlineWidth}}>
