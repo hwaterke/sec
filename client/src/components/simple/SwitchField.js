@@ -30,7 +30,6 @@ export class SwitchField extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 12,
     marginVertical: 8,
     paddingHorizontal: 8,
     paddingVertical: 2,

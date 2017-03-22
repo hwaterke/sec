@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import {Button, View, Alert} from 'react-native';
+import {Button, Alert} from 'react-native';
+import {View} from '@shoutem/ui';
 import {Field} from 'redux-form';
 import TextInputField from '../simple/TextInputField';
 import {resourceForm} from '../../api/resourceForm';
@@ -8,6 +9,7 @@ import {SwitchField} from '../simple/SwitchField';
 import {ExerciseResource} from '../../entities/ExerciseResource';
 import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
+import {MuscleSelectField} from '../simple/MuscleSelectField';
 
 class ExercisesForm extends React.Component {
   static propTypes = {
@@ -19,7 +21,7 @@ class ExercisesForm extends React.Component {
 
   render() {
     return (
-      <View>
+      <View styleName="md-gutter">
 
         <FieldWrapper label="Name">
           <Field
@@ -51,6 +53,19 @@ class ExercisesForm extends React.Component {
           name="distance"
           component={SwitchField}
           label="Distance"
+        />
+
+        <FieldWrapper label="Main muscle">
+          <Field
+            name="main_muscle"
+            component={MuscleSelectField}
+          />
+        </FieldWrapper>
+
+        <Field
+          name="cardio"
+          component={SwitchField}
+          label="Cardio"
         />
 
         <FieldWrapper label="Description">
