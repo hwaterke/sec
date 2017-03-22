@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text as RNText, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {exercisesByMuscleThenNameSelector} from '../../selectors/exercices';
+import {exercisesByMuscleThenNameSelector, displayNameOfExercise} from '../../selectors/exercices';
 import {globalStyles} from '../../constants/styles';
 import {Row, Text, ListView} from '@shoutem/ui';
 import {ExerciseResource} from '../../entities/ExerciseResource';
@@ -36,20 +36,13 @@ export class ExercisesList extends React.Component {
     );
   };
 
-  getSectionId = (e) => {
-    if (e.cardio) {
-      return 'Cardio';
-    }
-    return e.main_muscle || 'Other';
-  };
-
   render() {
     return (
       <ListView
         data={this.props.exercises}
         renderRow={this.renderRow}
         renderSectionHeader={this.renderHeader}
-        getSectionId={this.getSectionId}
+        getSectionId={displayNameOfExercise}
       />
 
     );

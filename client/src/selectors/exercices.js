@@ -1,6 +1,13 @@
 import {createSelector} from 'reselect';
 import R from 'ramda';
 
+export const displayNameOfExercise = (exercise) => {
+  if (exercise.cardio) {
+    return 'Cardio';
+  }
+  return exercise.main_muscle || 'Other';
+};
+
 export const exercisesByIdSelector = state => state.resources.exercises;
 
 export const exercisesArraySelector = createSelector(
