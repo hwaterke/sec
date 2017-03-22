@@ -9,5 +9,4 @@ services:
       context: .
       dockerfile: Dockerfile-prod
     volumes:
-      - .:/app/server
       - ./database:/db
