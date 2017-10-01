@@ -10,6 +10,9 @@ module Sec
       property :distance
       property :main_muscle
       property :cardio
+      property :is_machine
+      property :with_dumbbell
+      property :with_barbell
       property :description
     end
 
@@ -26,6 +29,9 @@ module Sec
           optional :distance, type: Boolean
           optional :main_muscle, type: String
           optional :cardio, type: Boolean
+          optional :is_machine, type: Boolean
+          optional :with_dumbbell, type: Boolean
+          optional :with_barbell, type: Boolean
           optional :description, type: String
         end
       end

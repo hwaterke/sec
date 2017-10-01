@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Neck",
+    "upper_body": true
+  },
+  {
+    "name": "Traps",
+    "muscle": "Trapezius"
+  },
+  {
+    "name": "Shoulders",
+    "muscle": "Deltoids"
+  },
+  {
+    "name": "Chest",
+    "muscle": "Pectoralis"
+  },
+  {
+    "name": "Biceps"
+  },
+  {
+    "name": "Forearm"
+  },
+  {
+    "name": "Abs"
+  },
+  {
+    "name": "Quads"
+  },
+  {
+    "name": "Calves"
+  },
+  {
+    "name": "Lats"
+  },
+  {
+    "name": "Triceps"
+  },
+  {
+    "name": "Middle back",
+    "muscle": "Rhomboids"
+  },
+  {
+    "name": "Lower back"
+  },
+  {
+    "name": "Glutes"
+  },
+  {
+    "name": "Hamstrings",
+    "muscle": "Biceps femoris"
+  }
+]
