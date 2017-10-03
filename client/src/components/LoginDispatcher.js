@@ -1,18 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {LoginScreen} from './LoginScreen';
-import {ConnectedSecTabNavigator} from './ConnectedSecTabNavigator';
+import {SecTabNavigator} from './TabNavigator';
 
 @connect(state => ({token: state.token}))
 export class LoginDispatcher extends React.Component {
-
   static propTypes = {
-    token: React.PropTypes.string
+    token: PropTypes.string
   };
 
   render() {
     if (this.props.token) {
-      return <ConnectedSecTabNavigator />;
+      return <SecTabNavigator />;
     }
     return <LoginScreen />;
   }

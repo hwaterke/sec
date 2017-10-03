@@ -1,28 +1,23 @@
 import React from 'react';
-import {View, Switch, Text, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 import {colors} from '../../constants/colors';
 
 export class SwitchField extends React.Component {
-
   static propTypes = {
-    label: React.PropTypes.string.isRequired,
-    input: React.PropTypes.shape({
-      value: React.PropTypes.any,
-      onChange: React.PropTypes.func.isRequired
-    }).isRequired,
-    meta: React.PropTypes.object,
+    label: PropTypes.string.isRequired,
+    input: PropTypes.shape({
+      value: PropTypes.any,
+      onChange: PropTypes.func.isRequired
+    }).isRequired
   };
 
   render() {
-    const {input: {value, onChange}, meta, label, ...custom} = this.props;
+    const {input: {value, onChange}, label} = this.props;
     return (
       <View style={styles.container}>
         <Text>{label}</Text>
-        <Switch
-          value={!!value}
-          onValueChange={value => onChange(value)}
-          {...custom}
-        />
+        <Switch value={!!value} onValueChange={value => onChange(value)} />
       </View>
     );
   }
@@ -35,7 +30,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     height: 40,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.veryDarkPrimaryColor,
+    borderColor: colors.discreteTextColor,
 
     flexDirection: 'row',
     justifyContent: 'space-between',

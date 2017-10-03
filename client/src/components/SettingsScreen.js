@@ -1,51 +1,41 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Banner} from './simple/Banner';
-import {globalStyles} from '../constants/styles';
 import {clearToken} from '../reducers/authentication';
-import {api} from '../api/api';
 import {SettingsResources} from './SettingsResources';
+import {Screen} from './dumb/Screen';
 
-@api()
 @connect(state => ({
   backend: state.backend
 }))
 export class SettingsScreen extends React.Component {
-
   static propTypes = {
-    backend: React.PropTypes.string,
-    dispatch: React.PropTypes.func.isRequired,
-    fetchAll: React.PropTypes.func.isRequired,
+    backend: PropTypes.string,
+    dispatch: PropTypes.func.isRequired
   };
 
   render() {
     return (
-      <View style={globalStyles.flexContainer}>
+      <Screen>
         <Banner />
 
-        <View style={styles.container}>
-          <View style={styles.box}>
-            <Text>Logged in to {this.props.backend}</Text>
-            <Button
-              title="Sign out"
-              onPress={() => this.props.dispatch(clearToken())}
-            />
-          </View>
-
-          <SettingsResources />
-
+        <View style={styles.box}>
+          <Text>Logged in to {this.props.backend}</Text>
+          <Button
+            title="Sign out"
+            onPress={() => this.props.dispatch(clearToken())}
+          />
         </View>
-      </View>
+
+        <SettingsResources />
+      </Screen>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa'
-  },
   box: {
     alignItems: 'center',
     marginBottom: 16,
@@ -57,4 +47,3 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth
   }
 });
-

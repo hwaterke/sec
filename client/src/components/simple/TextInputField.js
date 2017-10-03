@@ -1,26 +1,34 @@
 import React from 'react';
-import {TextInput} from '@shoutem/ui';
+import PropTypes from 'prop-types';
+import {StyleSheet, TextInput} from 'react-native';
 
-class TextInputField extends React.Component {
-
+export class TextInputField extends React.Component {
   static propTypes = {
-    input: React.PropTypes.shape({
-      value: React.PropTypes.string,
-      onChange: React.PropTypes.func.isRequired
+    input: PropTypes.shape({
+      value: PropTypes.string,
+      onChange: PropTypes.func.isRequired
     }).isRequired,
-    meta: React.PropTypes.object,
+    meta: PropTypes.object
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const {input: {value, onChange}, meta, ...custom} = this.props;
     return (
       <TextInput
         value={value}
         onChangeText={value => onChange(value)}
+        style={styles.container}
         {...custom}
       />
     );
   }
 }
 
-export default TextInputField;
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    paddingVertical: 18
+  }
+});

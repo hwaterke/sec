@@ -1,22 +1,34 @@
 import React from 'react';
-import {View, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {arraySelector, byIdSelector} from 'hw-react-shared';
+import {
+  Button,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import {connect} from 'react-redux';
 import {globalStyles} from '../../constants/styles';
-import {musclesByIdSelector, musclesArraySelector} from '../../selectors/muscles';
-import {ListView, Row, Button, Text} from '@shoutem/ui';
 import {MuscleResource} from '../../entities/MuscleResource';
+import {Row} from '../dumb/Row';
 
-const mapStateToProps = (state) => ({
-  muscleArray: musclesArraySelector(state),
-  muscles: musclesByIdSelector(state),
+const mapStateToProps = state => ({
+  muscleArray: arraySelector(MuscleResource)(state),
+  muscles: byIdSelector(MuscleResource)(state)
 });
 
 @connect(mapStateToProps)
 export class MuscleSelectField extends React.Component {
-
   static propTypes = {
-    muscleArray: React.PropTypes.arrayOf(MuscleResource.propType).isRequired,
-    muscles: React.PropTypes.objectOf(MuscleResource.propType).isRequired
+    muscleArray: PropTypes.arrayOf(MuscleResource.propType).isRequired,
+    muscles: PropTypes.objectOf(MuscleResource.propType).isRequired,
+    input: PropTypes.shape({
+      value: PropTypes.string,
+      onChange: PropTypes.func.isRequired
+    }).isRequired
   };
 
   state = {
@@ -34,7 +46,7 @@ export class MuscleSelectField extends React.Component {
     return 'Muscle';
   }
 
-  rowPress = (muscle) => {
+  rowPress = muscle => {
     if (muscle.name === 'NONE') {
       this.props.input.onChange(null);
     } else {
@@ -43,22 +55,21 @@ export class MuscleSelectField extends React.Component {
     this.toggleModal();
   };
 
-  renderRow = (muscle) => {
+  renderRow = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => this.rowPress(muscle)}>
-        <Row style={{borderColor: '#ddd', borderBottomWidth: StyleSheet.hairlineWidth}}>
-          <Text>{muscle.name}</Text>
+      <TouchableOpacity onPress={() => this.rowPress(item)}>
+        <Row>
+          <Text>{item.name}</Text>
         </Row>
       </TouchableOpacity>
     );
   };
 
   render() {
-    const {input: {value, onChange}, meta, onExerciseSelected, ...custom} = this.props;
     return (
       <View>
         <TouchableOpacity onPress={this.toggleModal} style={styles.container}>
-          <Text>{this.getMuscleName(value)}</Text>
+          <Text>{this.getMuscleName(this.props.input.value)}</Text>
         </TouchableOpacity>
         <Modal
           visible={this.state.modalVisible}
@@ -66,21 +77,18 @@ export class MuscleSelectField extends React.Component {
           animationType="slide"
         >
           <View style={globalStyles.modal}>
+            <Button title="Close" onPress={this.toggleModal} />
 
-            <Button onPress={this.toggleModal}>
-              <Text>Close</Text>
-            </Button>
-
-            <ListView
-              data={[{name: 'NONE'}, ...this.props.muscleArray]}
-              renderRow={this.renderRow}
+            <FlatList
+              data={[{name: 'NONE'}, ...this.props.muscleArray].map(m => ({
+                ...m,
+                key: m.name
+              }))}
+              renderItem={this.renderRow}
             />
-
           </View>
         </Modal>
-
       </View>
-
     );
   }
 }

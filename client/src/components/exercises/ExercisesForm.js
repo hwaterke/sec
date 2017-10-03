@@ -1,72 +1,51 @@
-// @flow
 import React from 'react';
-import {Button, Alert} from 'react-native';
-import {View} from '@shoutem/ui';
+import PropTypes from 'prop-types';
+import {Alert, Button, View} from 'react-native';
 import {Field} from 'redux-form';
-import TextInputField from '../simple/TextInputField';
-import {resourceForm} from '../../api/resourceForm';
+import {TextInputField} from '../simple/TextInputField';
 import {SwitchField} from '../simple/SwitchField';
 import {ExerciseResource} from '../../entities/ExerciseResource';
 import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
 import {MuscleSelectField} from '../simple/MuscleSelectField';
+import {resourceForm} from 'hw-react-shared';
+import {crud} from '../../hoc/crud';
 
-class ExercisesForm extends React.Component {
+@resourceForm({crud, resource: ExerciseResource})
+export class ExercisesForm extends React.Component {
   static propTypes = {
     updatedResource: ExerciseResource.propType,
-    handleSubmit: React.PropTypes.func.isRequired,
-    deleteResource: React.PropTypes.func,
-    isUpdate: React.PropTypes.bool.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    deleteResource: PropTypes.func,
+    isUpdate: PropTypes.bool.isRequired
   };
 
   render() {
     return (
-      <View styleName="md-gutter">
-
+      <View>
         <FieldWrapper label="Name">
-          <Field
-            name="name"
-            component={TextInputField}
-            placeholder="Name"
-          />
+          <Field name="name" component={TextInputField} placeholder="Name" />
         </FieldWrapper>
 
-        <Field
-          name="repetitions"
-          component={SwitchField}
-          label="Repetitions"
-        />
+        <Field name="repetitions" component={SwitchField} label="Repetitions" />
 
-        <Field
-          name="weight"
-          component={SwitchField}
-          label="Weight"
-        />
+        <Field name="weight" component={SwitchField} label="Weight" />
 
-        <Field
-          name="time"
-          component={SwitchField}
-          label="Time"
-        />
+        <Field name="time" component={SwitchField} label="Time" />
 
-        <Field
-          name="distance"
-          component={SwitchField}
-          label="Distance"
-        />
+        <Field name="distance" component={SwitchField} label="Distance" />
 
         <FieldWrapper label="Main muscle">
-          <Field
-            name="main_muscle"
-            component={MuscleSelectField}
-          />
+          <Field name="main_muscle" component={MuscleSelectField} />
         </FieldWrapper>
 
-        <Field
-          name="cardio"
-          component={SwitchField}
-          label="Cardio"
-        />
+        <Field name="cardio" component={SwitchField} label="Cardio" />
+
+        <Field name="is_machine" component={SwitchField} label="Machine" />
+
+        <Field name="with_dumbbell" component={SwitchField} label="Dumbbell" />
+
+        <Field name="with_barbell" component={SwitchField} label="Barbell" />
 
         <FieldWrapper label="Description">
           <Field
@@ -77,31 +56,23 @@ class ExercisesForm extends React.Component {
           />
         </FieldWrapper>
 
-        <Button
-          title="Save"
-          onPress={this.props.handleSubmit}
-        />
+        <Button title="Save" onPress={this.props.handleSubmit} />
 
-        {
-          this.props.isUpdate &&
+        {this.props.isUpdate && (
           <Button
             title="Delete"
-            onPress={() => Alert.alert(
-              'Delete',
-              null,
-              [
+            onPress={() =>
+              Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
                 {text: 'Cancel'}
-              ]
-            )}
+              ])}
           />
-        }
+        )}
 
-        {this.props.isUpdate && <JsonDebug value={this.props.updatedResource} />}
-
+        {this.props.isUpdate && (
+          <JsonDebug value={this.props.updatedResource} />
+        )}
       </View>
     );
   }
 }
-
-export default resourceForm(ExerciseResource.path)(ExercisesForm);

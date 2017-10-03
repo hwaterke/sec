@@ -1,9 +1,9 @@
-import {createSelector} from 'reselect';
+import {arraySelector} from 'hw-react-shared';
 import R from 'ramda';
+import {createSelector} from 'reselect';
+import {MuscleResource} from '../entities/MuscleResource';
 
-export const musclesByIdSelector = state => state.resources.muscles;
-
-export const musclesArraySelector = createSelector(
-  musclesByIdSelector,
-  musclesById => R.sortBy(R.prop('name'), Object.values(musclesById))
+export const musclesWithCardioArraySelector = createSelector(
+  arraySelector(MuscleResource),
+  muscles => R.sortBy(R.prop('name'), [...muscles, {name: 'Cardio'}])
 );

@@ -1,72 +1,62 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {colors} from '../constants/colors';
-import {api} from '../api/api';
 import {MuscleResource} from '../entities/MuscleResource';
 import {ExerciseResource} from '../entities/ExerciseResource';
 import {WorkoutSetResource} from '../entities/WorkoutSetResource';
+import {colors} from '../constants/colors';
+import {crud} from '../hoc/crud';
+import {Row} from './dumb/Row';
 
 @connect(state => ({
   resources: state.resources
 }))
-@api()
+@crud
 export class SettingsResources extends React.Component {
-
   static propTypes = {
-    resources: React.PropTypes.object.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
-    fetchAll: React.PropTypes.func.isRequired
+    resources: PropTypes.object.isRequired,
+    fetchAll: PropTypes.func.isRequired,
+    clearAll: PropTypes.func.isRequired
   };
 
   fetchAll = () => {
-    this.props.fetchAll(MuscleResource.path).then(() =>
-      this.props.fetchAll(ExerciseResource.path).then(() =>
-        this.props.fetchAll(WorkoutSetResource.path)
-      )
+    this.props
+      .fetchAll(MuscleResource, true)
+      .then(() => this.props.fetchAll(ExerciseResource, true))
+      .then(() => this.props.fetchAll(WorkoutSetResource, true));
+  };
+
+  clearAll = () => {
+    [WorkoutSetResource, ExerciseResource, MuscleResource].forEach(r =>
+      this.props.clearAll(r)
     );
   };
 
   render() {
     return (
       <View style={styles.box}>
-
         {Object.keys(this.props.resources).map(k => (
-          <View key={k} style={styles.flex}>
+          <Row key={k}>
             <Text>{k}</Text>
             <Text>{Object.keys(this.props.resources[k]).length}</Text>
-          </View>
-
+          </Row>
         ))}
 
-        <Button
-          title="Clear local state"
-          onPress={() => this.props.dispatch({type: 'RESET_RESOURCES'})}
-        />
+        <Button title="Clear all" onPress={this.clearAll} />
 
-        <Button
-          title="Fetch from server"
-          onPress={this.fetchAll}
-        />
+        <Button title="Fetch from server" onPress={this.fetchAll} />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    paddingVertical: 6,
-    marginVertical: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderColor: colors.borderColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
   box: {
     marginBottom: 16,
     paddingVertical: 16,
     paddingHorizontal: 8,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: 'white',
     borderColor: colors.borderColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth

@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "sec",
+    "description": "Sec",
+    "slug": "sec",
+    "privacy": "unlisted",
+    "sdkVersion": "21.0.0",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./src/assets/dumbbell_192.png",
+    "loading": {
+      "icon": "./src/assets/dumbbell_192.png",
+      "hideExponentText": true
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}

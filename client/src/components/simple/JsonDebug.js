@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, ScrollView, Button, Text, Modal, StyleSheet} from 'react-native';
 import {globalStyles} from '../../constants/styles';
 
 export class JsonDebug extends React.Component {
-
   static propTypes = {
-    value: React.PropTypes.any
+    value: PropTypes.any
   };
 
   state = {
@@ -27,7 +27,9 @@ export class JsonDebug extends React.Component {
         >
           <ScrollView style={globalStyles.modal}>
             <Button onPress={this.toggleModal} title="Close" />
-            <Text style={styles.debug}>{JSON.stringify(this.props.value, undefined, 2)}</Text>
+            <Text style={styles.debug}>
+              {JSON.stringify(this.props.value, undefined, 2)}
+            </Text>
           </ScrollView>
         </Modal>
       </View>

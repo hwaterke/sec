@@ -1,28 +1,31 @@
+import {byIdSelector} from 'hw-react-shared';
 import React from 'react';
-import {View} from 'react-native';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import ExercisesForm from './ExercisesForm';
-import {exercisesByIdSelector} from '../../selectors/exercices';
-import {globalStyles} from '../../constants/styles';
+import {ExerciseResource} from '../../entities/ExerciseResource';
+import {ExercisesForm} from './ExercisesForm';
+import {Screen} from '../dumb/Screen';
 
-@connect(state => ({exercises: exercisesByIdSelector(state)}))
+@connect(state => ({exercises: byIdSelector(ExerciseResource)(state)}))
 export class ExercisesEditScreen extends React.Component {
-
   static propTypes = {
-    navigation: React.PropTypes.shape({
-      goBack: React.PropTypes.func.isRequired,
-      state: React.PropTypes.object.isRequired
+    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired,
+    navigation: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+      state: PropTypes.object.isRequired
     }).isRequired
   };
 
   render() {
     return (
-      <View style={globalStyles.flexContainer}>
+      <Screen scroll padding>
         <ExercisesForm
-          updatedResource={this.props.exercises[this.props.navigation.state.params.resourceId]}
+          updatedResource={
+            this.props.exercises[this.props.navigation.state.params.resourceId]
+          }
           postSubmit={() => this.props.navigation.goBack()}
         />
-      </View>
+      </Screen>
     );
   }
 }

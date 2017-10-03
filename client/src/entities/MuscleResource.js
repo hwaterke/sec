@@ -1,12 +1,13 @@
 // @flow
-import React from 'react';
-import type {ResourceDefinition} from '../types/ResourceDefinition';
+import PropTypes from 'prop-types';
+import type {ResourceDefinition} from 'hw-react-shared';
 
 export const MuscleResource: ResourceDefinition = {
   path: 'muscles',
-  propType: React.PropTypes.shape({
-    name: React.PropTypes.string.isRequired,
-    muscle: React.PropTypes.string,
-    upper_body: React.PropTypes.bool
+  key: 'name',
+  propType: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    muscle: PropTypes.string,
+    upper_body: PropTypes.bool
   })
 };

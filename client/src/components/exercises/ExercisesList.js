@@ -1,50 +1,64 @@
 import React from 'react';
-import {View, Text as RNText, TouchableOpacity, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {Image, SectionList, Text, TouchableOpacity} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 import {connect} from 'react-redux';
-import {exercisesByMuscleThenNameSelector, displayNameOfExercise} from '../../selectors/exercices';
-import {globalStyles} from '../../constants/styles';
-import {Row, Text, ListView} from '@shoutem/ui';
+import {exercicesGroupedByMuscle} from '../../selectors/exercices';
 import {ExerciseResource} from '../../entities/ExerciseResource';
+import {colors} from '../../constants/colors';
+import {extractUuid} from '../../constants/keyExtractor';
+import {Row} from '../dumb/Row';
+import {SectionHeader} from '../dumb/SectionHeader';
 
-const mapStateToProps = (state) => ({
-  exercises: exercisesByMuscleThenNameSelector(state),
+const mapStateToProps = state => ({
+  exercises: exercicesGroupedByMuscle(state)
 });
 
 @connect(mapStateToProps)
 export class ExercisesList extends React.Component {
-
   static propTypes = {
-    exercises: React.PropTypes.arrayOf(ExerciseResource.propType).isRequired,
-    onRowPress: React.PropTypes.func.isRequired
+    exercises: PropTypes.arrayOf(
+      PropTypes.shape({
+        data: PropTypes.arrayOf(ExerciseResource.propType).isRequired,
+        title: PropTypes.string.isRequired
+      })
+    ).isRequired,
+    onRowPress: PropTypes.func.isRequired
   };
 
-  renderRow = (exercise) => {
+  renderRow = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => this.props.onRowPress(exercise)}>
-        <Row style={{borderColor: '#ddd', borderBottomWidth: StyleSheet.hairlineWidth}}>
-          <Text>{exercise.name}</Text>
+      <TouchableOpacity onPress={() => this.props.onRowPress(item)}>
+        <Row>
+          <Text>{item.name}</Text>
+          {item.is_machine && (
+            <Ionicons
+              style={{color: colors.headerColor}}
+              size={20}
+              name="ios-cog"
+            />
+          )}
+          {item.with_dumbbell && (
+            <Image source={require('../../assets/dumbbell_20h.png')} />
+          )}
+          {item.with_barbell && (
+            <Image source={require('../../assets/barbell_20h.png')} />
+          )}
         </Row>
       </TouchableOpacity>
     );
   };
 
-  renderHeader = (h) => {
-    return (
-      <View style={globalStyles.listSectionHeader}>
-        <RNText style={globalStyles.listSectionHeaderText}>{h}</RNText>
-      </View>
-    );
-  };
-
   render() {
     return (
-      <ListView
-        data={this.props.exercises}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderHeader}
-        getSectionId={displayNameOfExercise}
+      <SectionList
+        sections={this.props.exercises}
+        renderItem={this.renderRow}
+        renderSectionHeader={({section}) => (
+          <SectionHeader title={section.title} />
+        )}
+        keyExtractor={extractUuid}
       />
-
     );
   }
 }

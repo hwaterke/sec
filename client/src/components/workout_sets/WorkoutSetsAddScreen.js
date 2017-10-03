@@ -1,21 +1,24 @@
 import React from 'react';
-import {Screen} from '@shoutem/ui';
-import WorkoutSetsForm from './WorkoutSetsForm';
+import PropTypes from 'prop-types';
+import {WorkoutSetsForm} from './WorkoutSetsForm';
 import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
 import {connect} from 'react-redux';
+import {Screen} from '../dumb/Screen';
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
 });
 
 @connect(mapStateToProps)
 export class WorkoutSetsAddScreen extends React.Component {
-
   static propTypes = {
-    navigation: React.PropTypes.shape({
-      goBack: React.PropTypes.func.isRequired,
-      state: React.PropTypes.object.isRequired
-    }).isRequired
+    navigation: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+      state: PropTypes.object.isRequired
+    }).isRequired,
+    lastWorkoutSetByExercise: PropTypes.objectOf(WorkoutSetResource.propType)
+      .isRequired
   };
 
   getTemplate() {
@@ -38,7 +41,7 @@ export class WorkoutSetsAddScreen extends React.Component {
     const template = this.getTemplate();
 
     return (
-      <Screen>
+      <Screen scroll padding>
         <WorkoutSetsForm
           postSubmit={() => this.props.navigation.goBack()}
           exercise_uuid={template.exercise_uuid}

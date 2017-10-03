@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
 import {toKilo} from '../../utils/conversion';
 import {colors} from '../../constants/colors';
+import {rubikText} from '../../constants/styles';
+import {InfoRow} from '../simple/Info';
 
 export class WorkoutSetMetrics extends React.Component {
-
   static propTypes = {
     workoutSet: WorkoutSetResource.propType.isRequired
   };
@@ -14,19 +15,24 @@ export class WorkoutSetMetrics extends React.Component {
     const set = this.props.workoutSet;
 
     return (
-      <View style={styles.row}>
-        {set.repetitions != null && <Text>{set.repetitions}</Text>}
+      <InfoRow>
+        {set.repetitions != null && (
+          <Text style={styles.text}>{set.repetitions}</Text>
+        )}
 
         {set.weight != null && <Text style={styles.discretePush}>x</Text>}
-        {set.weight != null && <Text>{toKilo(set.weight)}</Text>}
+        {set.weight != null && (
+          <Text style={styles.text}>{toKilo(set.weight)}</Text>
+        )}
         {set.weight != null && <Text style={styles.discretePushLeft}>kg</Text>}
 
         {set.time && <Text style={styles.discretePushRight}>{set.time}</Text>}
 
-        {set.distance && <Text>{toKilo(set.distance)}</Text>}
+        {set.distance && (
+          <Text style={styles.text}>{toKilo(set.distance)}</Text>
+        )}
         {set.distance && <Text style={styles.discretePushLeft}>km</Text>}
-      </View>
-
+      </InfoRow>
     );
   }
 }
@@ -34,17 +40,23 @@ export class WorkoutSetMetrics extends React.Component {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    ...rubikText
   },
   discretePushLeft: {
+    ...rubikText,
     color: colors.discreteTextColor,
     paddingLeft: 4
   },
   discretePushRight: {
+    ...rubikText,
     color: colors.discreteTextColor,
     paddingRight: 4
   },
   discretePush: {
+    ...rubikText,
     color: colors.discreteTextColor,
     paddingHorizontal: 4
   }

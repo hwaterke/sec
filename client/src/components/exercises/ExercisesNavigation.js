@@ -7,47 +7,54 @@ import {ExercisesEditScreen} from './ExercisesEditScreen';
 import {globalStyles} from '../../constants/styles';
 import {colors} from '../../constants/colors';
 
-ExercisesListScreen.navigationOptions = {
+ExercisesListScreen.navigationOptions = ({navigation}) => ({
   title: 'Exercises',
-  header: ({state, setParams}) => ({
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor,
-    right: (
-      <Button
-        color={colors.headerTintColor}
-        title={(state.params && state.params.edit) ? 'Done' : 'Edit'}
-        onPress={() => setParams({edit: !(state.params && state.params.edit)})}
-      />
-    ),
-  }),
-};
+  headerStyle:
+    navigation.state.params && navigation.state.params.edit
+      ? globalStyles.headerEdit
+      : globalStyles.header,
+  headerTintColor: colors.headerTintColor,
+  headerRight: (
+    <Button
+      color={colors.headerTintColor}
+      title={
+        navigation.state.params && navigation.state.params.edit
+          ? 'Done'
+          : 'Edit'
+      }
+      onPress={() =>
+        navigation.setParams({
+          edit: !(navigation.state.params && navigation.state.params.edit)
+        })}
+    />
+  )
+});
 
 ExercisesAddScreen.navigationOptions = {
   title: 'New exercise',
-  header: {
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor
-  }
+  headerStyle: globalStyles.header,
+  headerTintColor: colors.headerTintColor
 };
 
 ExercisesEditScreen.navigationOptions = {
   title: 'Edit exercise',
-  header: {
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor
-  }
+  headerStyle: globalStyles.headerEdit,
+  headerTintColor: colors.headerTintColor
 };
 
-export const ExercisesNavigation = StackNavigator({
-  ExercisesList: {
-    screen: ExercisesListScreen,
+export const ExercisesNavigation = StackNavigator(
+  {
+    ExercisesList: {
+      screen: ExercisesListScreen
+    },
+    ExercisesAdd: {
+      screen: ExercisesAddScreen
+    },
+    ExercisesEdit: {
+      screen: ExercisesEditScreen
+    }
   },
-  ExercisesAdd: {
-    screen: ExercisesAddScreen,
-  },
-  ExercisesEdit: {
-    screen: ExercisesEditScreen,
-  },
-}, {
-  cardStyle: globalStyles.card
-});
+  {
+    cardStyle: globalStyles.card
+  }
+);

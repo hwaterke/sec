@@ -1,22 +1,19 @@
 import React from 'react';
-import {Caption, View} from '@shoutem/ui';
+import PropTypes from 'prop-types';
+import {View} from 'react-native';
+import {Caption} from '../dumb/Caption';
 
 export class FieldWrapper extends React.Component {
   static propTypes = {
-    label: React.PropTypes.string,
-    children: React.PropTypes.element,
-    row: React.PropTypes.bool,
+    label: PropTypes.string,
+    children: PropTypes.element
   };
 
   render() {
     return (
-      <View styleName="sm-gutter-vertical">
-        { this.props.label &&
-        <Caption>{this.props.label}</Caption>
-        }
-        <View>
-          {this.props.children}
-        </View>
+      <View>
+        {this.props.label && <Caption>{this.props.label}</Caption>}
+        <View>{this.props.children}</View>
       </View>
     );
   }

@@ -1,10 +1,21 @@
 import {StyleSheet} from 'react-native';
 import {colors} from './colors';
 
-export const globalStyles = StyleSheet.create({
+export const rubikText = {
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontSize: 15,
+  color: '#666666'
+};
 
+export const globalStyles = StyleSheet.create({
   flexContainer: {
     flex: 1
+  },
+
+  screen: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor
   },
 
   modal: {
@@ -13,36 +24,15 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: colors.backgroundColor
   },
 
-  textInput: {
-    height: 34
-  },
-
   header: {
     backgroundColor: colors.headerColor
   },
 
+  headerEdit: {
+    backgroundColor: '#E9D460'
+  },
+
   card: {
     backgroundColor: colors.backgroundColor
-  },
-
-  listSectionHeader: {
-    backgroundColor: colors.darkPrimaryColor
-  },
-
-  listSectionHeaderText: {
-    fontFamily: 'AvenirNext-Medium',
-    fontSize: 16,
-    color: 'white',
-    paddingLeft: 10
-  },
-
-  rowSeparator: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    height: 1,
-    marginHorizontal: 10,
-  },
-
-  rowSeparatorHide: {
-    opacity: 0.0,
   }
 });

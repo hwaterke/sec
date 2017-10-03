@@ -1,140 +1,21 @@
-// @flow
 import React from 'react';
-import {Alert} from 'react-native';
-import {resourceForm} from '../../api/resourceForm';
-import {Field} from 'redux-form';
-import {connect} from 'react-redux';
-import {exercisesByIdSelector} from '../../selectors/exercices';
-import TextInputField from '../simple/TextInputField';
-import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
-import NumberInputField from '../simple/NumberInputField';
+import PropTypes from 'prop-types';
+import {byIdSelector, resourceForm} from 'hw-react-shared';
 import moment from 'moment';
-import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
-import {fromKilo, toKilo} from '../../utils/conversion';
-import {JsonDebug} from '../simple/JsonDebug';
-import {FieldWrapper} from '../simple/FieldWrapper';
-import {NumberInputWithButtonsField} from '../simple/NumberInputWithButtonsField';
-import {View, Button, Text, Title} from '@shoutem/ui';
+import {Alert, Button, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import {Field} from 'redux-form';
 import {ExerciseResource} from '../../entities/ExerciseResource';
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
+import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
+import {fromKilo, toKilo} from '../../utils/conversion';
+import {FieldWrapper} from '../simple/FieldWrapper';
+import {JsonDebug} from '../simple/JsonDebug';
+import {TextInputField} from '../simple/TextInputField';
+import {Title} from '../dumb/Title';
+import {crud} from '../../hoc/crud';
 
-const mapStateToProps = (state) => ({
-  exercises: exercisesByIdSelector(state),
-  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
-});
-
-@connect(mapStateToProps)
-class WorkoutSetsForm extends React.Component {
-  static propTypes = {
-    exercise_uuid: React.PropTypes.string.isRequired,
-    updatedResource: WorkoutSetResource.propType,
-    handleSubmit: React.PropTypes.func.isRequired,
-    deleteResource: React.PropTypes.func,
-    autofill: React.PropTypes.func,
-    isUpdate: React.PropTypes.bool.isRequired,
-    exercises: React.PropTypes.objectOf(ExerciseResource.propType).isRequired
-  };
-
-  render() {
-    const exercise = this.props.exercises[this.props.exercise_uuid];
-
-    if (!exercise) {
-      return (<View><Text>Exercise not found</Text></View>);
-    }
-
-    return (
-      <View styleName="md-gutter">
-
-        <Title>{exercise.name}</Title>
-
-        <FieldWrapper label="When">
-          <Field
-            name="executed_at"
-            component={TextInputField}
-            placeholder="When"
-          />
-        </FieldWrapper>
-
-        {
-          exercise.repetitions &&
-          <FieldWrapper label="Repetitions">
-            <Field
-              name="repetitions"
-              component={NumberInputWithButtonsField}
-              placeholder="Repetitions"
-            />
-          </FieldWrapper>
-        }
-
-        {
-          exercise.weight &&
-          <FieldWrapper label="Weight">
-            <Field
-              name="weight"
-              component={NumberInputWithButtonsField}
-              placeholder="Weight"
-            />
-          </FieldWrapper>
-        }
-
-        {
-          exercise.time &&
-          <FieldWrapper label="Time">
-            <Field
-              name="time"
-              component={TextInputField}
-              placeholder="Time"
-            />
-          </FieldWrapper>
-        }
-
-        {
-          exercise.distance &&
-          <FieldWrapper label="Distance">
-            <Field
-              name="distance"
-              component={NumberInputField}
-              placeholder="Distance"
-            />
-          </FieldWrapper>
-        }
-
-        <FieldWrapper label="Notes">
-          <Field
-            name="notes"
-            component={TextInputField}
-            placeholder="Notes"
-            multiline
-          />
-        </FieldWrapper>
-
-        <Button onPress={this.props.handleSubmit}>
-          <Text>Save</Text>
-        </Button>
-
-        {
-          this.props.isUpdate &&
-          <Button
-            onPress={() => Alert.alert(
-              'Delete',
-              null,
-              [
-                {text: 'Delete', onPress: this.props.deleteResource},
-                {text: 'Cancel'}
-              ]
-            )}
-          >
-            <Text>Delete</Text>
-          </Button>
-        }
-
-        {this.props.isUpdate && <JsonDebug value={this.props.updatedResource} />}
-
-      </View>
-    );
-  }
-}
-
-const formToResource = (formData) => {
+const formToResource = formData => {
   const resource = {...formData};
   resource.repetitions = resource.repetitions && parseInt(resource.repetitions);
   resource.weight = resource.weight && fromKilo(resource.weight);
@@ -147,19 +28,134 @@ const updateOrTemplate = (updatedResource, props) => {
     return updatedResource;
   }
   const now = moment().format('YYYY-MM-DD HH:mm:ss');
-  return {...props.templateResource, executed_at: now};
+
+  // Delete the uuid to make sure we do not replace the existing one.
+  const cleanTemplate = {...props.templateResource, executed_at: now};
+  delete cleanTemplate.uuid;
+
+  return cleanTemplate;
 };
 
 const resourceToForm = (updatedResource, props) => {
   const resource = {...updateOrTemplate(updatedResource, props)};
-  resource.repetitions = resource.repetitions && resource.repetitions.toString();
+  resource.repetitions =
+    resource.repetitions && resource.repetitions.toString();
   resource.weight = resource.weight && toKilo(resource.weight).toString();
   resource.distance = resource.distance && toKilo(resource.distance).toString();
   return resource;
 };
 
-export default resourceForm(
-  WorkoutSetResource.path,
+const mapStateToProps = state => ({
+  exercises: byIdSelector(ExerciseResource)(state),
+  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
+});
+
+@resourceForm({
+  crud,
+  resource: WorkoutSetResource,
   formToResource,
   resourceToForm
-)(WorkoutSetsForm);
+})
+@connect(mapStateToProps)
+export class WorkoutSetsForm extends React.Component {
+  static propTypes = {
+    exercise_uuid: PropTypes.string.isRequired,
+    updatedResource: WorkoutSetResource.propType,
+    handleSubmit: PropTypes.func.isRequired,
+    deleteResource: PropTypes.func,
+    isUpdate: PropTypes.bool.isRequired,
+    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired
+  };
+
+  render() {
+    const exercise = this.props.exercises[this.props.exercise_uuid];
+
+    if (!exercise) {
+      return (
+        <View>
+          <Text>Exercise not found</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View>
+        <Title>{exercise.name}</Title>
+
+        <FieldWrapper label="When">
+          <Field
+            name="executed_at"
+            component={TextInputField}
+            placeholder="When"
+          />
+        </FieldWrapper>
+
+        {exercise.repetitions && (
+          <FieldWrapper label="Repetitions">
+            <Field
+              name="repetitions"
+              component={TextInputField}
+              keyboardType="numeric"
+              placeholder="Repetitions"
+            />
+          </FieldWrapper>
+        )}
+
+        {exercise.weight && (
+          <FieldWrapper label="Weight">
+            <Field
+              name="weight"
+              component={TextInputField}
+              keyboardType="numeric"
+              placeholder="Weight"
+            />
+          </FieldWrapper>
+        )}
+
+        {exercise.time && (
+          <FieldWrapper label="Time">
+            <Field name="time" component={TextInputField} placeholder="Time" />
+          </FieldWrapper>
+        )}
+
+        {exercise.distance && (
+          <FieldWrapper label="Distance">
+            <Field
+              name="distance"
+              component={TextInputField}
+              keyboardType="numeric"
+              placeholder="Distance"
+            />
+          </FieldWrapper>
+        )}
+
+        <FieldWrapper label="Notes">
+          <Field
+            name="notes"
+            component={TextInputField}
+            keyboardType="numeric"
+            placeholder="Notes"
+            multiline
+          />
+        </FieldWrapper>
+
+        <Button title="Save" onPress={this.props.handleSubmit} />
+
+        {this.props.isUpdate && (
+          <Button
+            title="Delete"
+            onPress={() =>
+              Alert.alert('Delete', null, [
+                {text: 'Delete', onPress: this.props.deleteResource},
+                {text: 'Cancel'}
+              ])}
+          />
+        )}
+
+        {this.props.isUpdate && (
+          <JsonDebug value={this.props.updatedResource} />
+        )}
+      </View>
+    );
+  }
+}

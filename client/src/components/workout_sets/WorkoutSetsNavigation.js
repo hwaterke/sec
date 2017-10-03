@@ -1,53 +1,70 @@
 import React from 'react';
-import {Button} from 'react-native';
 import {StackNavigator} from 'react-navigation';
-import {WorkoutSetsListScreen} from './WorkoutSetsListScreen';
 import {WorkoutSetsAddScreen} from './WorkoutSetsAddScreen';
 import {WorkoutSetsEditScreen} from './WorkoutSetsEditScreen';
 import {globalStyles} from '../../constants/styles';
 import {colors} from '../../constants/colors';
+import {SummaryListScreen} from '../summary/SummaryListScreen';
+import {WorkoutSetsSummary} from '../summary/WorkoutSetsSummary';
+import {Button} from 'react-native';
 
-WorkoutSetsListScreen.navigationOptions = {
-  title: 'Sets',
-  header: ({state, setParams}) => ({
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor,
-    right: (
-      <Button
-        color={colors.headerTintColor}
-        title={(state.params && state.params.edit) ? 'Done' : 'Edit'}
-        onPress={() => setParams({edit: !(state.params && state.params.edit)})}
-      />
-    ),
-  }),
+SummaryListScreen.navigationOptions = {
+  title: 'History',
+  headerStyle: globalStyles.header,
+  headerTintColor: colors.headerTintColor
 };
+
+WorkoutSetsSummary.navigationOptions = ({navigation}) => ({
+  title: 'Summary',
+  headerStyle:
+    navigation.state.params && navigation.state.params.edit
+      ? globalStyles.headerEdit
+      : globalStyles.header,
+  headerTintColor: colors.headerTintColor,
+  headerRight: (
+    <Button
+      color={colors.headerTintColor}
+      title={
+        navigation.state.params && navigation.state.params.edit
+          ? 'Done'
+          : 'Edit'
+      }
+      onPress={() =>
+        navigation.setParams({
+          edit: !(navigation.state.params && navigation.state.params.edit)
+        })}
+    />
+  )
+});
 
 WorkoutSetsAddScreen.navigationOptions = {
   title: 'New set',
-  header: {
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor
-  }
+  headerStyle: globalStyles.header,
+  headerTintColor: colors.headerTintColor
 };
 
 WorkoutSetsEditScreen.navigationOptions = {
   title: 'Edit set',
-  header: {
-    style: globalStyles.header,
-    tintColor: colors.headerTintColor
-  }
+  headerStyle: globalStyles.headerEdit,
+  headerTintColor: colors.headerTintColor
 };
 
-export const WorkoutSetsNavigation = StackNavigator({
-  WorkoutSetsList: {
-    screen: WorkoutSetsListScreen,
+export const WorkoutSetsNavigation = StackNavigator(
+  {
+    SummaryList: {
+      screen: SummaryListScreen
+    },
+    Summary: {
+      screen: WorkoutSetsSummary
+    },
+    WorkoutSetsAdd: {
+      screen: WorkoutSetsAddScreen
+    },
+    WorkoutSetsEdit: {
+      screen: WorkoutSetsEditScreen
+    }
   },
-  WorkoutSetsAdd: {
-    screen: WorkoutSetsAddScreen,
-  },
-  WorkoutSetsEdit: {
-    screen: WorkoutSetsEditScreen,
-  },
-}, {
-  cardStyle: globalStyles.card
-});
+  {
+    cardStyle: globalStyles.card
+  }
+);
