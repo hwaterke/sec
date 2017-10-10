@@ -29,6 +29,11 @@ export const workoutSetsByDaySelector = createSelector(
   }
 );
 
+export const workoutSetsByExercise = createSelector(
+  arraySelector(WorkoutSetResource),
+  workoutSets => R.groupBy(R.prop('exercise_uuid'))(workoutSets)
+);
+
 // Returns Sets grouped by day as a list of sections
 export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
   workoutSetsByDaySelector,

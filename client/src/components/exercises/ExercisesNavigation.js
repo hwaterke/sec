@@ -6,6 +6,7 @@ import {ExercisesAddScreen} from './ExercisesAddScreen';
 import {ExercisesEditScreen} from './ExercisesEditScreen';
 import {globalStyles} from '../../constants/styles';
 import {colors} from '../../constants/colors';
+import {ExercisesDetailScreen} from './ExercisesDetailScreen';
 
 ExercisesListScreen.navigationOptions = ({navigation}) => ({
   title: 'Exercises',
@@ -30,6 +31,12 @@ ExercisesListScreen.navigationOptions = ({navigation}) => ({
   )
 });
 
+ExercisesDetailScreen.navigationOptions = {
+  title: 'Detail',
+  headerStyle: globalStyles.header,
+  headerTintColor: colors.headerTintColor
+};
+
 ExercisesAddScreen.navigationOptions = {
   title: 'New exercise',
   headerStyle: globalStyles.header,
@@ -46,6 +53,9 @@ export const ExercisesNavigation = StackNavigator(
   {
     ExercisesList: {
       screen: ExercisesListScreen
+    },
+    ExercisesDetail: {
+      screen: ExercisesDetailScreen
     },
     ExercisesAdd: {
       screen: ExercisesAddScreen

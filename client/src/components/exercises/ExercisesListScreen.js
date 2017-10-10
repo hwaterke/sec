@@ -20,7 +20,7 @@ export class ExercisesListScreen extends React.Component {
     if (this.isEdit()) {
       this.props.navigation.navigate('ExercisesEdit', {resourceId: row.uuid});
     } else {
-      this.props.navigation.navigate('WorkoutSetsAdd', {
+      this.props.navigation.navigate('ExercisesDetail', {
         exercise_uuid: row.uuid
       });
     }
