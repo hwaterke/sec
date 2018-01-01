@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name,react/prop-types */
 import React from 'react';
-import {TabNavigator} from 'react-navigation';
+import {TabNavigator, TabView} from 'react-navigation';
 import {SettingsScreen} from './SettingsScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {ExercisesNavigation} from './exercises/ExercisesNavigation';
@@ -54,7 +54,15 @@ export const SecTabNavigator = TabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: colors.headerColor
-    }
+      activeTintColor: colors.headerColor,
+      inactiveTintColor: 'black',
+      showIcon: true,
+      tabBarComponent: TabView.TabBarBottom,
+      style: {
+        backgroundColor: '#EEEEEE'
+      },
+      renderIndicator: () => null
+    },
+    tabBarPosition: 'bottom'
   }
 );
