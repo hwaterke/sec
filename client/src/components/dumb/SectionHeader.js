@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Platform} from 'react-native';
 import {colors} from '../../constants/colors';
 
 export class SectionHeader extends React.Component {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: Platform.OS === 'ios' ? 'AvenirNext-Medium' : 'normal',
     fontSize: 16,
     color: 'white',
     paddingLeft: 10
