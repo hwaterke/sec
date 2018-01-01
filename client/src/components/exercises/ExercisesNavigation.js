@@ -17,7 +17,7 @@ ExercisesListScreen.navigationOptions = ({navigation}) => ({
   headerTintColor: colors.headerTintColor,
   headerRight: (
     <Button
-      color={colors.headerTintColor}
+      color={colors.headerColor}
       title={
         navigation.state.params && navigation.state.params.edit
           ? 'Done'
