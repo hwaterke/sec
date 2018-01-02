@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {colors} from '../constants/colors';
 import {LoginDispatcher} from './LoginDispatcher';
+import {TopBar} from './dumb/TopBar';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancers = composeEnhancers(applyMiddleware(thunk), autoRehydrate());
@@ -27,6 +28,7 @@ export class App extends React.Component {
       <Provider store={store}>
         <View style={styles.container}>
           <StatusBar backgroundColor="blue" barStyle="light-content" />
+          <TopBar />
           <LoginDispatcher />
         </View>
       </Provider>
