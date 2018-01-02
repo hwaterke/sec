@@ -72,5 +72,5 @@ export const SecTabNavigator = TabNavigator(
       screen: SettingsScreen
     }
   },
-  ...(() => (Platform.OS === 'ios' ? iosTabOptions : androidTabOptions))()
+  ...(Platform.OS === 'ios' ? iosTabOptions : androidTabOptions)
 );
