@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name,react/prop-types */
 import React from 'react';
-import {TabNavigator, TabView} from 'react-navigation';
+import {TabNavigator, TabView, Platform} from 'react-navigation';
 import {SettingsScreen} from './SettingsScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {ExercisesNavigation} from './exercises/ExercisesNavigation';
@@ -40,6 +40,26 @@ SettingsScreen.navigationOptions = {
   )
 };
 
+const iosTabOptions = {
+  tabBarOptions: {
+    activeTintColor: colors.headerColor
+  }
+};
+
+const androidTabOptions = {
+  tabBarOptions: {
+    activeTintColor: colors.headerColor,
+    inactiveTintColor: 'black',
+    showIcon: true,
+    tabBarComponent: TabView.TabBarBottom,
+    style: {
+      backgroundColor: '#EEEEEE'
+    },
+    renderIndicator: () => null
+  },
+  tabBarPosition: 'bottom'
+};
+
 export const SecTabNavigator = TabNavigator(
   {
     Exercises: {
@@ -52,17 +72,5 @@ export const SecTabNavigator = TabNavigator(
       screen: SettingsScreen
     }
   },
-  {
-    tabBarOptions: {
-      activeTintColor: colors.headerColor,
-      inactiveTintColor: 'black',
-      showIcon: true,
-      tabBarComponent: TabView.TabBarBottom,
-      style: {
-        backgroundColor: '#EEEEEE'
-      },
-      renderIndicator: () => null
-    },
-    tabBarPosition: 'bottom'
-  }
+  ...(() => (Platform.OS === 'ios' ? iosTabOptions : androidTabOptions))()
 );
