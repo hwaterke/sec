@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-native';
+import {Button, Platform} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import {ExercisesListScreen} from './ExercisesListScreen';
 import {ExercisesAddScreen} from './ExercisesAddScreen';
@@ -17,7 +17,9 @@ ExercisesListScreen.navigationOptions = ({navigation}) => ({
   headerTintColor: colors.headerTintColor,
   headerRight: (
     <Button
-      color={colors.headerColor}
+      color={
+        Platform.OS === 'ios' ? colors.headerTintColor : colors.headerColor
+      }
       title={
         navigation.state.params && navigation.state.params.edit
           ? 'Done'
