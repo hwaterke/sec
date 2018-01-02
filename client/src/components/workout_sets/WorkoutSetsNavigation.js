@@ -6,7 +6,7 @@ import {globalStyles} from '../../constants/styles';
 import {colors} from '../../constants/colors';
 import {SummaryListScreen} from '../summary/SummaryListScreen';
 import {WorkoutSetsSummary} from '../summary/WorkoutSetsSummary';
-import {Button} from 'react-native';
+import {Button, Platform} from 'react-native';
 
 SummaryListScreen.navigationOptions = {
   title: 'History',
@@ -23,7 +23,9 @@ WorkoutSetsSummary.navigationOptions = ({navigation}) => ({
   headerTintColor: colors.headerTintColor,
   headerRight: (
     <Button
-      color={colors.headerTintColor}
+      color={
+        Platform.OS === 'ios' ? colors.headerTintColor : colors.headerColor
+      }
       title={
         navigation.state.params && navigation.state.params.edit
           ? 'Done'
