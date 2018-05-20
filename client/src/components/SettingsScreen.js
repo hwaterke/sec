@@ -1,32 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
 import {Banner} from './simple/Banner';
-import {clearToken} from '../reducers/authentication';
+import firebase from 'firebase';
 import {SettingsResources} from './SettingsResources';
 import {Screen} from './dumb/Screen';
+import {firebaseConfig} from '../constants/firebase';
 
-@connect(state => ({
-  backend: state.backend
-}))
 export class SettingsScreen extends React.Component {
-  static propTypes = {
-    backend: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
-  };
-
   render() {
     return (
       <Screen>
         <Banner />
 
         <View style={styles.box}>
-          <Text>Logged in to {this.props.backend}</Text>
-          <Button
-            title="Sign out"
-            onPress={() => this.props.dispatch(clearToken())}
-          />
+          <Text>Logged in to {firebaseConfig.authDomain}</Text>
+          <Button title="Sign out" onPress={() => firebase.auth().signOut()} />
         </View>
 
         <SettingsResources />
