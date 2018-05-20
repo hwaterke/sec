@@ -4,7 +4,6 @@ import {byIdSelector} from 'hw-react-shared';
 import moment from 'moment';
 import {Alert, Button, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Field} from 'redux-form';
 import {ExerciseResource} from '../../entities/ExerciseResource';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
 import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
@@ -13,6 +12,10 @@ import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
 import {TextInputField} from '../simple/TextInputField';
 import {Title} from '../dumb/Title';
+import {Form, Field} from 'react-final-form';
+import {ExerciseProvider} from '../providers/ExerciseProvider';
+import {LoadingScreen} from '../dumb/LoadingScreen';
+import {DateTime} from 'luxon';
 
 // eslint-disable-next-line no-unused-vars
 const formToResource = formData => {
@@ -51,106 +54,126 @@ const mapStateToProps = state => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
 });
 
+const NotFound = () => (
+  <View>
+    <Text>Exercise not found</Text>
+  </View>
+);
+
 @connect(mapStateToProps)
 export class WorkoutSetsForm extends React.Component {
   static propTypes = {
     exercise_uuid: PropTypes.string.isRequired,
     updatedResource: WorkoutSetResource.propType,
-    handleSubmit: PropTypes.func.isRequired,
     deleteResource: PropTypes.func,
-    isUpdate: PropTypes.bool.isRequired,
-    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired
+    isUpdate: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired
   };
 
   render() {
-    const exercise = this.props.exercises[this.props.exercise_uuid];
-
-    if (!exercise) {
-      return (
-        <View>
-          <Text>Exercise not found</Text>
-        </View>
-      );
-    }
-
+    const {exercise_uuid, handleSubmit: propsSubmit} = this.props;
     return (
-      <View>
-        <Title>{exercise.name}</Title>
+      <ExerciseProvider exerciseId={exercise_uuid}>
+        {({exercise, isLoaded}) =>
+          !isLoaded ? (
+            <LoadingScreen />
+          ) : !exercise ? (
+            <NotFound />
+          ) : (
+            <Form
+              initialValues={{
+                executed_at: DateTime.local().toISO()
+              }}
+              onSubmit={propsSubmit}
+              render={({handleSubmit}) => (
+                <View>
+                  <Title>{exercise.name}</Title>
 
-        <FieldWrapper label="When">
-          <Field
-            name="executed_at"
-            component={TextInputField}
-            placeholder="When"
-          />
-        </FieldWrapper>
+                  <FieldWrapper label="When">
+                    <Field
+                      name="executed_at"
+                      component={TextInputField}
+                      placeholder="When"
+                    />
+                  </FieldWrapper>
 
-        {exercise.repetitions && (
-          <FieldWrapper label="Repetitions">
-            <Field
-              name="repetitions"
-              component={TextInputField}
-              keyboardType="numeric"
-              placeholder="Repetitions"
+                  {exercise.repetitions && (
+                    <FieldWrapper label="Repetitions">
+                      <Field
+                        name="repetitions"
+                        component={TextInputField}
+                        keyboardType="numeric"
+                        placeholder="Repetitions"
+                      />
+                    </FieldWrapper>
+                  )}
+
+                  {exercise.weight && (
+                    <FieldWrapper label="Weight">
+                      <Field
+                        name="weight"
+                        component={TextInputField}
+                        keyboardType="numeric"
+                        placeholder="Weight"
+                      />
+                    </FieldWrapper>
+                  )}
+
+                  {exercise.time && (
+                    <FieldWrapper label="Time">
+                      <Field
+                        name="time"
+                        component={TextInputField}
+                        keyboardType="numeric"
+                        placeholder="Time (in seconds)"
+                      />
+                    </FieldWrapper>
+                  )}
+
+                  {exercise.distance && (
+                    <FieldWrapper label="Distance">
+                      <Field
+                        name="distance"
+                        component={TextInputField}
+                        keyboardType="numeric"
+                        placeholder="Distance"
+                      />
+                    </FieldWrapper>
+                  )}
+
+                  <FieldWrapper label="Notes">
+                    <Field
+                      name="notes"
+                      component={TextInputField}
+                      placeholder="Notes"
+                      multiline
+                    />
+                  </FieldWrapper>
+
+                  <Button title="Save" onPress={handleSubmit} />
+
+                  {this.props.isUpdate && (
+                    <Button
+                      title="Delete"
+                      onPress={() =>
+                        Alert.alert('Delete', null, [
+                          {
+                            text: 'Delete',
+                            onPress: this.props.deleteResource
+                          },
+                          {text: 'Cancel'}
+                        ])}
+                    />
+                  )}
+
+                  {this.props.isUpdate && (
+                    <JsonDebug value={this.props.updatedResource} />
+                  )}
+                </View>
+              )}
             />
-          </FieldWrapper>
-        )}
-
-        {exercise.weight && (
-          <FieldWrapper label="Weight">
-            <Field
-              name="weight"
-              component={TextInputField}
-              keyboardType="numeric"
-              placeholder="Weight"
-            />
-          </FieldWrapper>
-        )}
-
-        {exercise.time && (
-          <FieldWrapper label="Time">
-            <Field name="time" component={TextInputField} placeholder="Time" />
-          </FieldWrapper>
-        )}
-
-        {exercise.distance && (
-          <FieldWrapper label="Distance">
-            <Field
-              name="distance"
-              component={TextInputField}
-              keyboardType="numeric"
-              placeholder="Distance"
-            />
-          </FieldWrapper>
-        )}
-
-        <FieldWrapper label="Notes">
-          <Field
-            name="notes"
-            component={TextInputField}
-            keyboardType="numeric"
-            placeholder="Notes"
-            multiline
-          />
-        </FieldWrapper>
-
-        <Button title="Save" onPress={this.props.handleSubmit} />
-
-        {this.props.isUpdate && (
-          <Button
-            title="Delete"
-            onPress={() =>
-              Alert.alert('Delete', null, [
-                {text: 'Delete', onPress: this.props.deleteResource},
-                {text: 'Cancel'}
-              ])}
-          />
-        )}
-
-        {this.props.isUpdate && (
-          <JsonDebug value={this.props.updatedResource} />
-        )}
-      </View>
+          )}
+      </ExerciseProvider>
     );
   }
 }

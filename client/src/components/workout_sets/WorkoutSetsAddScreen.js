@@ -5,6 +5,7 @@ import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
 import {connect} from 'react-redux';
 import {Screen} from '../dumb/Screen';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
+import {getWorkoutRef} from '../../utils/firestoreUtils';
 
 const mapStateToProps = state => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
@@ -37,13 +38,22 @@ export class WorkoutSetsAddScreen extends React.Component {
     return null;
   }
 
+  createWorkoutSet = data =>
+    getWorkoutRef()
+      .doc('sets')
+      .collection(this.props.navigation.state.params.exercise_uuid)
+      .add(data)
+      .then(() => {
+        this.props.navigation.goBack();
+      });
+
   render() {
     const template = this.getTemplate();
 
     return (
       <Screen scroll padding>
         <WorkoutSetsForm
-          postSubmit={() => this.props.navigation.goBack()}
+          handleSubmit={this.createWorkoutSet}
           exercise_uuid={template.exercise_uuid}
           templateResource={template}
         />
