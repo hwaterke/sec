@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name,react/prop-types */
 import React from 'react';
-import {TabNavigator, TabView, Platform} from 'react-navigation';
+import {Platform} from 'react-native';
+import {TabNavigator, TabView} from 'react-navigation';
 import {SettingsScreen} from './SettingsScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {ExercisesNavigation} from './exercises/ExercisesNavigation';
