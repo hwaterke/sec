@@ -1,17 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {LoginScreen} from './LoginScreen';
 import {SecTabNavigator} from './TabNavigator';
+import firebase from 'firebase';
 
-@connect(state => ({token: state.token}))
 export class LoginDispatcher extends React.Component {
-  static propTypes = {
-    token: PropTypes.string
+  state = {
+    loggedIn: false
   };
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        loggedIn: !!user
+      });
+    });
+  }
+
   render() {
-    if (this.props.token) {
+    if (this.state.loggedIn) {
       return <SecTabNavigator />;
     }
     return <LoginScreen />;
