@@ -1,8 +1,6 @@
-// @flow
 import PropTypes from 'prop-types';
-import type {ResourceDefinition} from 'hw-react-shared';
 
-export const MuscleResource: ResourceDefinition = {
+export const MuscleResource = {
   path: 'muscles',
   key: 'name',
   propType: PropTypes.shape({

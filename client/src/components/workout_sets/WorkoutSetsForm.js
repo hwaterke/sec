@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {byIdSelector, resourceForm} from 'hw-react-shared';
+import {byIdSelector} from 'hw-react-shared';
 import moment from 'moment';
 import {Alert, Button, Text, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -13,8 +13,8 @@ import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
 import {TextInputField} from '../simple/TextInputField';
 import {Title} from '../dumb/Title';
-import {crud} from '../../hoc/crud';
 
+// eslint-disable-next-line no-unused-vars
 const formToResource = formData => {
   const resource = {...formData};
   resource.repetitions = resource.repetitions && parseInt(resource.repetitions);
@@ -36,6 +36,7 @@ const updateOrTemplate = (updatedResource, props) => {
   return cleanTemplate;
 };
 
+// eslint-disable-next-line no-unused-vars
 const resourceToForm = (updatedResource, props) => {
   const resource = {...updateOrTemplate(updatedResource, props)};
   resource.repetitions =
@@ -50,12 +51,6 @@ const mapStateToProps = state => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
 });
 
-@resourceForm({
-  crud,
-  resource: WorkoutSetResource,
-  formToResource,
-  resourceToForm
-})
 @connect(mapStateToProps)
 export class WorkoutSetsForm extends React.Component {
   static propTypes = {
