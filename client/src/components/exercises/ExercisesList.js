@@ -1,30 +1,54 @@
 import React from 'react';
+import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import {Image, SectionList, Text, TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import {connect} from 'react-redux';
-import {exercicesGroupedByMuscle} from '../../selectors/exercices';
-import {ExerciseResource} from '../../entities/ExerciseResource';
 import {colors} from '../../constants/colors';
-import {extractUuid} from '../../constants/keyExtractor';
 import {Row} from '../dumb/Row';
 import {SectionHeader} from '../dumb/SectionHeader';
+import {uidSelector} from '../../selectors/firebaseSelectors';
+import {groupBy, pipe, sortWith, ascend, prop} from 'ramda';
 
-const mapStateToProps = state => ({
-  exercises: exercicesGroupedByMuscle(state)
-});
+const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz';
+const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))]);
+const groupByMuscle = groupBy(muscleName);
 
-@connect(mapStateToProps)
+const getSections = data =>
+  pipe(sortByName, groupByMuscle, groups => {
+    return Object.keys(groups).map(muscle => ({
+      data: groups[muscle],
+      title: muscle === 'zzzz' ? 'Other' : muscle
+    }));
+  })(data);
+
 export class ExercisesList extends React.Component {
   static propTypes = {
-    exercises: PropTypes.arrayOf(
-      PropTypes.shape({
-        data: PropTypes.arrayOf(ExerciseResource.propType).isRequired,
-        title: PropTypes.string.isRequired
-      })
-    ).isRequired,
     onRowPress: PropTypes.func.isRequired
   };
+
+  state = {
+    exercises: []
+  };
+
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(uidSelector(firebase))
+      .collection('exercises')
+      .get()
+      .then(snap => {
+        const data = [];
+        snap.forEach(doc => {
+          data.push({
+            ...doc.data(),
+            id: doc.id
+          });
+        });
+        return data;
+      })
+      .then(exercises => this.setState({exercises}));
+  }
 
   renderRow = ({item}) => {
     return (
@@ -50,14 +74,15 @@ export class ExercisesList extends React.Component {
   };
 
   render() {
+    const sections = getSections(this.state.exercises);
     return (
       <SectionList
-        sections={this.props.exercises}
+        sections={sections}
         renderItem={this.renderRow}
         renderSectionHeader={({section}) => (
           <SectionHeader title={section.title} />
         )}
-        keyExtractor={extractUuid}
+        keyExtractor={e => e.id}
       />
     );
   }
