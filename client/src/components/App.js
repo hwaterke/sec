@@ -8,6 +8,8 @@ import thunk from 'redux-thunk';
 import {colors} from '../constants/colors';
 import {LoginDispatcher} from './LoginDispatcher';
 import {TopBar} from './dumb/TopBar';
+// eslint-disable-next-line import/named
+import {KeepAwake} from 'expo';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancers = composeEnhancers(applyMiddleware(thunk), autoRehydrate());
@@ -30,6 +32,7 @@ export class App extends React.Component {
           <StatusBar backgroundColor="blue" barStyle="light-content" />
           <TopBar />
           <LoginDispatcher />
+          {process.env.NODE_ENV === 'development' && <KeepAwake />}
         </View>
       </Provider>
     );
