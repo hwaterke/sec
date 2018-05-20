@@ -3669,6 +3669,10 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+luxon@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.2.1.tgz#5c4948d141939c2b2820f0c3a99276932245efb1"
+
 macos-release@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/macos-release/-/macos-release-1.1.0.tgz#831945e29365b470aa8724b0ab36c8f8959d10fb"
@@ -4500,6 +4504,10 @@ react-devtools-core@3.1.0:
 react-display-name@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.0.tgz#0e1f7086e45a32d07764df35ed32ff16f1259790"
+
+react-fast-compare@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-1.0.0.tgz#813a039155e49b43ceffe99528fe5e9d97a6c938"
 
 react-final-form@^3.4.2:
   version "3.4.2"
@@ -5522,42 +5530,44 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-victory-chart@^22.0.0:
-  version "22.0.0"
-  resolved "https://registry.yarnpkg.com/victory-chart/-/victory-chart-22.0.0.tgz#55f0a85c7d14d4f87ab50b761af0ec1731773e6b"
+victory-chart@^25.2.0:
+  version "25.2.5"
+  resolved "https://registry.yarnpkg.com/victory-chart/-/victory-chart-25.2.5.tgz#70625c4fbe596ca2919e1ee4a1676d5bc9b5cd3e"
   dependencies:
     d3-voronoi "^1.1.2"
-    lodash "^4.17.4"
-    victory-core "^18.0.0"
+    lodash "^4.17.5"
+    react-fast-compare "^1.0.0"
+    victory-core "^21.1.12"
 
-victory-core@^18.0.0, victory-core@^18.0.1:
-  version "18.0.2"
-  resolved "https://registry.yarnpkg.com/victory-core/-/victory-core-18.0.2.tgz#5a962865d1ce47b1cec740a34a39f8274b6d4e68"
+victory-core@^21.1.0, victory-core@^21.1.1, victory-core@^21.1.12:
+  version "21.1.13"
+  resolved "https://registry.yarnpkg.com/victory-core/-/victory-core-21.1.13.tgz#5076e57e450af8e136fd11376ff80213904963d1"
   dependencies:
     d3-ease "^1.0.0"
     d3-interpolate "^1.1.1"
     d3-scale "^1.0.0"
     d3-shape "^1.2.0"
     d3-timer "^1.0.0"
-    lodash "^4.17.4"
+    lodash "^4.17.5"
+    react-fast-compare "^1.0.0"
 
-victory-native@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/victory-native/-/victory-native-0.15.0.tgz#047b63c802268f72e1727bf595039646eecdda6e"
+victory-native@^0.17.0:
+  version "0.17.4"
+  resolved "https://registry.yarnpkg.com/victory-native/-/victory-native-0.17.4.tgz#3d4b22fa9ad11bae2961be8e3f52883d6b41e201"
   dependencies:
-    lodash "^4.17.4"
+    lodash "^4.17.5"
     prop-types "^15.5.10"
-    victory-chart "^22.0.0"
-    victory-core "^18.0.1"
-    victory-pie "^12.0.0"
+    victory-chart "^25.2.0"
+    victory-core "^21.1.1"
+    victory-pie "^14.0.2"
 
-victory-pie@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/victory-pie/-/victory-pie-12.0.0.tgz#60c734d2976be2d011446fdfa9024e0a5922a605"
+victory-pie@^14.0.2:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/victory-pie/-/victory-pie-14.0.2.tgz#fc284febf9c505b5de852e34891492d607145c39"
   dependencies:
     d3-shape "^1.0.0"
-    lodash "^4.17.4"
-    victory-core "^18.0.0"
+    lodash "^4.17.5"
+    victory-core "^21.1.0"
 
 walker@~1.0.5:
   version "1.0.7"
