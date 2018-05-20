@@ -14,13 +14,15 @@ export class ExercisesForm extends React.Component {
     updatedResource: ExerciseResource.propType,
     handleSubmit: PropTypes.func.isRequired,
     deleteResource: PropTypes.func,
-    isUpdate: PropTypes.bool
+    isUpdate: PropTypes.bool,
+    initialValues: PropTypes.object
   };
 
   render() {
-    const {handleSubmit: propsSubmit} = this.props;
+    const {handleSubmit: propsSubmit, initialValues} = this.props;
     return (
       <Form
+        initialValues={initialValues}
         onSubmit={propsSubmit}
         render={({handleSubmit}) => (
           <View>

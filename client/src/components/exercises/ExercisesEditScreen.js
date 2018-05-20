@@ -1,31 +1,43 @@
-import {byIdSelector} from 'hw-react-shared';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {ExerciseResource} from '../../entities/ExerciseResource';
 import {ExercisesForm} from './ExercisesForm';
 import {Screen} from '../dumb/Screen';
+import {LoadingScreen} from '../dumb/LoadingScreen';
+import {ExerciseProvider} from '../providers/ExerciseProvider';
+import {getExercisesRef} from '../../utils/firestoreUtils';
 
-@connect(state => ({exercises: byIdSelector(ExerciseResource)(state)}))
 export class ExercisesEditScreen extends React.Component {
   static propTypes = {
-    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired,
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
       state: PropTypes.object.isRequired
     }).isRequired
   };
 
+  updateResource = data => {
+    const {resourceId} = this.props.navigation.state.params;
+    getExercisesRef()
+      .doc(resourceId)
+      .update(data)
+      .then(this.props.navigation.goBack);
+  };
+
   render() {
+    const {resourceId} = this.props.navigation.state.params;
     return (
-      <Screen scroll padding>
-        <ExercisesForm
-          updatedResource={
-            this.props.exercises[this.props.navigation.state.params.resourceId]
-          }
-          postSubmit={() => this.props.navigation.goBack()}
-        />
-      </Screen>
+      <ExerciseProvider exerciseId={resourceId}>
+        {({exercise, isLoaded}) =>
+          !isLoaded ? (
+            <LoadingScreen />
+          ) : (
+            <Screen scroll padding>
+              <ExercisesForm
+                initialValues={exercise}
+                handleSubmit={this.updateResource}
+              />
+            </Screen>
+          )}
+      </ExerciseProvider>
     );
   }
 }

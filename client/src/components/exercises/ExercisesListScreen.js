@@ -18,10 +18,10 @@ export class ExercisesListScreen extends React.Component {
 
   onRowPress = row => {
     if (this.isEdit()) {
-      this.props.navigation.navigate('ExercisesEdit', {resourceId: row.uuid});
+      this.props.navigation.navigate('ExercisesEdit', {resourceId: row.id});
     } else {
       this.props.navigation.navigate('ExercisesDetail', {
-        exercise_uuid: row.uuid
+        exercise_uuid: row.id
       });
     }
   };

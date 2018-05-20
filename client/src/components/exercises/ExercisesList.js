@@ -8,6 +8,7 @@ import {Row} from '../dumb/Row';
 import {SectionHeader} from '../dumb/SectionHeader';
 import {uidSelector} from '../../selectors/firebaseSelectors';
 import {groupBy, pipe, sortWith, ascend, prop} from 'ramda';
+import {LoadingScreen} from '../dumb/LoadingScreen';
 
 const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz';
 const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))]);
@@ -27,7 +28,8 @@ export class ExercisesList extends React.Component {
   };
 
   state = {
-    exercises: []
+    exercises: [],
+    loaded: false
   };
 
   componentDidMount() {
@@ -47,7 +49,7 @@ export class ExercisesList extends React.Component {
         });
         return data;
       })
-      .then(exercises => this.setState({exercises}));
+      .then(exercises => this.setState({exercises, loaded: true}));
   }
 
   renderRow = ({item}) => {
@@ -74,6 +76,10 @@ export class ExercisesList extends React.Component {
   };
 
   render() {
+    const {loaded} = this.state;
+    if (!loaded) {
+      return <LoadingScreen />;
+    }
     const sections = getSections(this.state.exercises);
     return (
       <SectionList
