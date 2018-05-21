@@ -1,36 +1,36 @@
-import {Component} from 'react';
-import PropTypes from 'prop-types';
-import {uidSelector} from '../../selectors/firebaseSelectors';
-import firebase from 'firebase';
+import {Component} from 'react'
+import PropTypes from 'prop-types'
+import {uidSelector} from '../../selectors/firebaseSelectors'
+import firebase from 'firebase'
 
 const getExercisesRef = () =>
   firebase
     .firestore()
     .collection('users')
     .doc(uidSelector(firebase))
-    .collection('exercises');
+    .collection('exercises')
 
 export class ExerciseProvider extends Component {
   static propTypes = {
     exerciseId: PropTypes.string.isRequired,
-    children: PropTypes.func.isRequired
-  };
+    children: PropTypes.func.isRequired,
+  }
 
   state = {
     isLoaded: false,
-    exercise: null
-  };
+    exercise: null,
+  }
 
   componentDidMount() {
     getExercisesRef()
       .doc(this.props.exerciseId)
       .get()
       .then(snap => snap.data())
-      .then(exercise => this.setState({exercise, isLoaded: true}));
+      .then(exercise => this.setState({exercise, isLoaded: true}))
   }
 
   render() {
-    const {children} = this.props;
-    return children(this.state);
+    const {children} = this.props
+    return children(this.state)
   }
 }

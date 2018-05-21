@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Alert, Button, View} from 'react-native';
-import {TextInputField} from '../simple/TextInputField';
-import {SwitchField} from '../simple/SwitchField';
-import {ExerciseResource} from '../../entities/ExerciseResource';
-import {FieldWrapper} from '../simple/FieldWrapper';
-import {JsonDebug} from '../simple/JsonDebug';
-import {MuscleSelectField} from '../simple/MuscleSelectField';
-import {Field, Form} from 'react-final-form';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Alert, Button, View} from 'react-native'
+import {TextInputField} from '../simple/TextInputField'
+import {SwitchField} from '../simple/SwitchField'
+import {ExerciseResource} from '../../entities/ExerciseResource'
+import {FieldWrapper} from '../simple/FieldWrapper'
+import {JsonDebug} from '../simple/JsonDebug'
+import {MuscleSelectField} from '../simple/MuscleSelectField'
+import {Field, Form} from 'react-final-form'
 
 export class ExercisesForm extends React.Component {
   static propTypes = {
@@ -15,11 +15,12 @@ export class ExercisesForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     deleteResource: PropTypes.func,
     isUpdate: PropTypes.bool,
-    initialValues: PropTypes.object
-  };
+    isUpdating: PropTypes.bool,
+    initialValues: PropTypes.object,
+  }
 
   render() {
-    const {handleSubmit: propsSubmit, initialValues} = this.props;
+    const {handleSubmit: propsSubmit, initialValues, isUpdating} = this.props
     return (
       <Form
         initialValues={initialValues}
@@ -75,7 +76,7 @@ export class ExercisesForm extends React.Component {
               />
             </FieldWrapper>
 
-            <Button title="Save" onPress={handleSubmit} />
+            <Button disabled={isUpdating} title="Save" onPress={handleSubmit} />
 
             {this.props.isUpdate && (
               <Button
@@ -83,7 +84,7 @@ export class ExercisesForm extends React.Component {
                 onPress={() =>
                   Alert.alert('Delete', null, [
                     {text: 'Delete', onPress: this.props.deleteResource},
-                    {text: 'Cancel'}
+                    {text: 'Cancel'},
                   ])}
               />
             )}
@@ -94,6 +95,6 @@ export class ExercisesForm extends React.Component {
           </View>
         )}
       />
-    );
+    )
   }
 }

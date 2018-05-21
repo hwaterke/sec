@@ -1,58 +1,58 @@
-import type {Config} from 'hw-react-shared';
+import type {Config} from 'hw-react-shared'
 // @flow
-import {crud as crudCreator} from 'hw-react-shared';
-import {clearToken} from '../reducers/authentication';
+import {crud as crudCreator} from 'hw-react-shared'
+import {clearToken} from '../reducers/authentication'
 
 // Manually generating uuid for now as 'react-native-uuid' has problems
 // https://github.com/eugenehp/react-native-uuid/issues/6
 function uuidv4(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     const r = (Math.random() * 16) | 0,
-      v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+      v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
 }
 
 const CrudConfig: Config = {
   backendSelector(state) {
-    return `${state.backend}/api`;
+    return `${state.backend}/api`
   },
 
   tokenSelector(state) {
-    return state.token;
+    return state.token
   },
 
   tokenToHeader(token) {
     if (token) {
-      return {Authorization: token};
+      return {Authorization: token}
     }
-    return {};
+    return {}
   },
 
   onAuthError({dispatch}) {
-    dispatch(clearToken());
+    dispatch(clearToken())
   },
 
   onError(props, resource, operation, error) {
-    alert(`Error: ${operation} - ${error}`);
+    alert(`Error: ${operation} - ${error}`)
   },
 
   cuid() {
-    return uuidv4();
+    return uuidv4()
   },
 
   fetchAllDataToRecords(responseData) {
-    return responseData.data;
+    return responseData.data
   },
   fetchOneDataToRecord(responseData) {
-    return responseData;
+    return responseData
   },
   createDataToRecord(responseData) {
-    return responseData;
+    return responseData
   },
   updateDataToRecord(responseData) {
-    return responseData;
-  }
-};
+    return responseData
+  },
+}
 
-export const crud = crudCreator(CrudConfig);
+export const crud = crudCreator(CrudConfig)

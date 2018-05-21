@@ -1,25 +1,25 @@
-import React from 'react';
-import {LoginScreen} from './LoginScreen';
-import {SecTabNavigator} from './TabNavigator';
-import firebase from 'firebase';
+import React from 'react'
+import {LoginScreen} from './LoginScreen'
+import {SecTabNavigator} from './TabNavigator'
+import firebase from 'firebase'
 
 export class LoginDispatcher extends React.Component {
   state = {
-    loggedIn: false
-  };
+    loggedIn: false,
+  }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({
-        loggedIn: !!user
-      });
-    });
+        loggedIn: !!user,
+      })
+    })
   }
 
   render() {
     if (this.state.loggedIn) {
-      return <SecTabNavigator />;
+      return <SecTabNavigator />
     }
-    return <LoginScreen />;
+    return <LoginScreen />
   }
 }

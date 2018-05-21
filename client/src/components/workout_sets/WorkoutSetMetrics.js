@@ -1,18 +1,18 @@
-import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
-import {toKilo} from '../../utils/conversion';
-import {colors} from '../../constants/colors';
-import {rubikText} from '../../constants/styles';
-import {InfoRow} from '../simple/Info';
+import React from 'react'
+import {StyleSheet, Text} from 'react-native'
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
+import {toKilo} from '../../utils/conversion'
+import {colors} from '../../constants/colors'
+import {rubikText} from '../../constants/styles'
+import {InfoRow} from '../simple/Info'
 
 export class WorkoutSetMetrics extends React.Component {
   static propTypes = {
-    workoutSet: WorkoutSetResource.propType.isRequired
-  };
+    workoutSet: WorkoutSetResource.propType.isRequired,
+  }
 
   render() {
-    const set = this.props.workoutSet;
+    const set = this.props.workoutSet
 
     return (
       <InfoRow>
@@ -33,31 +33,31 @@ export class WorkoutSetMetrics extends React.Component {
         )}
         {set.distance && <Text style={styles.discretePushLeft}>km</Text>}
       </InfoRow>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
-    ...rubikText
+    ...rubikText,
   },
   discretePushLeft: {
     ...rubikText,
     color: colors.discreteTextColor,
-    paddingLeft: 4
+    paddingLeft: 4,
   },
   discretePushRight: {
     ...rubikText,
     color: colors.discreteTextColor,
-    paddingRight: 4
+    paddingRight: 4,
   },
   discretePush: {
     ...rubikText,
     color: colors.discreteTextColor,
-    paddingHorizontal: 4
-  }
-});
+    paddingHorizontal: 4,
+  },
+})

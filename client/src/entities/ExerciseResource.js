@@ -1,6 +1,6 @@
 // @flow
-import PropTypes from 'prop-types';
-import type {ResourceDefinition} from 'hw-react-shared';
+import PropTypes from 'prop-types'
+import type {ResourceDefinition} from 'hw-react-shared'
 
 export const ExerciseResource: ResourceDefinition = {
   path: 'exercises',
@@ -10,6 +10,6 @@ export const ExerciseResource: ResourceDefinition = {
     weight: PropTypes.bool,
     time: PropTypes.bool,
     distance: PropTypes.bool,
-    description: PropTypes.string
-  })
-};
+    description: PropTypes.string,
+  }),
+}

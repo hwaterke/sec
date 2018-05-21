@@ -5,5 +5,5 @@ export const colors = {
   backgroundColor: '#FAFAFA',
   borderColor: '#E5E5E5',
   darkPrimaryColor: '#80CBC4',
-  discreteTextColor: '#999'
-};
+  discreteTextColor: '#999',
+}

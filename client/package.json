@@ -6,14 +6,14 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "format": "prettier --single-quote --bracket-spacing=false --write 'src/**/*.js'",
+    "format": "prettier --write 'src/**/*.js'",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "gitDir": "../",
     "linters": {
       "*.js": [
-        "prettier --write --single-quote --bracket-spacing=false",
+        "prettier --write",
         "eslint --max-warnings 1",
         "git add"
       ]
@@ -41,6 +41,7 @@
     "redux-persist": "^4.10.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.0",
+    "styled-components": "^3.2.6",
     "victory-native": "^0.17.0"
   },
   "devDependencies": {

@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, TextInput} from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {StyleSheet, TextInput} from 'react-native'
 
 export class TextInputField extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
       value: PropTypes.string,
-      onChange: PropTypes.func.isRequired
+      onChange: PropTypes.func.isRequired,
     }).isRequired,
-    meta: PropTypes.object
-  };
+    meta: PropTypes.object,
+  }
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const {input: {value, onChange}, meta, ...custom} = this.props;
+    const {input: {value, onChange}, meta, ...custom} = this.props
     return (
       <TextInput
         value={value}
@@ -21,7 +21,7 @@ export class TextInputField extends React.Component {
         style={styles.container}
         {...custom}
       />
-    );
+    )
   }
 }
 
@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingHorizontal: 20,
-    paddingVertical: 18
-  }
-});
+    paddingVertical: 18,
+  },
+})

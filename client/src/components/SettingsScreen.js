@@ -1,10 +1,10 @@
-import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {Banner} from './simple/Banner';
-import firebase from 'firebase';
-import {SettingsResources} from './SettingsResources';
-import {Screen} from './dumb/Screen';
-import {firebaseConfig} from '../constants/firebase';
+import React from 'react'
+import {Button, StyleSheet, Text, View} from 'react-native'
+import {Banner} from './simple/Banner'
+import firebase from 'firebase'
+import {SettingsResources} from './SettingsResources'
+import {Screen} from './dumb/Screen'
+import {firebaseConfig} from '../constants/firebase'
 
 export class SettingsScreen extends React.Component {
   render() {
@@ -19,7 +19,7 @@ export class SettingsScreen extends React.Component {
 
         <SettingsResources />
       </Screen>
-    );
+    )
   }
 }
 
@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#e5e5e5',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+})

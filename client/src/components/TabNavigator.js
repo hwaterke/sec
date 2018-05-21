@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name,react/prop-types */
-import React from 'react';
-import {Platform} from 'react-native';
-import {TabNavigator, TabView} from 'react-navigation';
-import {SettingsScreen} from './SettingsScreen';
-import {Ionicons} from '@expo/vector-icons';
-import {ExercisesNavigation} from './exercises/ExercisesNavigation';
-import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
-import {colors} from '../constants/colors';
+import React from 'react'
+import {Platform} from 'react-native'
+import {TabNavigator, TabView} from 'react-navigation'
+import {SettingsScreen} from './SettingsScreen'
+import {Ionicons} from '@expo/vector-icons'
+import {ExercisesNavigation} from './exercises/ExercisesNavigation'
+import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation'
+import {colors} from '../constants/colors'
 
 ExercisesNavigation.navigationOptions = {
   tabBarLabel: 'Exercises',
@@ -16,8 +16,8 @@ ExercisesNavigation.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 WorkoutSetsNavigation.navigationOptions = {
   tabBarLabel: 'Set',
@@ -27,8 +27,8 @@ WorkoutSetsNavigation.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 SettingsScreen.navigationOptions = {
   tabBarLabel: 'Settings',
@@ -38,14 +38,14 @@ SettingsScreen.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 const iosTabOptions = {
   tabBarOptions: {
-    activeTintColor: colors.headerColor
-  }
-};
+    activeTintColor: colors.headerColor,
+  },
+}
 
 const androidTabOptions = {
   tabBarOptions: {
@@ -54,24 +54,24 @@ const androidTabOptions = {
     showIcon: true,
     tabBarComponent: TabView.TabBarBottom,
     style: {
-      backgroundColor: '#EEEEEE'
+      backgroundColor: '#EEEEEE',
     },
-    renderIndicator: () => null
+    renderIndicator: () => null,
   },
-  tabBarPosition: 'bottom'
-};
+  tabBarPosition: 'bottom',
+}
 
 export const SecTabNavigator = TabNavigator(
   {
     Exercises: {
-      screen: ExercisesNavigation
+      screen: ExercisesNavigation,
     },
     Sets: {
-      screen: WorkoutSetsNavigation
+      screen: WorkoutSetsNavigation,
     },
     Settings: {
-      screen: SettingsScreen
-    }
+      screen: SettingsScreen,
+    },
   },
   ...(Platform.OS === 'ios' ? iosTabOptions : androidTabOptions)
-);
+)

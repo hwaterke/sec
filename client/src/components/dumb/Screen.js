@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {colors} from '../../constants/colors';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {ScrollView, StyleSheet, View} from 'react-native'
+import {colors} from '../../constants/colors'
 
 export class Screen extends React.Component {
   static propTypes = {
-    scroll: PropTypes.bool.isRequired,
-    padding: PropTypes.bool.isRequired,
-    children: PropTypes.node
-  };
+    scroll: PropTypes.bool,
+    padding: PropTypes.bool,
+    children: PropTypes.node,
+  }
 
   static defaultProps = {
     scroll: false,
-    padding: false
-  };
+    padding: false,
+  }
 
   render() {
     if (this.props.scroll) {
@@ -25,7 +25,7 @@ export class Screen extends React.Component {
         >
           {this.props.children}
         </ScrollView>
-      );
+      )
     }
 
     return (
@@ -36,19 +36,19 @@ export class Screen extends React.Component {
       >
         {this.props.children}
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundColor
+    backgroundColor: colors.backgroundColor,
   },
 
   containerWithPadding: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-    padding: 16
-  }
-});
+    padding: 16,
+  },
+})

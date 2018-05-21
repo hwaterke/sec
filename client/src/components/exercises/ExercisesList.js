@@ -1,36 +1,37 @@
-import React from 'react';
-import firebase from 'firebase';
-import PropTypes from 'prop-types';
-import {Image, SectionList, Text, TouchableOpacity} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {colors} from '../../constants/colors';
-import {Row} from '../dumb/Row';
-import {SectionHeader} from '../dumb/SectionHeader';
-import {uidSelector} from '../../selectors/firebaseSelectors';
-import {groupBy, pipe, sortWith, ascend, prop} from 'ramda';
-import {LoadingScreen} from '../dumb/LoadingScreen';
+import React from 'react'
+import firebase from 'firebase'
+import PropTypes from 'prop-types'
+import {Image, SectionList, Text, TouchableOpacity} from 'react-native'
+import {Ionicons} from '@expo/vector-icons'
+import {colors} from '../../constants/colors'
+import {Row} from '../dumb/Row'
+import {SectionHeader} from '../dumb/SectionHeader'
+import {uidSelector} from '../../selectors/firebaseSelectors'
+import {groupBy, pipe, sortWith, ascend, prop} from 'ramda'
+import {LoadingScreen} from '../dumb/LoadingScreen'
+import {EmptyExercisesList} from './ExerciseList.styled'
 
-const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz';
-const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))]);
-const groupByMuscle = groupBy(muscleName);
+const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz'
+const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))])
+const groupByMuscle = groupBy(muscleName)
 
 const getSections = data =>
   pipe(sortByName, groupByMuscle, groups => {
     return Object.keys(groups).map(muscle => ({
       data: groups[muscle],
-      title: muscle === 'zzzz' ? 'Other' : muscle
-    }));
-  })(data);
+      title: muscle === 'zzzz' ? 'Other' : muscle,
+    }))
+  })(data)
 
 export class ExercisesList extends React.Component {
   static propTypes = {
-    onRowPress: PropTypes.func.isRequired
-  };
+    onRowPress: PropTypes.func.isRequired,
+  }
 
   state = {
     exercises: [],
-    loaded: false
-  };
+    loaded: false,
+  }
 
   componentDidMount() {
     firebase
@@ -38,18 +39,16 @@ export class ExercisesList extends React.Component {
       .collection('users')
       .doc(uidSelector(firebase))
       .collection('exercises')
-      .get()
-      .then(snap => {
-        const data = [];
+      .onSnapshot(snap => {
+        const exercises = []
         snap.forEach(doc => {
-          data.push({
+          exercises.push({
             ...doc.data(),
-            id: doc.id
-          });
-        });
-        return data;
+            id: doc.id,
+          })
+        })
+        this.setState({exercises, loaded: true})
       })
-      .then(exercises => this.setState({exercises, loaded: true}));
   }
 
   renderRow = ({item}) => {
@@ -72,15 +71,18 @@ export class ExercisesList extends React.Component {
           )}
         </Row>
       </TouchableOpacity>
-    );
-  };
+    )
+  }
 
   render() {
-    const {loaded} = this.state;
+    const {loaded, exercises} = this.state
     if (!loaded) {
-      return <LoadingScreen />;
+      return <LoadingScreen />
     }
-    const sections = getSections(this.state.exercises);
+    if (exercises.length === 0) {
+      return <EmptyExercisesList />
+    }
+    const sections = getSections(exercises)
     return (
       <SectionList
         sections={sections}
@@ -90,6 +92,6 @@ export class ExercisesList extends React.Component {
         )}
         keyExtractor={e => e.id}
       />
-    );
+    )
   }
 }

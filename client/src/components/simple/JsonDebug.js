@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {View, ScrollView, Button, Text, Modal, StyleSheet} from 'react-native';
-import {globalStyles} from '../../constants/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {View, ScrollView, Button, Text, Modal, StyleSheet} from 'react-native'
+import {globalStyles} from '../../constants/styles'
 
 export class JsonDebug extends React.Component {
   static propTypes = {
-    value: PropTypes.any
-  };
+    value: PropTypes.any,
+  }
 
   state = {
-    modalVisible: false
-  };
+    modalVisible: false,
+  }
 
   toggleModal = () => {
-    this.setState({modalVisible: !this.state.modalVisible});
-  };
+    this.setState({modalVisible: !this.state.modalVisible})
+  }
 
   render() {
     return (
@@ -33,13 +33,13 @@ export class JsonDebug extends React.Component {
           </ScrollView>
         </Modal>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   debug: {
     padding: 4,
-    backgroundColor: 'white'
-  }
-});
+    backgroundColor: 'white',
+  },
+})

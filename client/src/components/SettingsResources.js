@@ -1,37 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import {MuscleResource} from '../entities/MuscleResource';
-import {ExerciseResource} from '../entities/ExerciseResource';
-import {WorkoutSetResource} from '../entities/WorkoutSetResource';
-import {colors} from '../constants/colors';
-import {crud} from '../hoc/crud';
-import {Row} from './dumb/Row';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Button, StyleSheet, Text, View} from 'react-native'
+import {connect} from 'react-redux'
+import {MuscleResource} from '../entities/MuscleResource'
+import {ExerciseResource} from '../entities/ExerciseResource'
+import {WorkoutSetResource} from '../entities/WorkoutSetResource'
+import {colors} from '../constants/colors'
+import {crud} from '../hoc/crud'
+import {Row} from './dumb/Row'
 
 @connect(state => ({
-  resources: state.resources
+  resources: state.resources,
 }))
 @crud
 export class SettingsResources extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
     fetchAll: PropTypes.func.isRequired,
-    clearAll: PropTypes.func.isRequired
-  };
+    clearAll: PropTypes.func.isRequired,
+  }
 
   fetchAll = () => {
     this.props
       .fetchAll(MuscleResource, true)
       .then(() => this.props.fetchAll(ExerciseResource, true))
-      .then(() => this.props.fetchAll(WorkoutSetResource, true));
-  };
+      .then(() => this.props.fetchAll(WorkoutSetResource, true))
+  }
 
-  clearAll = () => {
+  clearAll = () =>
     [WorkoutSetResource, ExerciseResource, MuscleResource].forEach(r =>
       this.props.clearAll(r)
-    );
-  };
+    )
 
   render() {
     return (
@@ -47,7 +46,7 @@ export class SettingsResources extends React.Component {
 
         <Button title="Fetch from server" onPress={this.fetchAll} />
       </View>
-    );
+    )
   }
 }
 
@@ -59,6 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: colors.borderColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+})
