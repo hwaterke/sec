@@ -39,6 +39,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "eslint --no-eslintrc -c .eslintrc-import-order.json --fix",
       "prettier --write",
       "eslint --max-warnings 0",
       "git add"
