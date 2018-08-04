@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, View} from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {StyleSheet, View} from 'react-native'
 
 export class Row extends React.Component {
   static propTypes = {
-    children: PropTypes.node
-  };
+    children: PropTypes.node,
+  }
 
   render() {
-    return <View style={styles.container}>{this.props.children}</View>;
+    return <View style={styles.container}>{this.props.children}</View>
   }
 }
 
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#ffffff',
     borderBottomColor: '#e5e5e5',
-    borderBottomWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+})

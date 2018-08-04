@@ -1,18 +1,18 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {ExerciseResource} from '../../entities/ExerciseResource';
-import {ResourceFormProvider} from '../../providers/ResourceFormProvider';
-import {crudThunks} from '../../thunks/crudThunks';
-import {Screen} from '../dumb/Screen';
-import {ExercisesForm} from './ExercisesForm';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {ExerciseResource} from '../../entities/ExerciseResource'
+import {ResourceFormProvider} from '../../providers/ResourceFormProvider'
+import {crudThunks} from '../../thunks/crudThunks'
+import {Screen} from '../dumb/Screen'
+import {ExercisesForm} from './ExercisesForm'
 
 export class ExercisesEditScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
-      state: PropTypes.object.isRequired
-    }).isRequired
-  };
+      state: PropTypes.object.isRequired,
+    }).isRequired,
+  }
 
   render() {
     return (
@@ -26,6 +26,6 @@ export class ExercisesEditScreen extends React.Component {
           {props => <ExercisesForm {...props} />}
         </ResourceFormProvider>
       </Screen>
-    );
+    )
   }
 }

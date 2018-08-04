@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Alert, Button, View} from 'react-native';
-import {Field, reduxForm} from 'redux-form';
-import {ExerciseResource} from '../../entities/ExerciseResource';
-import {FieldWrapper} from '../simple/FieldWrapper';
-import {JsonDebug} from '../simple/JsonDebug';
-import {MuscleSelectField} from '../simple/MuscleSelectField';
-import {SwitchField} from '../simple/SwitchField';
-import {TextInputField} from '../simple/TextInputField';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {Alert, Button, View} from 'react-native'
+import {Field, reduxForm} from 'redux-form'
+import {ExerciseResource} from '../../entities/ExerciseResource'
+import {FieldWrapper} from '../simple/FieldWrapper'
+import {JsonDebug} from '../simple/JsonDebug'
+import {MuscleSelectField} from '../simple/MuscleSelectField'
+import {SwitchField} from '../simple/SwitchField'
+import {TextInputField} from '../simple/TextInputField'
 
 @reduxForm({form: ExerciseResource.name})
 export class ExercisesForm extends React.Component {
@@ -15,8 +15,8 @@ export class ExercisesForm extends React.Component {
     updatedResource: ExerciseResource.propType,
     handleSubmit: PropTypes.func.isRequired,
     deleteResource: PropTypes.func,
-    isUpdate: PropTypes.bool.isRequired
-  };
+    isUpdate: PropTypes.bool.isRequired,
+  }
 
   render() {
     return (
@@ -62,7 +62,7 @@ export class ExercisesForm extends React.Component {
             onPress={() =>
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
-                {text: 'Cancel'}
+                {text: 'Cancel'},
               ])
             }
           />
@@ -72,6 +72,6 @@ export class ExercisesForm extends React.Component {
           <JsonDebug value={this.props.updatedResource} />
         )}
       </View>
-    );
+    )
   }
 }

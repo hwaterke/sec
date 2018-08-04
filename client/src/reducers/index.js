@@ -1,13 +1,13 @@
 import {
   createActivityReducersForResources,
-  createReducersForResources
-} from 'redux-crud-provider';
-import {reducer as formReducer} from 'redux-form';
-import {ExerciseResource} from '../entities/ExerciseResource';
-import {MuscleResource} from '../entities/MuscleResource';
-import {WorkoutSetResource} from '../entities/WorkoutSetResource';
-import {authenticationReducer} from './authentication';
-import {backendReducer} from './backend';
+  createReducersForResources,
+} from 'redux-crud-provider'
+import {reducer as formReducer} from 'redux-form'
+import {ExerciseResource} from '../entities/ExerciseResource'
+import {MuscleResource} from '../entities/MuscleResource'
+import {WorkoutSetResource} from '../entities/WorkoutSetResource'
+import {authenticationReducer} from './authentication'
+import {backendReducer} from './backend'
 
 export const reducers = {
   backend: backendReducer,
@@ -15,12 +15,12 @@ export const reducers = {
   resources: createReducersForResources([
     MuscleResource,
     ExerciseResource,
-    WorkoutSetResource
+    WorkoutSetResource,
   ]),
   resourcesActivity: createActivityReducersForResources([
     MuscleResource,
     ExerciseResource,
-    WorkoutSetResource
+    WorkoutSetResource,
   ]),
-  token: authenticationReducer
-};
+  token: authenticationReducer,
+}

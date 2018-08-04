@@ -1,11 +1,11 @@
-import {Ionicons} from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons'
 /* eslint-disable react/display-name,react/prop-types */
-import React from 'react';
-import {createBottomTabNavigator} from 'react-navigation';
-import {colors} from '../constants/colors';
-import {ExercisesNavigation} from './exercises/ExercisesNavigation';
-import {SettingsScreen} from './SettingsScreen';
-import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
+import React from 'react'
+import {createBottomTabNavigator} from 'react-navigation'
+import {colors} from '../constants/colors'
+import {ExercisesNavigation} from './exercises/ExercisesNavigation'
+import {SettingsScreen} from './SettingsScreen'
+import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation'
 
 ExercisesNavigation.navigationOptions = {
   tabBarLabel: 'Exercises',
@@ -15,8 +15,8 @@ ExercisesNavigation.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 WorkoutSetsNavigation.navigationOptions = {
   tabBarLabel: 'Set',
@@ -26,8 +26,8 @@ WorkoutSetsNavigation.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 SettingsScreen.navigationOptions = {
   tabBarLabel: 'Settings',
@@ -37,24 +37,24 @@ SettingsScreen.navigationOptions = {
       size={26}
       style={{color: tintColor}}
     />
-  )
-};
+  ),
+}
 
 export const SecTabNavigator = createBottomTabNavigator(
   {
     Exercises: {
-      screen: ExercisesNavigation
+      screen: ExercisesNavigation,
     },
     Sets: {
-      screen: WorkoutSetsNavigation
+      screen: WorkoutSetsNavigation,
     },
     Settings: {
-      screen: SettingsScreen
-    }
+      screen: SettingsScreen,
+    },
   },
   {
     tabBarOptions: {
-      activeTintColor: colors.headerColor
-    }
+      activeTintColor: colors.headerColor,
+    },
   }
-);
+)

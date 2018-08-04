@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Image, SectionList, Text, TouchableOpacity} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {connect} from 'react-redux';
-import {exercicesGroupedByMuscle} from '../../selectors/exercices';
-import {ExerciseResource} from '../../entities/ExerciseResource';
-import {colors} from '../../constants/colors';
-import {extractUuid} from '../../constants/keyExtractor';
-import {Row} from '../dumb/Row';
-import {SectionHeader} from '../dumb/SectionHeader';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Image, SectionList, Text, TouchableOpacity} from 'react-native'
+import {Ionicons} from '@expo/vector-icons'
+import {connect} from 'react-redux'
+import {exercicesGroupedByMuscle} from '../../selectors/exercices'
+import {ExerciseResource} from '../../entities/ExerciseResource'
+import {colors} from '../../constants/colors'
+import {extractUuid} from '../../constants/keyExtractor'
+import {Row} from '../dumb/Row'
+import {SectionHeader} from '../dumb/SectionHeader'
 
 const mapStateToProps = state => ({
-  exercises: exercicesGroupedByMuscle(state)
-});
+  exercises: exercicesGroupedByMuscle(state),
+})
 
 @connect(mapStateToProps)
 export class ExercisesList extends React.Component {
@@ -20,11 +20,11 @@ export class ExercisesList extends React.Component {
     exercises: PropTypes.arrayOf(
       PropTypes.shape({
         data: PropTypes.arrayOf(ExerciseResource.propType).isRequired,
-        title: PropTypes.string.isRequired
+        title: PropTypes.string.isRequired,
       })
     ).isRequired,
-    onRowPress: PropTypes.func.isRequired
-  };
+    onRowPress: PropTypes.func.isRequired,
+  }
 
   renderRow = ({item}) => {
     return (
@@ -46,8 +46,8 @@ export class ExercisesList extends React.Component {
           )}
         </Row>
       </TouchableOpacity>
-    );
-  };
+    )
+  }
 
   render() {
     return (
@@ -59,6 +59,6 @@ export class ExercisesList extends React.Component {
         )}
         keyExtractor={extractUuid}
       />
-    );
+    )
   }
 }

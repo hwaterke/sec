@@ -1,23 +1,23 @@
 // Copied from hwaterke/inab
-import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 const mapDispatchToProps = (dispatch, ownProps) =>
   bindActionCreators(
     {
-      createResource: ownProps.crudThunks.createResource
+      createResource: ownProps.crudThunks.createResource,
     },
     dispatch
-  );
+  )
 
 class _ResourceCreator extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     resource: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired
+      key: PropTypes.string.isRequired,
     }).isRequired,
     path: PropTypes.string,
     postAction: PropTypes.func,
@@ -26,65 +26,65 @@ class _ResourceCreator extends React.Component {
     formToResource: PropTypes.func,
 
     // From redux
-    createResource: PropTypes.func.isRequired
-  };
+    createResource: PropTypes.func.isRequired,
+  }
 
   static defaultProps = {
-    formToResource: data => data
-  };
+    formToResource: data => data,
+  }
 
   componentDidMount() {
-    this._isMounted = true;
+    this._isMounted = true
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = false
   }
 
   createEntity = entity => {
-    const {resource, path, postAction, formToResource} = this.props;
+    const {resource, path, postAction, formToResource} = this.props
 
     return this.props
       .createResource({
         resource: resource,
         path: path,
-        entity: formToResource(entity)
+        entity: formToResource(entity),
       })
       .then(() => {
         if (this._isMounted && postAction) {
-          postAction();
+          postAction()
         }
-      });
-  };
+      })
+  }
 
   render() {
     return this.props.children({
       createEntity: this.createEntity,
       thunks: {
-        createResource: this.props.createResource
-      }
-    });
+        createResource: this.props.createResource,
+      },
+    })
   }
 }
 
 export const ResourceCreator = connect(
   undefined,
   mapDispatchToProps
-)(_ResourceCreator);
+)(_ResourceCreator)
 
 ResourceCreator.propTypes = {
   crudThunks: PropTypes.shape({
-    createResource: PropTypes.func.isRequired
+    createResource: PropTypes.func.isRequired,
   }).isRequired,
 
   children: PropTypes.func.isRequired,
   resource: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired
+    key: PropTypes.string.isRequired,
   }).isRequired,
   path: PropTypes.string,
   postAction: PropTypes.func,
 
   // Optional prop to transform data before sending it.
-  formToResource: PropTypes.func
-};
+  formToResource: PropTypes.func,
+}

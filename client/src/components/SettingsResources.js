@@ -1,35 +1,35 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import {colors} from '../constants/colors';
-import {ExerciseResource} from '../entities/ExerciseResource';
-import {MuscleResource} from '../entities/MuscleResource';
-import {WorkoutSetResource} from '../entities/WorkoutSetResource';
-import {crudThunks} from '../thunks/crudThunks';
-import {Row} from './dumb/Row';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {Button, StyleSheet, Text, View} from 'react-native'
+import {connect} from 'react-redux'
+import {colors} from '../constants/colors'
+import {ExerciseResource} from '../entities/ExerciseResource'
+import {MuscleResource} from '../entities/MuscleResource'
+import {WorkoutSetResource} from '../entities/WorkoutSetResource'
+import {crudThunks} from '../thunks/crudThunks'
+import {Row} from './dumb/Row'
 
 const mapDispatchToProps = {
-  fetchAll: crudThunks.fetchAll
-};
+  fetchAll: crudThunks.fetchAll,
+}
 
 @connect(
   state => ({
-    resources: state.resources
+    resources: state.resources,
   }),
   mapDispatchToProps
 )
 export class SettingsResources extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
-    fetchAll: PropTypes.func.isRequired
-  };
+    fetchAll: PropTypes.func.isRequired,
+  }
 
   fetchAll = async () => {
-    await this.props.fetchAll({resource: MuscleResource, replace: true});
-    await this.props.fetchAll({resource: ExerciseResource, replace: true});
-    await this.props.fetchAll({resource: WorkoutSetResource, replace: true});
-  };
+    await this.props.fetchAll({resource: MuscleResource, replace: true})
+    await this.props.fetchAll({resource: ExerciseResource, replace: true})
+    await this.props.fetchAll({resource: WorkoutSetResource, replace: true})
+  }
 
   render() {
     return (
@@ -43,7 +43,7 @@ export class SettingsResources extends React.Component {
 
         <Button title="Fetch from server" onPress={this.fetchAll} />
       </View>
-    );
+    )
   }
 }
 
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: colors.borderColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+})

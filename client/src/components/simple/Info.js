@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, Text, View} from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {StyleSheet, Text, View} from 'react-native'
 
 export class InfoRow extends React.Component {
   static propTypes = {
-    children: PropTypes.node
-  };
+    children: PropTypes.node,
+  }
 
   render() {
-    return <View style={styles.row}>{this.props.children}</View>;
+    return <View style={styles.row}>{this.props.children}</View>
   }
 }
 
@@ -16,8 +16,8 @@ export class Info extends React.Component {
   static propTypes = {
     highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired,
-    caption: PropTypes.string
-  };
+    caption: PropTypes.string,
+  }
 
   render() {
     return (
@@ -27,25 +27,25 @@ export class Info extends React.Component {
           <Text style={styles.caption}>{this.props.caption}</Text>
         )}
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   info: {
     flex: 1,
     alignItems: 'center',
-    padding: 8
+    padding: 8,
   },
   highlight: {
     fontSize: 26,
-    color: '#333'
+    color: '#333',
   },
   caption: {
     fontSize: 12,
-    color: '#888'
-  }
-});
+    color: '#888',
+  },
+})

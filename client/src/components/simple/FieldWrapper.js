@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {View} from 'react-native';
-import {Caption} from '../dumb/Caption';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {View} from 'react-native'
+import {Caption} from '../dumb/Caption'
 
 export class FieldWrapper extends React.Component {
   static propTypes = {
     label: PropTypes.string,
-    children: PropTypes.element
-  };
+    children: PropTypes.element,
+  }
 
   render() {
     return (
@@ -15,6 +15,6 @@ export class FieldWrapper extends React.Component {
         {this.props.label && <Caption>{this.props.label}</Caption>}
         <View>{this.props.children}</View>
       </View>
-    );
+    )
   }
 }

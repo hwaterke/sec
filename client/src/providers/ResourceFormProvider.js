@@ -1,8 +1,8 @@
 // Copied from hwaterke/inab
-import PropTypes from 'prop-types';
-import React from 'react';
-import {ResourceProvider} from 'redux-crud-provider';
-import {ResourceCreator} from './ResourceCreator';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {ResourceProvider} from 'redux-crud-provider'
+import {ResourceCreator} from './ResourceCreator'
 
 export class ResourceFormProvider extends React.Component {
   static propTypes = {
@@ -21,17 +21,17 @@ export class ResourceFormProvider extends React.Component {
     /** The resource definition */
     resource: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired
+      key: PropTypes.string.isRequired,
     }).isRequired,
 
     /** A function that will be called upon success only if the component is still on the page */
-    postAction: PropTypes.func
-  };
+    postAction: PropTypes.func,
+  }
 
   static defaultProps = {
     formToResource: data => data,
-    resourceToForm: data => data
-  };
+    resourceToForm: data => data,
+  }
 
   render() {
     const {
@@ -41,8 +41,8 @@ export class ResourceFormProvider extends React.Component {
       formToResource,
       resourceToForm,
       postAction,
-      children
-    } = this.props;
+      children,
+    } = this.props
 
     if (!uuid) {
       return (
@@ -57,11 +57,11 @@ export class ResourceFormProvider extends React.Component {
               onSubmit: createEntity,
               isCreate: true,
               isUpdate: false,
-              initialValues: resourceToForm(null, this.props)
+              initialValues: resourceToForm(null, this.props),
             })
           }
         </ResourceCreator>
-      );
+      )
     }
 
     return (
@@ -79,10 +79,10 @@ export class ResourceFormProvider extends React.Component {
             isCreate: false,
             isUpdate: true,
             deleteResource: deleteEntity,
-            initialValues: resourceToForm(entity, this.props)
+            initialValues: resourceToForm(entity, this.props),
           })
         }
       </ResourceProvider>
-    );
+    )
   }
 }

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 export const ExerciseResource = {
   name: 'exercises',
@@ -12,6 +12,6 @@ export const ExerciseResource = {
     weight: PropTypes.bool,
     time: PropTypes.bool,
     distance: PropTypes.bool,
-    description: PropTypes.string
-  })
-};
+    description: PropTypes.string,
+  }),
+}

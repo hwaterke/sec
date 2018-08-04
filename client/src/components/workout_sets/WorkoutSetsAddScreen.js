@@ -1,50 +1,50 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
-import {ResourceFormProvider} from '../../providers/ResourceFormProvider';
-import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
-import {crudThunks} from '../../thunks/crudThunks';
-import {Screen} from '../dumb/Screen';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {connect} from 'react-redux'
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
+import {ResourceFormProvider} from '../../providers/ResourceFormProvider'
+import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets'
+import {crudThunks} from '../../thunks/crudThunks'
+import {Screen} from '../dumb/Screen'
 import {
   WorkoutSetsForm,
   workoutSetsFormToResource,
-  workoutSetsResourceToForm
-} from './WorkoutSetsForm';
+  workoutSetsResourceToForm,
+} from './WorkoutSetsForm'
 
 const mapStateToProps = state => ({
-  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
-});
+  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state),
+})
 
 @connect(mapStateToProps)
 export class WorkoutSetsAddScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
-      state: PropTypes.object.isRequired
+      state: PropTypes.object.isRequired,
     }).isRequired,
     lastWorkoutSetByExercise: PropTypes.objectOf(WorkoutSetResource.propType)
-      .isRequired
-  };
+      .isRequired,
+  }
 
   getTemplate() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.navigation.state.params
     if (params) {
       if (params.workoutSet) {
-        return params.workoutSet;
+        return params.workoutSet
       }
       if (params.exercise_uuid) {
         return Object.assign(
           {exercise_uuid: params.exercise_uuid},
           this.props.lastWorkoutSetByExercise[params.exercise_uuid]
-        );
+        )
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const template = this.getTemplate();
+    const template = this.getTemplate()
 
     return (
       <Screen scroll padding>
@@ -64,6 +64,6 @@ export class WorkoutSetsAddScreen extends React.Component {
           )}
         </ResourceFormProvider>
       </Screen>
-    );
+    )
   }
 }

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 export const WorkoutSetResource = {
   name: 'workout_sets',
@@ -14,6 +14,6 @@ export const WorkoutSetResource = {
     distance: PropTypes.number,
     notes: PropTypes.string,
     exercise_uuid: PropTypes.string.isRequired,
-    executed_at: PropTypes.string.isRequired
-  })
-};
+    executed_at: PropTypes.string.isRequired,
+  }),
+}

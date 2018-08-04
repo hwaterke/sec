@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Ionicons} from '@expo/vector-icons';
-import {select} from 'redux-crud-provider';
-import moment from 'moment';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Ionicons} from '@expo/vector-icons'
+import {select} from 'redux-crud-provider'
+import moment from 'moment'
 import {
   SectionList,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
-} from 'react-native';
-import {connect} from 'react-redux';
-import {colors} from '../../constants/colors';
-import {globalStyles} from '../../constants/styles';
-import {ExerciseResource} from '../../entities/ExerciseResource';
+  View,
+} from 'react-native'
+import {connect} from 'react-redux'
+import {colors} from '../../constants/colors'
+import {globalStyles} from '../../constants/styles'
+import {ExerciseResource} from '../../entities/ExerciseResource'
 import {
   workoutSetsByDayAndExerciseSelector,
   workoutSetsByDayByExerciseSectionsSelector,
-  workoutSetsByDaySelector
-} from '../../selectors/workout_sets';
-import {Info, InfoRow} from '../simple/Info';
-import {WorkoutSetMetrics} from '../workout_sets/WorkoutSetMetrics';
-import {extractUuid} from '../../constants/keyExtractor';
-import {SectionHeader} from '../dumb/SectionHeader';
-import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
+  workoutSetsByDaySelector,
+} from '../../selectors/workout_sets'
+import {Info, InfoRow} from '../simple/Info'
+import {WorkoutSetMetrics} from '../workout_sets/WorkoutSetMetrics'
+import {extractUuid} from '../../constants/keyExtractor'
+import {SectionHeader} from '../dumb/SectionHeader'
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
 
 const mapStateToProps = state => ({
   ws: workoutSetsByDayAndExerciseSelector(state),
@@ -31,30 +31,30 @@ const mapStateToProps = state => ({
   workoutSetsByDayByExerciseSections: workoutSetsByDayByExerciseSectionsSelector(
     state
   ),
-  exercisesById: select(ExerciseResource).byId(state)
-});
+  exercisesById: select(ExerciseResource).byId(state),
+})
 
 @connect(mapStateToProps)
 export class WorkoutSetsSummary extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
-      state: PropTypes.object.isRequired
+      state: PropTypes.object.isRequired,
     }).isRequired,
     workoutSetsByDay: PropTypes.objectOf(
       PropTypes.arrayOf(WorkoutSetResource.propType)
     ).isRequired,
-    workoutSetsByDayByExerciseSections: PropTypes.object.isRequired
-  };
+    workoutSetsByDayByExerciseSections: PropTypes.object.isRequired,
+  }
 
   renderHeader = () => {
-    const date = this.props.navigation.state.params.date;
-    const allSets = this.props.workoutSetsByDay[date];
-    const timeEnd = moment(allSets[0].executed_at, 'YYYY-MM-DD HH:mm:ss');
+    const date = this.props.navigation.state.params.date
+    const allSets = this.props.workoutSetsByDay[date]
+    const timeEnd = moment(allSets[0].executed_at, 'YYYY-MM-DD HH:mm:ss')
     const timeStart = moment(
       allSets[allSets.length - 1].executed_at,
       'YYYY-MM-DD HH:mm:ss'
-    );
+    )
     return (
       <View style={globalStyles.screen}>
         <InfoRow>
@@ -68,26 +68,26 @@ export class WorkoutSetsSummary extends React.Component {
           <Info highlight={timeEnd.format('HH:mm')} caption="END" />
         </InfoRow>
       </View>
-    );
-  };
+    )
+  }
 
   getTime(date) {
-    return moment(date, 'YYYY-MM-DD HH:mm').format('HH:mm');
+    return moment(date, 'YYYY-MM-DD HH:mm').format('HH:mm')
   }
 
   isEdit = () =>
     this.props.navigation.state.params &&
-    this.props.navigation.state.params.edit;
+    this.props.navigation.state.params.edit
 
   onRowPress = workoutSet => {
     if (this.isEdit()) {
       this.props.navigation.navigate('WorkoutSetsEdit', {
-        resourceId: workoutSet.uuid
-      });
+        resourceId: workoutSet.uuid,
+      })
     } else {
-      this.props.navigation.navigate('WorkoutSetsAdd', {workoutSet});
+      this.props.navigation.navigate('WorkoutSetsAdd', {workoutSet})
     }
-  };
+  }
 
   renderRow = ({item}) => (
     <TouchableOpacity onPress={() => this.onRowPress(item)}>
@@ -111,14 +111,14 @@ export class WorkoutSetsSummary extends React.Component {
         </View>
       </View>
     </TouchableOpacity>
-  );
+  )
 
   render() {
-    const date = this.props.navigation.state.params.date;
-    const allSets = this.props.workoutSetsByDayByExerciseSections[date];
+    const date = this.props.navigation.state.params.date
+    const allSets = this.props.workoutSetsByDayByExerciseSections[date]
 
     if (!allSets) {
-      return null;
+      return null
     }
 
     return (
@@ -133,7 +133,7 @@ export class WorkoutSetsSummary extends React.Component {
           keyExtractor={extractUuid}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: 'white',
     borderColor: colors.borderColor,
-    borderBottomWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+})

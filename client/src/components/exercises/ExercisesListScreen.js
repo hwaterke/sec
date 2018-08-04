@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Button} from 'react-native';
-import {ExercisesList} from './ExercisesList';
-import {Screen} from '../dumb/Screen';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Button} from 'react-native'
+import {Screen} from '../dumb/Screen'
+import {ExercisesList} from './ExercisesList'
 
 export class ExercisesListScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
-      state: PropTypes.object.isRequired
-    }).isRequired
-  };
+      state: PropTypes.object.isRequired,
+    }).isRequired,
+  }
 
   isEdit = () =>
     this.props.navigation.state.params &&
-    this.props.navigation.state.params.edit;
+    this.props.navigation.state.params.edit
 
   onRowPress = row => {
     if (this.isEdit()) {
-      this.props.navigation.navigate('ExercisesEdit', {resourceId: row.uuid});
+      this.props.navigation.navigate('ExercisesEdit', {resourceId: row.uuid})
     } else {
       this.props.navigation.navigate('ExercisesDetail', {
-        exercise_uuid: row.uuid
-      });
+        exercise_uuid: row.uuid,
+      })
     }
-  };
+  }
 
   render() {
     return (
@@ -37,6 +37,6 @@ export class ExercisesListScreen extends React.Component {
         )}
         <ExercisesList onRowPress={this.onRowPress} />
       </Screen>
-    );
+    )
   }
 }

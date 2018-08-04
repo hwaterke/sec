@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 export const MuscleResource = {
   name: 'muscles',
@@ -9,6 +9,6 @@ export const MuscleResource = {
   propType: PropTypes.shape({
     name: PropTypes.string.isRequired,
     muscle: PropTypes.string,
-    upper_body: PropTypes.bool
-  })
-};
+    upper_body: PropTypes.bool,
+  }),
+}

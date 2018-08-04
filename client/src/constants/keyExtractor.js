@@ -1,1 +1,1 @@
-export const extractUuid = e => e.uuid;
+export const extractUuid = e => e.uuid

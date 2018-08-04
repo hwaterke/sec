@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 import {
   Button,
   FlatList,
@@ -7,18 +7,18 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
-} from 'react-native';
-import {connect} from 'react-redux';
-import {select} from 'redux-crud-provider';
-import {globalStyles} from '../../constants/styles';
-import {MuscleResource} from '../../entities/MuscleResource';
-import {Row} from '../dumb/Row';
+  View,
+} from 'react-native'
+import {connect} from 'react-redux'
+import {select} from 'redux-crud-provider'
+import {globalStyles} from '../../constants/styles'
+import {MuscleResource} from '../../entities/MuscleResource'
+import {Row} from '../dumb/Row'
 
 const mapStateToProps = state => ({
   muscleArray: select(MuscleResource).asArray(state),
-  muscles: select(MuscleResource).byId(state)
-});
+  muscles: select(MuscleResource).byId(state),
+})
 
 @connect(mapStateToProps)
 export class MuscleSelectField extends React.Component {
@@ -27,33 +27,33 @@ export class MuscleSelectField extends React.Component {
     muscles: PropTypes.objectOf(MuscleResource.propType).isRequired,
     input: PropTypes.shape({
       value: PropTypes.string,
-      onChange: PropTypes.func.isRequired
-    }).isRequired
-  };
+      onChange: PropTypes.func.isRequired,
+    }).isRequired,
+  }
 
   state = {
-    modalVisible: false
-  };
+    modalVisible: false,
+  }
 
   toggleModal = () => {
-    this.setState({modalVisible: !this.state.modalVisible});
-  };
+    this.setState({modalVisible: !this.state.modalVisible})
+  }
 
   getMuscleName(value) {
     if (value) {
-      return this.props.muscles[value].name;
+      return this.props.muscles[value].name
     }
-    return 'Muscle';
+    return 'Muscle'
   }
 
   rowPress = muscle => {
     if (muscle.name === 'NONE') {
-      this.props.input.onChange(null);
+      this.props.input.onChange(null)
     } else {
-      this.props.input.onChange(muscle.name);
+      this.props.input.onChange(muscle.name)
     }
-    this.toggleModal();
-  };
+    this.toggleModal()
+  }
 
   renderRow = ({item}) => {
     return (
@@ -62,8 +62,8 @@ export class MuscleSelectField extends React.Component {
           <Text>{item.name}</Text>
         </Row>
       </TouchableOpacity>
-    );
-  };
+    )
+  }
 
   render() {
     return (
@@ -82,14 +82,14 @@ export class MuscleSelectField extends React.Component {
             <FlatList
               data={[{name: 'NONE'}, ...this.props.muscleArray].map(m => ({
                 ...m,
-                key: m.name
+                key: m.name,
               }))}
               renderItem={this.renderRow}
             />
           </View>
         </Modal>
       </View>
-    );
+    )
   }
 }
 
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
-  }
-});
+    alignItems: 'center',
+  },
+})

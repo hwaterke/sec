@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import {Banner} from './simple/Banner';
-import {clearToken} from '../reducers/authentication';
-import {SettingsResources} from './SettingsResources';
-import {Screen} from './dumb/Screen';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Button, StyleSheet, Text, View} from 'react-native'
+import {connect} from 'react-redux'
+import {clearToken} from '../reducers/authentication'
+import {Banner} from './simple/Banner'
+import {SettingsResources} from './SettingsResources'
+import {Screen} from './dumb/Screen'
 
 @connect(state => ({
-  backend: state.backend
+  backend: state.backend,
 }))
 export class SettingsScreen extends React.Component {
   static propTypes = {
     backend: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
-  };
+    dispatch: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -31,7 +31,7 @@ export class SettingsScreen extends React.Component {
 
         <SettingsResources />
       </Screen>
-    );
+    )
   }
 }
 
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#e5e5e5',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth
-  }
-});
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+})

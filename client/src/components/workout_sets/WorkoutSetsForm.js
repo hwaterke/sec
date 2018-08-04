@@ -1,53 +1,52 @@
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Alert, Button, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import {select} from 'redux-crud-provider';
-import {Field, reduxForm} from 'redux-form';
-import {ExerciseResource} from '../../entities/ExerciseResource';
-import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
-import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
-import {fromKilo, toKilo} from '../../utils/conversion';
-import {Title} from '../dumb/Title';
-import {FieldWrapper} from '../simple/FieldWrapper';
-import {JsonDebug} from '../simple/JsonDebug';
-import {TextInputField} from '../simple/TextInputField';
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import React from 'react'
+import {Alert, Button, Text, View} from 'react-native'
+import {connect} from 'react-redux'
+import {select} from 'redux-crud-provider'
+import {Field, reduxForm} from 'redux-form'
+import {ExerciseResource} from '../../entities/ExerciseResource'
+import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
+import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets'
+import {fromKilo, toKilo} from '../../utils/conversion'
+import {Title} from '../dumb/Title'
+import {FieldWrapper} from '../simple/FieldWrapper'
+import {JsonDebug} from '../simple/JsonDebug'
+import {TextInputField} from '../simple/TextInputField'
 
 export const workoutSetsFormToResource = formData => {
-  const resource = {...formData};
-  resource.repetitions = resource.repetitions && parseInt(resource.repetitions);
-  resource.weight = resource.weight && fromKilo(resource.weight);
-  resource.distance = resource.distance && fromKilo(resource.distance);
-  return resource;
-};
+  const resource = {...formData}
+  resource.repetitions = resource.repetitions && parseInt(resource.repetitions)
+  resource.weight = resource.weight && fromKilo(resource.weight)
+  resource.distance = resource.distance && fromKilo(resource.distance)
+  return resource
+}
 
 const updateOrTemplate = (updatedResource, props) => {
   if (updatedResource) {
-    return updatedResource;
+    return updatedResource
   }
-  const now = moment().format('YYYY-MM-DD HH:mm:ss');
+  const now = moment().format('YYYY-MM-DD HH:mm:ss')
 
   // Delete the uuid to make sure we do not replace the existing one.
-  const cleanTemplate = {...props.templateResource, executed_at: now};
-  delete cleanTemplate.uuid;
+  const cleanTemplate = {...props.templateResource, executed_at: now}
+  delete cleanTemplate.uuid
 
-  return cleanTemplate;
-};
+  return cleanTemplate
+}
 
 export const workoutSetsResourceToForm = (updatedResource, props) => {
-  const resource = {...updateOrTemplate(updatedResource, props)};
-  resource.repetitions =
-    resource.repetitions && resource.repetitions.toString();
-  resource.weight = resource.weight && toKilo(resource.weight).toString();
-  resource.distance = resource.distance && toKilo(resource.distance).toString();
-  return resource;
-};
+  const resource = {...updateOrTemplate(updatedResource, props)}
+  resource.repetitions = resource.repetitions && resource.repetitions.toString()
+  resource.weight = resource.weight && toKilo(resource.weight).toString()
+  resource.distance = resource.distance && toKilo(resource.distance).toString()
+  return resource
+}
 
 const mapStateToProps = state => ({
   exercises: select(ExerciseResource).byId(state),
-  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
-});
+  lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state),
+})
 
 @reduxForm({form: WorkoutSetResource.name})
 @connect(mapStateToProps)
@@ -58,18 +57,18 @@ export class WorkoutSetsForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     deleteResource: PropTypes.func,
     isUpdate: PropTypes.bool.isRequired,
-    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired
-  };
+    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired,
+  }
 
   render() {
-    const exercise = this.props.exercises[this.props.exercise_uuid];
+    const exercise = this.props.exercises[this.props.exercise_uuid]
 
     if (!exercise) {
       return (
         <View>
           <Text>Exercise not found</Text>
         </View>
-      );
+      )
     }
 
     return (
@@ -141,7 +140,7 @@ export class WorkoutSetsForm extends React.Component {
             onPress={() =>
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
-                {text: 'Cancel'}
+                {text: 'Cancel'},
               ])
             }
           />
@@ -151,6 +150,6 @@ export class WorkoutSetsForm extends React.Component {
           <JsonDebug value={this.props.updatedResource} />
         )}
       </View>
-    );
+    )
   }
 }
