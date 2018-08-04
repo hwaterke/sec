@@ -1,12 +1,18 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {byIdSelector} from 'hw-react-shared';
+import React from 'react';
 import {connect} from 'react-redux';
+import {select} from 'redux-crud-provider';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
-import {WorkoutSetsForm} from './WorkoutSetsForm';
+import {ResourceFormProvider} from '../../providers/ResourceFormProvider';
+import {crudThunks} from '../../thunks/crudThunks';
 import {Screen} from '../dumb/Screen';
+import {
+  WorkoutSetsForm,
+  workoutSetsFormToResource,
+  workoutSetsResourceToForm
+} from './WorkoutSetsForm';
 
-@connect(state => ({workoutSetsById: byIdSelector(WorkoutSetResource)(state)}))
+@connect(state => ({workoutSetsById: select(WorkoutSetResource).byId(state)}))
 export class WorkoutSetsEditScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
@@ -17,17 +23,23 @@ export class WorkoutSetsEditScreen extends React.Component {
   };
 
   render() {
-    const ws = this.props.workoutSetsById[
-      this.props.navigation.state.params.resourceId
-    ];
-
     return (
       <Screen scroll padding>
-        <WorkoutSetsForm
-          updatedResource={ws}
-          postSubmit={() => this.props.navigation.goBack()}
-          exercise_uuid={ws.exercise_uuid}
-        />
+        <ResourceFormProvider
+          crudThunks={crudThunks}
+          uuid={this.props.navigation.state.params.resourceId}
+          resource={WorkoutSetResource}
+          formToResource={workoutSetsFormToResource}
+          resourceToForm={workoutSetsResourceToForm}
+          postAction={() => this.props.navigation.goBack()}
+        >
+          {props => (
+            <WorkoutSetsForm
+              {...props}
+              exercise_uuid={props.entity.exercise_uuid}
+            />
+          )}
+        </ResourceFormProvider>
       </Screen>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Ionicons} from '@expo/vector-icons';
-import {byIdSelector} from 'hw-react-shared';
+import {select} from 'redux-crud-provider';
 import moment from 'moment';
 import {
   SectionList,
@@ -31,7 +31,7 @@ const mapStateToProps = state => ({
   workoutSetsByDayByExerciseSections: workoutSetsByDayByExerciseSectionsSelector(
     state
   ),
-  exercisesById: byIdSelector(ExerciseResource)(state)
+  exercisesById: select(ExerciseResource).byId(state)
 });
 
 @connect(mapStateToProps)

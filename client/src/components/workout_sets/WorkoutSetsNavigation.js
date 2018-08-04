@@ -1,12 +1,12 @@
 import React from 'react';
-import {StackNavigator} from 'react-navigation';
-import {WorkoutSetsAddScreen} from './WorkoutSetsAddScreen';
-import {WorkoutSetsEditScreen} from './WorkoutSetsEditScreen';
-import {globalStyles} from '../../constants/styles';
+import {Button, Platform} from 'react-native';
+import {createStackNavigator} from 'react-navigation';
 import {colors} from '../../constants/colors';
+import {globalStyles} from '../../constants/styles';
 import {SummaryListScreen} from '../summary/SummaryListScreen';
 import {WorkoutSetsSummary} from '../summary/WorkoutSetsSummary';
-import {Button, Platform} from 'react-native';
+import {WorkoutSetsAddScreen} from './WorkoutSetsAddScreen';
+import {WorkoutSetsEditScreen} from './WorkoutSetsEditScreen';
 
 SummaryListScreen.navigationOptions = {
   title: 'History',
@@ -34,7 +34,8 @@ WorkoutSetsSummary.navigationOptions = ({navigation}) => ({
       onPress={() =>
         navigation.setParams({
           edit: !(navigation.state.params && navigation.state.params.edit)
-        })}
+        })
+      }
     />
   )
 });
@@ -51,7 +52,7 @@ WorkoutSetsEditScreen.navigationOptions = {
   headerTintColor: colors.headerTintColor
 };
 
-export const WorkoutSetsNavigation = StackNavigator(
+export const WorkoutSetsNavigation = createStackNavigator(
   {
     SummaryList: {
       screen: SummaryListScreen

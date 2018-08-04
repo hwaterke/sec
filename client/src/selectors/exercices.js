@@ -1,5 +1,5 @@
-import {arraySelector} from 'hw-react-shared';
-import R from 'ramda';
+import {ascend, groupBy, prop, sortWith} from 'ramda';
+import {select} from 'redux-crud-provider';
 import {createSelector} from 'reselect';
 import {ExerciseResource} from '../entities/ExerciseResource';
 
@@ -11,21 +11,19 @@ export const displayNameOfExercise = exercise => {
 };
 
 const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz';
-const sortByName = R.sortWith([R.ascend(muscleName), R.ascend(R.prop('name'))]);
-const groupByMuscle = R.groupBy(muscleName);
+const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))]);
+const groupByMuscle = groupBy(muscleName);
 
 export const exercisesByMuscleThenNameSelector = createSelector(
-  arraySelector(ExerciseResource),
+  select(ExerciseResource).asArray,
   exercisesArray => {
     const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz';
-    return R.sortWith([R.ascend(muscleName), R.ascend(R.prop('name'))])(
-      exercisesArray
-    );
+    return sortWith([ascend(muscleName), ascend(prop('name'))])(exercisesArray);
   }
 );
 
 export const exercicesGroupedByMuscle = createSelector(
-  arraySelector(ExerciseResource),
+  select(ExerciseResource).asArray,
   exercices => {
     const groups = groupByMuscle(sortByName(exercices));
     return Object.keys(groups).map(muscle => ({

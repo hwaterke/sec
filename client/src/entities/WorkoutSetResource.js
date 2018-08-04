@@ -1,9 +1,11 @@
-// @flow
 import PropTypes from 'prop-types';
-import type {ResourceDefinition} from 'hw-react-shared';
 
-export const WorkoutSetResource: ResourceDefinition = {
-  path: 'workout_sets',
+export const WorkoutSetResource = {
+  name: 'workout_sets',
+  key: 'uuid',
+
+  defaultPath: 'workout_sets',
+
   propType: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     repetitions: PropTypes.number,

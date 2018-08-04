@@ -1,21 +1,24 @@
-import {arraySelector, byIdSelector} from 'hw-react-shared';
 import moment from 'moment';
-import R from 'ramda';
+import {compose, descend, groupBy, last, map, prop, sort, sortBy} from 'ramda';
+import {select} from 'redux-crud-provider';
 import {createSelector} from 'reselect';
-import {WorkoutSetResource} from '../entities/WorkoutSetResource';
 import {ExerciseResource} from '../entities/ExerciseResource';
+import {WorkoutSetResource} from '../entities/WorkoutSetResource';
 
 export const workoutSetsByDateSelector = createSelector(
-  arraySelector(WorkoutSetResource),
-  workoutSetsArray => R.sort(R.descend(R.prop('executed_at')))(workoutSetsArray)
+  select(WorkoutSetResource).asArray,
+  workoutSetsArray => sort(descend(prop('executed_at')))(workoutSetsArray)
 );
 
 export const lastWorkoutSetByExerciseSelector = createSelector(
-  arraySelector(WorkoutSetResource),
+  select(WorkoutSetResource).asArray,
   workoutSetsArray =>
-    R.map(R.compose(R.last, R.sortBy(R.prop('executed_at'))))(
-      R.groupBy(R.prop('exercise_uuid'))(workoutSetsArray)
-    )
+    map(
+      compose(
+        last,
+        sortBy(prop('executed_at'))
+      )
+    )(groupBy(prop('exercise_uuid'))(workoutSetsArray))
 );
 
 // Returns Sets grouped by day
@@ -24,22 +27,22 @@ export const workoutSetsByDaySelector = createSelector(
   workoutSets => {
     const day = ws =>
       moment(ws.executed_at, 'YYYY-MM-DD').format('dddd, D MMMM');
-    const byDate = R.groupBy(day);
+    const byDate = groupBy(day);
     return byDate(workoutSets);
   }
 );
 
 export const workoutSetsByExercise = createSelector(
-  arraySelector(WorkoutSetResource),
-  workoutSets => R.groupBy(R.prop('exercise_uuid'))(workoutSets)
+  select(WorkoutSetResource).asArray,
+  workoutSets => groupBy(prop('exercise_uuid'))(workoutSets)
 );
 
 // Returns Sets grouped by day as a list of sections
 export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
   workoutSetsByDaySelector,
-  byIdSelector(ExerciseResource),
+  select(ExerciseResource).byId,
   (workoutSetsByDay, exercisesById) => {
-    const groupByExerciseName = R.groupBy(
+    const groupByExerciseName = groupBy(
       ws => exercisesById[ws.exercise_uuid].name
     );
 
@@ -49,8 +52,11 @@ export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
         title: name
       }));
 
-    return R.map(
-      R.compose(convertToArray, groupByExerciseName),
+    return map(
+      compose(
+        convertToArray,
+        groupByExerciseName
+      ),
       workoutSetsByDay
     );
   }
@@ -60,8 +66,8 @@ export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
 export const workoutSetsByDayAndExerciseSelector = createSelector(
   workoutSetsByDaySelector,
   workoutSetsByDay => {
-    const byExercise = R.groupBy(R.prop('exercise_uuid'));
-    const sortByDate = R.map(R.sortBy(R.prop('executed_at')));
-    return R.map(byExercise)(sortByDate(workoutSetsByDay));
+    const byExercise = groupBy(prop('exercise_uuid'));
+    const sortByDate = map(sortBy(prop('executed_at')));
+    return map(byExercise)(sortByDate(workoutSetsByDay));
   }
 );

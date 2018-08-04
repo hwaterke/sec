@@ -1,10 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {WorkoutSetsForm} from './WorkoutSetsForm';
-import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
+import React from 'react';
 import {connect} from 'react-redux';
-import {Screen} from '../dumb/Screen';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
+import {ResourceFormProvider} from '../../providers/ResourceFormProvider';
+import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
+import {crudThunks} from '../../thunks/crudThunks';
+import {Screen} from '../dumb/Screen';
+import {
+  WorkoutSetsForm,
+  workoutSetsFormToResource,
+  workoutSetsResourceToForm
+} from './WorkoutSetsForm';
 
 const mapStateToProps = state => ({
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
@@ -42,11 +48,21 @@ export class WorkoutSetsAddScreen extends React.Component {
 
     return (
       <Screen scroll padding>
-        <WorkoutSetsForm
-          postSubmit={() => this.props.navigation.goBack()}
-          exercise_uuid={template.exercise_uuid}
+        <ResourceFormProvider
+          crudThunks={crudThunks}
+          resource={WorkoutSetResource}
+          formToResource={workoutSetsFormToResource}
+          resourceToForm={workoutSetsResourceToForm}
           templateResource={template}
-        />
+          postAction={() => this.props.navigation.goBack()}
+        >
+          {props => (
+            <WorkoutSetsForm
+              {...props}
+              exercise_uuid={template.exercise_uuid}
+            />
+          )}
+        </ResourceFormProvider>
       </Screen>
     );
   }

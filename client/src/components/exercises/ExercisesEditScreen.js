@@ -1,15 +1,13 @@
-import {byIdSelector} from 'hw-react-shared';
-import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React from 'react';
 import {ExerciseResource} from '../../entities/ExerciseResource';
-import {ExercisesForm} from './ExercisesForm';
+import {ResourceFormProvider} from '../../providers/ResourceFormProvider';
+import {crudThunks} from '../../thunks/crudThunks';
 import {Screen} from '../dumb/Screen';
+import {ExercisesForm} from './ExercisesForm';
 
-@connect(state => ({exercises: byIdSelector(ExerciseResource)(state)}))
 export class ExercisesEditScreen extends React.Component {
   static propTypes = {
-    exercises: PropTypes.objectOf(ExerciseResource.propType).isRequired,
     navigation: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
       state: PropTypes.object.isRequired
@@ -19,12 +17,14 @@ export class ExercisesEditScreen extends React.Component {
   render() {
     return (
       <Screen scroll padding>
-        <ExercisesForm
-          updatedResource={
-            this.props.exercises[this.props.navigation.state.params.resourceId]
-          }
-          postSubmit={() => this.props.navigation.goBack()}
-        />
+        <ResourceFormProvider
+          crudThunks={crudThunks}
+          uuid={this.props.navigation.state.params.resourceId}
+          resource={ExerciseResource}
+          postAction={() => this.props.navigation.goBack()}
+        >
+          {props => <ExercisesForm {...props} />}
+        </ResourceFormProvider>
       </Screen>
     );
   }

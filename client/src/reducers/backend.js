@@ -1,10 +1,6 @@
-export const setBackendUrl = (url) => ({
+export const setBackendUrl = url => ({
   type: 'SET_BACKEND_URL',
   payload: url
-});
-
-export const clearBackendUrl = () => ({
-  type: 'CLEAR_BACKEND_URL'
 });
 
 export const backendReducer = (state = null, action) => {

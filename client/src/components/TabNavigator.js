@@ -1,11 +1,11 @@
+import {Ionicons} from '@expo/vector-icons';
 /* eslint-disable react/display-name,react/prop-types */
 import React from 'react';
-import {TabNavigator, TabView, Platform} from 'react-navigation';
-import {SettingsScreen} from './SettingsScreen';
-import {Ionicons} from '@expo/vector-icons';
-import {ExercisesNavigation} from './exercises/ExercisesNavigation';
-import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
+import {createBottomTabNavigator} from 'react-navigation';
 import {colors} from '../constants/colors';
+import {ExercisesNavigation} from './exercises/ExercisesNavigation';
+import {SettingsScreen} from './SettingsScreen';
+import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation';
 
 ExercisesNavigation.navigationOptions = {
   tabBarLabel: 'Exercises',
@@ -40,27 +40,7 @@ SettingsScreen.navigationOptions = {
   )
 };
 
-const iosTabOptions = {
-  tabBarOptions: {
-    activeTintColor: colors.headerColor
-  }
-};
-
-const androidTabOptions = {
-  tabBarOptions: {
-    activeTintColor: colors.headerColor,
-    inactiveTintColor: 'black',
-    showIcon: true,
-    tabBarComponent: TabView.TabBarBottom,
-    style: {
-      backgroundColor: '#EEEEEE'
-    },
-    renderIndicator: () => null
-  },
-  tabBarPosition: 'bottom'
-};
-
-export const SecTabNavigator = TabNavigator(
+export const SecTabNavigator = createBottomTabNavigator(
   {
     Exercises: {
       screen: ExercisesNavigation
@@ -72,5 +52,9 @@ export const SecTabNavigator = TabNavigator(
       screen: SettingsScreen
     }
   },
-  ...(Platform.OS === 'ios' ? iosTabOptions : androidTabOptions)
+  {
+    tabBarOptions: {
+      activeTintColor: colors.headerColor
+    }
+  }
 );

@@ -1,17 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {Alert, Button, View} from 'react-native';
-import {Field} from 'redux-form';
-import {TextInputField} from '../simple/TextInputField';
-import {SwitchField} from '../simple/SwitchField';
+import {Field, reduxForm} from 'redux-form';
 import {ExerciseResource} from '../../entities/ExerciseResource';
 import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
 import {MuscleSelectField} from '../simple/MuscleSelectField';
-import {resourceForm} from 'hw-react-shared';
-import {crud} from '../../hoc/crud';
+import {SwitchField} from '../simple/SwitchField';
+import {TextInputField} from '../simple/TextInputField';
 
-@resourceForm({crud, resource: ExerciseResource})
+@reduxForm({form: ExerciseResource.name})
 export class ExercisesForm extends React.Component {
   static propTypes = {
     updatedResource: ExerciseResource.propType,
@@ -65,7 +63,8 @@ export class ExercisesForm extends React.Component {
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
                 {text: 'Cancel'}
-              ])}
+              ])
+            }
           />
         )}
 

@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {arraySelector, byIdSelector} from 'hw-react-shared';
+import React from 'react';
 import {
   Button,
   FlatList,
@@ -11,13 +10,14 @@ import {
   View
 } from 'react-native';
 import {connect} from 'react-redux';
+import {select} from 'redux-crud-provider';
 import {globalStyles} from '../../constants/styles';
 import {MuscleResource} from '../../entities/MuscleResource';
 import {Row} from '../dumb/Row';
 
 const mapStateToProps = state => ({
-  muscleArray: arraySelector(MuscleResource)(state),
-  muscles: byIdSelector(MuscleResource)(state)
+  muscleArray: select(MuscleResource).asArray(state),
+  muscles: select(MuscleResource).byId(state)
 });
 
 @connect(mapStateToProps)

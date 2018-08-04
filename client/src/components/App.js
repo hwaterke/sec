@@ -1,36 +1,23 @@
 import React from 'react';
-import {AsyncStorage, StatusBar, StyleSheet, View} from 'react-native';
-import {appReducer} from '../reducers';
-import {autoRehydrate, persistStore} from 'redux-persist';
-import {applyMiddleware, compose, createStore} from 'redux';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
+import {PersistGate} from 'redux-persist/es/integration/react';
 import {colors} from '../constants/colors';
-import {LoginDispatcher} from './LoginDispatcher';
+import {persistor, store} from '../store/store';
 import {TopBar} from './dumb/TopBar';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancers = composeEnhancers(applyMiddleware(thunk), autoRehydrate());
-
-// Creation of Redux store
-const store = createStore(appReducer, enhancers);
+import {LoginDispatcher} from './LoginDispatcher';
 
 export class App extends React.Component {
-  componentDidMount() {
-    persistStore(store, {
-      storage: AsyncStorage,
-      blacklist: ['navigation', 'form']
-    });
-  }
-
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <StatusBar backgroundColor="blue" barStyle="light-content" />
-          <TopBar />
-          <LoginDispatcher />
-        </View>
+        <PersistGate persistor={persistor}>
+          <View style={styles.container}>
+            <StatusBar backgroundColor="blue" barStyle="light-content" />
+            <TopBar />
+            <LoginDispatcher />
+          </View>
+        </PersistGate>
       </Provider>
     );
   }

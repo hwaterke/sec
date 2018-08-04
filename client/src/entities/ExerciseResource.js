@@ -1,9 +1,11 @@
-// @flow
 import PropTypes from 'prop-types';
-import type {ResourceDefinition} from 'hw-react-shared';
 
-export const ExerciseResource: ResourceDefinition = {
-  path: 'exercises',
+export const ExerciseResource = {
+  name: 'exercises',
+  key: 'uuid',
+
+  defaultPath: 'exercises',
+
   propType: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     repetitions: PropTypes.bool,

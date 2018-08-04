@@ -1,21 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {byIdSelector, resourceForm} from 'hw-react-shared';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Alert, Button, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Field} from 'redux-form';
+import {select} from 'redux-crud-provider';
+import {Field, reduxForm} from 'redux-form';
 import {ExerciseResource} from '../../entities/ExerciseResource';
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource';
 import {lastWorkoutSetByExerciseSelector} from '../../selectors/workout_sets';
 import {fromKilo, toKilo} from '../../utils/conversion';
+import {Title} from '../dumb/Title';
 import {FieldWrapper} from '../simple/FieldWrapper';
 import {JsonDebug} from '../simple/JsonDebug';
 import {TextInputField} from '../simple/TextInputField';
-import {Title} from '../dumb/Title';
-import {crud} from '../../hoc/crud';
 
-const formToResource = formData => {
+export const workoutSetsFormToResource = formData => {
   const resource = {...formData};
   resource.repetitions = resource.repetitions && parseInt(resource.repetitions);
   resource.weight = resource.weight && fromKilo(resource.weight);
@@ -36,7 +35,7 @@ const updateOrTemplate = (updatedResource, props) => {
   return cleanTemplate;
 };
 
-const resourceToForm = (updatedResource, props) => {
+export const workoutSetsResourceToForm = (updatedResource, props) => {
   const resource = {...updateOrTemplate(updatedResource, props)};
   resource.repetitions =
     resource.repetitions && resource.repetitions.toString();
@@ -46,16 +45,11 @@ const resourceToForm = (updatedResource, props) => {
 };
 
 const mapStateToProps = state => ({
-  exercises: byIdSelector(ExerciseResource)(state),
+  exercises: select(ExerciseResource).byId(state),
   lastWorkoutSetByExercise: lastWorkoutSetByExerciseSelector(state)
 });
 
-@resourceForm({
-  crud,
-  resource: WorkoutSetResource,
-  formToResource,
-  resourceToForm
-})
+@reduxForm({form: WorkoutSetResource.name})
 @connect(mapStateToProps)
 export class WorkoutSetsForm extends React.Component {
   static propTypes = {
@@ -148,7 +142,8 @@ export class WorkoutSetsForm extends React.Component {
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
                 {text: 'Cancel'}
-              ])}
+              ])
+            }
           />
         )}
 
