@@ -5,8 +5,8 @@ import {colors} from '../../constants/colors';
 
 export class Screen extends React.Component {
   static propTypes = {
-    scroll: PropTypes.bool.isRequired,
-    padding: PropTypes.bool.isRequired,
+    scroll: PropTypes.bool,
+    padding: PropTypes.bool,
     children: PropTypes.node
   };
 
