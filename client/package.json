@@ -10,15 +10,14 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@expo/vector-icons": "^6.3.1",
     "axios": "^0.18.0",
     "cuid": "^2.1.1",
-    "expo": "^30.0.1",
+    "expo": "^31.0.2",
     "moment": "^2.22.2",
     "ramda": "^0.25.0",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-navigation": "^2.13.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-navigation": "^2.18.3",
     "react-redux": "^5.0.3",
     "redux": "^4.0.0",
     "redux-crud": "^3.0.4",
@@ -30,6 +29,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "babel-preset-expo": "^5.0.0",
     "eslint": "^5.10.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",

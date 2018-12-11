@@ -9,34 +9,22 @@ import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation'
 
 ExercisesNavigation.navigationOptions = {
   tabBarLabel: 'Exercises',
-  tabBarIcon: ({tintColor, focused}) => (
-    <Ionicons
-      name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
-      size={26}
-      style={{color: tintColor}}
-    />
+  tabBarIcon: ({tintColor}) => (
+    <Ionicons name="ios-list-box" size={26} style={{color: tintColor}} />
   ),
 }
 
 WorkoutSetsNavigation.navigationOptions = {
   tabBarLabel: 'Set',
-  tabBarIcon: ({tintColor, focused}) => (
-    <Ionicons
-      name={focused ? 'ios-add' : 'ios-add-outline'}
-      size={26}
-      style={{color: tintColor}}
-    />
+  tabBarIcon: ({tintColor}) => (
+    <Ionicons name="ios-add" size={26} style={{color: tintColor}} />
   ),
 }
 
 SettingsScreen.navigationOptions = {
   tabBarLabel: 'Settings',
-  tabBarIcon: ({tintColor, focused}) => (
-    <Ionicons
-      name={focused ? 'ios-settings' : 'ios-settings-outline'}
-      size={26}
-      style={{color: tintColor}}
-    />
+  tabBarIcon: ({tintColor}) => (
+    <Ionicons name="ios-settings" size={26} style={{color: tintColor}} />
   ),
 }
 

@@ -9,7 +9,8 @@
     "ecmaFeatures": {
       "jsx": true,
       "generators": true,
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
+      "legacyDecorators": true
     }
   },
 

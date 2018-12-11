@@ -94,11 +94,7 @@ export class WorkoutSetsSummary extends React.Component {
       <View style={styles.smallRow}>
         {(item.busy || item.pendingCreate || item.pendingUpdate) && (
           <View style={{flex: 1}}>
-            <Ionicons
-              name="ios-cloud-upload-outline"
-              size={26}
-              style={styles.icon}
-            />
+            <Ionicons name="ios-cloud-upload" size={26} style={styles.icon} />
           </View>
         )}
         <View style={{flex: 1}}>

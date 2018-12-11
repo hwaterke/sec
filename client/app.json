@@ -1,21 +1,22 @@
 {
   "expo": {
     "name": "sec",
-    "description": "Sec",
     "slug": "sec",
     "privacy": "unlisted",
-    "sdkVersion": "30.0.0",
+    "sdkVersion": "31.0.0",
+    "platforms": ["ios", "android"],
     "version": "1.0.1",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
     "icon": "./src/assets/dumbbell_192.png",
-    "loading": {
-      "icon": "./src/assets/dumbbell_192.png",
-      "hideExponentText": true
+    "splash": {
+      "image": "./src/assets/dumbbell_192.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "packagerOpts": {
-      "assetExts": ["ttf", "mp4"]
+    "updates": {
+      "fallbackToCacheTimeout": 0
     },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }
