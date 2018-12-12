@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {connect} from 'react-redux'
 import {select} from 'redux-crud-provider'
+import {Text, View} from 'react-native'
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
 import {ResourceFormProvider} from '../../providers/ResourceFormProvider'
 import {crudThunks} from '../../thunks/crudThunks'
@@ -33,12 +34,18 @@ export class WorkoutSetsEditScreen extends React.Component {
           resourceToForm={workoutSetsResourceToForm}
           postAction={() => this.props.navigation.goBack()}
         >
-          {props => (
-            <WorkoutSetsForm
-              {...props}
-              exercise_uuid={props.entity.exercise_uuid}
-            />
-          )}
+          {props =>
+            props.entity ? (
+              <WorkoutSetsForm
+                {...props}
+                exercise_uuid={props.entity.exercise_uuid}
+              />
+            ) : (
+              <View>
+                <Text>Workout set not found</Text>
+              </View>
+            )
+          }
         </ResourceFormProvider>
       </Screen>
     )
