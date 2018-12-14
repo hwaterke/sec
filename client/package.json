@@ -6,8 +6,7 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "format": "prettier --write 'src/**/*.js'",
-    "precommit": "lint-staged"
+    "format": "prettier --write 'src/**/*.js'"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -48,5 +47,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
