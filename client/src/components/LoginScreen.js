@@ -20,6 +20,9 @@ export class LoginScreen extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   onSubmit = data => {
@@ -40,6 +43,7 @@ export class LoginScreen extends React.Component {
         if (response.headers.authorization) {
           // Dispatch save token
           this.props.dispatch(saveToken(response.headers.authorization))
+          this.props.navigation.navigate('App')
         } else {
           alert('Login error')
         }

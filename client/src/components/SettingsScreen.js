@@ -14,6 +14,9 @@ export class SettingsScreen extends React.Component {
   static propTypes = {
     backend: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   render() {
@@ -25,7 +28,10 @@ export class SettingsScreen extends React.Component {
           <Text>Logged in to {this.props.backend}</Text>
           <Button
             title="Sign out"
-            onPress={() => this.props.dispatch(clearToken())}
+            onPress={() => {
+              this.props.dispatch(clearToken())
+              this.props.navigation.navigate('Auth')
+            }}
           />
         </View>
 
