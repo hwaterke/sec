@@ -26,10 +26,18 @@ export const globalStyles = StyleSheet.create({
 
   header: {
     backgroundColor: colors.headerColor,
+    // iOS
+    borderBottomWidth: 0,
+    // Android
+    elevation: 0,
   },
 
   headerEdit: {
     backgroundColor: '#E9D460',
+    // iOS
+    borderBottomWidth: 0,
+    // Android
+    elevation: 0,
   },
 
   card: {
