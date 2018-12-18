@@ -2,12 +2,18 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {Button, StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux'
+import styled from 'styled-components'
 import {colors} from '../constants/colors'
 import {ExerciseResource} from '../entities/ExerciseResource'
 import {MuscleResource} from '../entities/MuscleResource'
 import {WorkoutSetResource} from '../entities/WorkoutSetResource'
 import {crudThunks} from '../thunks/crudThunks'
-import {Row} from './dumb/Row'
+
+const Row = styled.View`
+  padding: 8px;
+  flex-direction: row;
+  justify-content: space-between;
+`
 
 const mapDispatchToProps = {
   fetchAll: crudThunks.fetchAll,
