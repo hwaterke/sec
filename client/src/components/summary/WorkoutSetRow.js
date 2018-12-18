@@ -16,9 +16,15 @@ const Row = styled.View`
   border-bottom-width: ${StyleSheet.hairlineWidth};
 `
 
-const formatTime = date => moment(date, 'YYYY-MM-DD HH:mm').format('HH:mm')
+const formatTime = (date, fullDate) => {
+  if (fullDate) {
+    return moment(date, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+  }
 
-export const WorkoutSetRow = ({onPress, workoutSet}) => (
+  return moment(date, 'YYYY-MM-DD HH:mm').format('HH:mm')
+}
+
+export const WorkoutSetRow = ({onPress, workoutSet, fullDate}) => (
   <TouchableOpacity onPress={onPress}>
     <Row>
       {(workoutSet.busy ||
@@ -28,12 +34,12 @@ export const WorkoutSetRow = ({onPress, workoutSet}) => (
           <Ionicons name="ios-cloud-upload" size={26} />
         </View>
       )}
-      <View style={{flex: 1}}>
+      <View style={{flex: 2}}>
         <Text style={{color: colors.discreteTextColor}}>
-          {formatTime(workoutSet.executed_at)}
+          {formatTime(workoutSet.executed_at, fullDate)}
         </Text>
       </View>
-      <View style={{flex: 4}}>
+      <View style={{flex: 3}}>
         <WorkoutSetMetrics workoutSet={workoutSet} />
       </View>
     </Row>
@@ -42,5 +48,6 @@ export const WorkoutSetRow = ({onPress, workoutSet}) => (
 
 WorkoutSetRow.propTypes = {
   onPress: PropTypes.func.isRequired,
+  fullDate: PropTypes.bool,
   workoutSet: WorkoutSetResource.propType.isRequired,
 }

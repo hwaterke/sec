@@ -28,7 +28,7 @@ const withoutDuplicates = sets => {
   return pipe(
     sortByDateDesc,
     uniqBy(hash),
-    take(10)
+    take(15)
   )(sets)
 }
 
@@ -77,6 +77,7 @@ export class ExercisesDetailScreen extends React.Component {
                 key={ws.uuid}
                 workoutSet={ws}
                 onPress={() => this.onClick(ws)}
+                fullDate
               />
             ))}
           </Fragment>
