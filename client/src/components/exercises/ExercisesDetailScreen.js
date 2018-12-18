@@ -26,8 +26,8 @@ const withoutDuplicates = sets => {
   }
 
   return pipe(
-    uniqBy(hash),
     sortByDateDesc,
+    uniqBy(hash),
     take(10)
   )(sets)
 }
