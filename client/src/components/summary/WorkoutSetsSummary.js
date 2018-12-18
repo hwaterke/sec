@@ -1,17 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Ionicons} from '@expo/vector-icons'
 import {select} from 'redux-crud-provider'
 import moment from 'moment'
-import {
-  SectionList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {SectionList, View} from 'react-native'
 import {connect} from 'react-redux'
-import {colors} from '../../constants/colors'
 import {globalStyles} from '../../constants/styles'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {
@@ -20,10 +12,10 @@ import {
   workoutSetsByDaySelector,
 } from '../../selectors/workout_sets'
 import {Info, InfoRow} from '../simple/Info'
-import {WorkoutSetMetrics} from '../workout_sets/WorkoutSetMetrics'
 import {extractUuid} from '../../constants/keyExtractor'
 import {SectionHeader} from '../dumb/SectionHeader'
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
+import {WorkoutSetRow} from './WorkoutSetRow'
 
 const mapStateToProps = state => ({
   ws: workoutSetsByDayAndExerciseSelector(state),
@@ -71,10 +63,6 @@ export class WorkoutSetsSummary extends React.Component {
     )
   }
 
-  getTime(date) {
-    return moment(date, 'YYYY-MM-DD HH:mm').format('HH:mm')
-  }
-
   isEdit = () =>
     this.props.navigation.state.params &&
     this.props.navigation.state.params.edit
@@ -90,23 +78,7 @@ export class WorkoutSetsSummary extends React.Component {
   }
 
   renderRow = ({item}) => (
-    <TouchableOpacity onPress={() => this.onRowPress(item)}>
-      <View style={styles.smallRow}>
-        {(item.busy || item.pendingCreate || item.pendingUpdate) && (
-          <View style={{flex: 1}}>
-            <Ionicons name="ios-cloud-upload" size={26} style={styles.icon} />
-          </View>
-        )}
-        <View style={{flex: 1}}>
-          <Text style={{color: colors.discreteTextColor}}>
-            {this.getTime(item.executed_at)}
-          </Text>
-        </View>
-        <View style={{flex: 4}}>
-          <WorkoutSetMetrics workoutSet={item} />
-        </View>
-      </View>
-    </TouchableOpacity>
+    <WorkoutSetRow workoutSet={item} onPress={() => this.onRowPress(item)} />
   )
 
   render() {
@@ -132,14 +104,3 @@ export class WorkoutSetsSummary extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  smallRow: {
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    backgroundColor: 'white',
-    borderColor: colors.borderColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-})
