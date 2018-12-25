@@ -9,6 +9,9 @@ import {colors} from '../../constants/colors'
 import {extractUuid} from '../../constants/keyExtractor'
 import {Row} from '../dumb/Row'
 import {SectionHeader} from '../dumb/SectionHeader'
+import {SearchListHeader} from '../dumb/SearchListHeader'
+
+const safeUpper = value => (value ? value.toUpperCase() : '')
 
 const mapStateToProps = state => ({
   exercises: exercicesGroupedByMuscle(state),
@@ -24,6 +27,31 @@ export class ExercisesList extends React.Component {
       })
     ).isRequired,
     onRowPress: PropTypes.func.isRequired,
+  }
+
+  state = {
+    searchTerm: '',
+    sections: this.props.exercises,
+  }
+
+  search = searchTerm => {
+    const value = safeUpper(searchTerm)
+
+    const ns = this.props.exercises
+      .map(section => {
+        return {
+          ...section,
+          data: section.data.filter(
+            e =>
+              searchTerm === '' ||
+              safeUpper(e.name).includes(value) ||
+              safeUpper(e.main_muscle).includes(value)
+          ),
+        }
+      })
+      .filter(section => section.data.length > 0)
+
+    this.setState({sections: ns, searchTerm})
   }
 
   renderRow = ({item}) => {
@@ -52,12 +80,18 @@ export class ExercisesList extends React.Component {
   render() {
     return (
       <SectionList
-        sections={this.props.exercises}
+        sections={this.state.sections}
         renderItem={this.renderRow}
         renderSectionHeader={({section}) => (
           <SectionHeader title={section.title} />
         )}
         keyExtractor={extractUuid}
+        ListHeaderComponent={
+          <SearchListHeader
+            value={this.state.searchTerm}
+            onChangeText={this.search}
+          />
+        }
       />
     )
   }
