@@ -6,6 +6,7 @@ import {select} from 'redux-crud-provider'
 import {descend, head, pipe, prop, sortWith, take, uniqBy} from 'ramda'
 import {VictoryBar} from 'victory-native'
 import moment from 'moment'
+import styled from 'styled-components'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {Screen} from '../dumb/Screen'
 import {Title} from '../dumb/Title'
@@ -13,6 +14,10 @@ import {workoutSetsByExercise} from '../../selectors/workout_sets'
 import {WorkoutSetRow} from '../summary/WorkoutSetRow'
 import {SectionHeader} from '../dumb/SectionHeader'
 import {colors} from '../../constants/colors'
+
+const TitleContainer = styled.View`
+  padding: 0 16px;
+`
 
 const mapStateToProps = state => ({
   exercicesById: select(ExerciseResource).byId(state),
@@ -82,7 +87,10 @@ export class ExercisesDetailScreen extends React.Component {
             this.props.navigation.navigate('WorkoutSetsAdd', {exercise_uuid})
           }
         />
-        <Title>{exercise.name}</Title>
+
+        <TitleContainer>
+          <Title>{exercise.name}</Title>
+        </TitleContainer>
 
         {sets && (
           <Fragment>
@@ -98,14 +106,19 @@ export class ExercisesDetailScreen extends React.Component {
             ))}
 
             {raw.length > 0 && (
-              <VictoryBar
-                style={{
-                  data: {
-                    fill: colors.headerColor,
-                  },
-                }}
-                data={raw}
-              />
+              <Fragment>
+                <TitleContainer>
+                  <Title>Weight</Title>
+                </TitleContainer>
+                <VictoryBar
+                  style={{
+                    data: {
+                      fill: colors.headerColor,
+                    },
+                  }}
+                  data={raw}
+                />
+              </Fragment>
             )}
           </Fragment>
         )}
