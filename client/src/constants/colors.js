@@ -4,6 +4,5 @@ export const colors = {
   tintColor: '#2f95dc',
   backgroundColor: '#FAFAFA',
   borderColor: '#E5E5E5',
-  darkPrimaryColor: '#80CBC4',
   discreteTextColor: '#999',
 }
