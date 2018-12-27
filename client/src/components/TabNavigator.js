@@ -7,6 +7,7 @@ import {globalStyles} from '../constants/styles'
 import {ExercisesNavigation} from './exercises/ExercisesNavigation'
 import {SettingsScreen} from './SettingsScreen'
 import {WorkoutSetsNavigation} from './workout_sets/WorkoutSetsNavigation'
+import {TodayScreen} from './screens/today/TodayScreen'
 
 ExercisesNavigation.navigationOptions = {
   tabBarLabel: 'Exercises',
@@ -40,6 +41,24 @@ SettingStack.navigationOptions = {
   ),
 }
 
+const TodayStack = createStackNavigator({
+  TodayScreen: {
+    screen: TodayScreen,
+    navigationOptions: {
+      title: 'Now',
+      headerStyle: globalStyles.header,
+      headerTintColor: colors.headerTintColor,
+    },
+  },
+})
+
+TodayStack.navigationOptions = {
+  tabBarLabel: 'Today',
+  tabBarIcon: ({tintColor}) => (
+    <Ionicons name="ios-flash" size={26} style={{color: tintColor}} />
+  ),
+}
+
 export const SecTabNavigator = createBottomTabNavigator(
   {
     Exercises: {
@@ -48,6 +67,10 @@ export const SecTabNavigator = createBottomTabNavigator(
     Sets: {
       screen: WorkoutSetsNavigation,
     },
+    Today: {
+      screen: TodayStack,
+    },
+
     Settings: {
       screen: SettingStack,
     },
