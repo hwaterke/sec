@@ -15,6 +15,7 @@ import {Info, InfoRow} from '../simple/Info'
 import {extractUuid} from '../../constants/keyExtractor'
 import {SectionHeader} from '../dumb/SectionHeader'
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
+import {secondsToHuman} from '../screens/today/TimeSince'
 import {WorkoutSetRow} from './WorkoutSetRow'
 
 const mapStateToProps = state => ({
@@ -52,7 +53,9 @@ export class WorkoutSetsSummary extends React.Component {
         <InfoRow>
           <Info
             highlight={date}
-            caption={moment.duration(timeEnd.diff(timeStart)).humanize()}
+            caption={secondsToHuman(
+              moment.duration(timeEnd.diff(timeStart)).asSeconds()
+            )}
           />
         </InfoRow>
         <InfoRow>

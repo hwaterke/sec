@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const intDivision = (a, b) => Math.floor(a / b)
 
-const secondsToHuman = seconds => {
+export const secondsToHuman = seconds => {
   const deltas = [[24 * 60 * 60, 'd'], [60 * 60, 'h'], [60, 'm']]
 
   for (const [delta, suffix] of deltas) {
