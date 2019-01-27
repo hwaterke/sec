@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Image, SectionList, Text, TouchableOpacity} from 'react-native'
 import {Ionicons} from '@expo/vector-icons'
 import {connect} from 'react-redux'
-import {exercisesGroupedByMuscle} from '../../selectors/exercises'
+import {exercisesGroupedByMuscleSelector} from '../../selectors/exercises'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {colors} from '../../constants/colors'
 import {extractUuid} from '../../constants/keyExtractor'
@@ -14,7 +14,7 @@ import {SearchListHeader} from '../dumb/SearchListHeader'
 const safeUpper = value => (value ? value.toUpperCase() : '')
 
 const mapStateToProps = state => ({
-  exercises: exercisesGroupedByMuscle(state),
+  exercises: exercisesGroupedByMuscleSelector(state),
 })
 
 @connect(mapStateToProps)
