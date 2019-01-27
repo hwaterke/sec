@@ -15,6 +15,7 @@ import {extractUuid} from '../../constants/keyExtractor'
 import {SectionHeader} from '../dumb/SectionHeader'
 import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
 import {secondsToHuman} from '../screens/today/TimeSince'
+import {isoDateToHuman} from '../../utils/dateUtils'
 import {WorkoutSetRow} from './WorkoutSetRow'
 
 const mapStateToProps = state => ({
@@ -50,7 +51,7 @@ export class WorkoutSetsSummary extends React.Component {
       <View style={globalStyles.screen}>
         <InfoRow>
           <Info
-            highlight={date}
+            highlight={isoDateToHuman(date)}
             caption={secondsToHuman(
               moment.duration(timeEnd.diff(timeStart)).asSeconds()
             )}

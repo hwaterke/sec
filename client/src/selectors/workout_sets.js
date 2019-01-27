@@ -25,8 +25,7 @@ export const lastWorkoutSetByExerciseSelector = createSelector(
 export const workoutSetsByDaySelector = createSelector(
   workoutSetsByDateDescSelector,
   workoutSets => {
-    const day = ws =>
-      moment(ws.executed_at, 'YYYY-MM-DD').format('dddd, D MMMM')
+    const day = ws => moment(ws.executed_at, 'YYYY-MM-DD').format('YYYY-MM-DD')
     const byDate = groupBy(day)
     return byDate(workoutSets)
   }

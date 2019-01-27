@@ -11,6 +11,7 @@ import {WorkoutSetResource} from '../../entities/WorkoutSetResource'
 import {displayNameOfExercise} from '../../selectors/exercices'
 import {workoutSetsByDaySelector} from '../../selectors/workout_sets'
 import {Row} from '../dumb/Row'
+import {isoDateToHuman} from '../../utils/dateUtils'
 
 const mapStateToProps = state => ({
   exercises: select(ExerciseResource).byId(state),
@@ -38,7 +39,7 @@ export class SummaryListScreen extends React.Component {
         onPress={() => this.props.navigation.navigate('Summary', {date: item})}
       >
         <Row>
-          <Text>{item}</Text>
+          <Text>{isoDateToHuman(item)}</Text>
           <Text>{muscle}</Text>
           <Ionicons name="ios-arrow-forward" />
         </Row>
