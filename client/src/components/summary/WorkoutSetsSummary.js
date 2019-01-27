@@ -7,8 +7,8 @@ import {connect} from 'react-redux'
 import {globalStyles} from '../../constants/styles'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {
-  workoutSetsByDayByExerciseSectionsSelector,
   workoutSetsByDaySelector,
+  workoutSetsGroupedByDateExerciseSectionsSelector,
 } from '../../selectors/workout_sets'
 import {Info, InfoRow} from '../simple/Info'
 import {extractUuid} from '../../constants/keyExtractor'
@@ -20,7 +20,7 @@ import {WorkoutSetRow} from './WorkoutSetRow'
 
 const mapStateToProps = state => ({
   workoutSetsByDay: workoutSetsByDaySelector(state),
-  workoutSetsByDayByExerciseSections: workoutSetsByDayByExerciseSectionsSelector(
+  workoutSetsGroupedByDateExerciseSections: workoutSetsGroupedByDateExerciseSectionsSelector(
     state
   ),
   exercisesById: select(ExerciseResource).byId(state),
@@ -36,7 +36,8 @@ export class WorkoutSetsSummary extends React.Component {
     workoutSetsByDay: PropTypes.objectOf(
       PropTypes.arrayOf(WorkoutSetResource.propType)
     ).isRequired,
-    workoutSetsByDayByExerciseSections: PropTypes.object.isRequired,
+    workoutSetsGroupedByDateExerciseSections: PropTypes.object.isRequired,
+    exercisesById: PropTypes.objectOf(ExerciseResource.propType),
   }
 
   renderHeader = () => {
@@ -84,20 +85,21 @@ export class WorkoutSetsSummary extends React.Component {
   )
 
   render() {
+    const {exercisesById} = this.props
     const date = this.props.navigation.state.params.date
-    const allSets = this.props.workoutSetsByDayByExerciseSections[date]
+    const daySets = this.props.workoutSetsGroupedByDateExerciseSections[date]
 
-    if (!allSets) {
+    if (!daySets) {
       return null
     }
 
     return (
       <View style={globalStyles.screen}>
         <SectionList
-          sections={allSets}
+          sections={daySets}
           renderItem={this.renderRow}
           renderSectionHeader={({section}) => (
-            <SectionHeader title={section.title} />
+            <SectionHeader title={exercisesById[section.exerciseUuid].name} />
           )}
           ListHeaderComponent={this.renderHeader}
           keyExtractor={extractUuid}

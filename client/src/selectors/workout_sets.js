@@ -1,8 +1,18 @@
 import moment from 'moment'
-import {compose, descend, groupBy, last, map, prop, sort, sortBy} from 'ramda'
+import {
+  compose,
+  descend,
+  groupBy,
+  last,
+  map,
+  pipe,
+  prop,
+  sort,
+  sortBy,
+  toPairs,
+} from 'ramda'
 import {select} from 'redux-crud-provider'
 import {createSelector} from 'reselect'
-import {ExerciseResource} from '../entities/ExerciseResource'
 import {WorkoutSetResource} from '../entities/WorkoutSetResource'
 
 export const workoutSetsByDateDescSelector = createSelector(
@@ -36,27 +46,23 @@ export const workoutSetsByExercise = createSelector(
   workoutSets => groupBy(prop('exercise_uuid'))(workoutSets)
 )
 
-// Returns Sets grouped by day as a list of sections
-export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
+export const workoutSetsGroupedByDateAndExerciseSelector = createSelector(
   workoutSetsByDaySelector,
-  select(ExerciseResource).byId,
-  (workoutSetsByDay, exercisesById) => {
-    const groupByExerciseName = groupBy(
-      ws => exercisesById[ws.exercise_uuid].name
-    )
+  map(groupBy(ws => ws.exercise_uuid))
+)
 
-    const convertToArray = obj =>
-      Object.keys(obj).map(name => ({
-        data: obj[name],
-        title: name,
+/**
+ * Returns Workout Sets grouped by day as a list of sections (each exercise is a section)
+ */
+export const workoutSetsGroupedByDateExerciseSectionsSelector = createSelector(
+  workoutSetsGroupedByDateAndExerciseSelector,
+  map(
+    pipe(
+      toPairs,
+      map(([exerciseUuid, workoutSets]) => ({
+        data: workoutSets,
+        exerciseUuid,
       }))
-
-    return map(
-      compose(
-        convertToArray,
-        groupByExerciseName
-      ),
-      workoutSetsByDay
     )
-  }
+  )
 )
