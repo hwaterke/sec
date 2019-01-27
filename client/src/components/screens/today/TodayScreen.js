@@ -6,7 +6,7 @@ import {head} from 'ramda'
 import moment from 'moment'
 import styled from 'styled-components'
 import {WorkoutSetResource} from '../../../entities/WorkoutSetResource'
-import {workoutSetsByDateSelector} from '../../../selectors/workout_sets'
+import {workoutSetsByDateDescSelector} from '../../../selectors/workout_sets'
 import {Screen} from '../../dumb/Screen'
 import {TimeSince} from './TimeSince'
 
@@ -30,7 +30,7 @@ _TodayScreen.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  workoutSets: workoutSetsByDateSelector(state),
+  workoutSets: workoutSetsByDateDescSelector(state),
 })
 
 export const TodayScreen = connect(mapStateToProps)(_TodayScreen)

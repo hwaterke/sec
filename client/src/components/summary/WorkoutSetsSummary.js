@@ -7,7 +7,6 @@ import {connect} from 'react-redux'
 import {globalStyles} from '../../constants/styles'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {
-  workoutSetsByDayAndExerciseSelector,
   workoutSetsByDayByExerciseSectionsSelector,
   workoutSetsByDaySelector,
 } from '../../selectors/workout_sets'
@@ -19,7 +18,6 @@ import {secondsToHuman} from '../screens/today/TimeSince'
 import {WorkoutSetRow} from './WorkoutSetRow'
 
 const mapStateToProps = state => ({
-  ws: workoutSetsByDayAndExerciseSelector(state),
   workoutSetsByDay: workoutSetsByDaySelector(state),
   workoutSetsByDayByExerciseSections: workoutSetsByDayByExerciseSectionsSelector(
     state

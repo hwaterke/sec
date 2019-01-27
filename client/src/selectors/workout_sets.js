@@ -5,7 +5,7 @@ import {createSelector} from 'reselect'
 import {ExerciseResource} from '../entities/ExerciseResource'
 import {WorkoutSetResource} from '../entities/WorkoutSetResource'
 
-export const workoutSetsByDateSelector = createSelector(
+export const workoutSetsByDateDescSelector = createSelector(
   select(WorkoutSetResource).asArray,
   workoutSetsArray => sort(descend(prop('executed_at')))(workoutSetsArray)
 )
@@ -23,7 +23,7 @@ export const lastWorkoutSetByExerciseSelector = createSelector(
 
 // Returns Sets grouped by day
 export const workoutSetsByDaySelector = createSelector(
-  workoutSetsByDateSelector,
+  workoutSetsByDateDescSelector,
   workoutSets => {
     const day = ws =>
       moment(ws.executed_at, 'YYYY-MM-DD').format('dddd, D MMMM')
@@ -59,15 +59,5 @@ export const workoutSetsByDayByExerciseSectionsSelector = createSelector(
       ),
       workoutSetsByDay
     )
-  }
-)
-
-// Returns Sets grouped by day and then by exercise
-export const workoutSetsByDayAndExerciseSelector = createSelector(
-  workoutSetsByDaySelector,
-  workoutSetsByDay => {
-    const byExercise = groupBy(prop('exercise_uuid'))
-    const sortByDate = map(sortBy(prop('executed_at')))
-    return map(byExercise)(sortByDate(workoutSetsByDay))
   }
 )
