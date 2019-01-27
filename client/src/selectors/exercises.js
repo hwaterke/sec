@@ -14,15 +14,7 @@ const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz'
 const sortByName = sortWith([ascend(muscleName), ascend(prop('name'))])
 const groupByMuscle = groupBy(muscleName)
 
-export const exercisesByMuscleThenNameSelector = createSelector(
-  select(ExerciseResource).asArray,
-  exercisesArray => {
-    const muscleName = e => e.main_muscle || (e.cardio && 'Cardio') || 'zzzz'
-    return sortWith([ascend(muscleName), ascend(prop('name'))])(exercisesArray)
-  }
-)
-
-export const exercicesGroupedByMuscle = createSelector(
+export const exercisesGroupedByMuscle = createSelector(
   select(ExerciseResource).asArray,
   exercices => {
     const groups = groupByMuscle(sortByName(exercices))
