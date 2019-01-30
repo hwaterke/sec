@@ -14,9 +14,10 @@ import {select} from 'redux-crud-provider'
 import {globalStyles} from '../../constants/styles'
 import {MuscleResource} from '../../entities/MuscleResource'
 import {Row} from '../dumb/Row'
+import {musclesSortedSelector} from '../../selectors/muscles'
 
 const mapStateToProps = state => ({
-  muscleArray: select(MuscleResource).asArray(state),
+  muscleArray: musclesSortedSelector(state),
   muscles: select(MuscleResource).byId(state),
 })
 
