@@ -11,10 +11,16 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import {select} from 'redux-crud-provider'
-import {globalStyles} from '../../constants/styles'
+import styled from 'styled-components'
 import {MuscleResource} from '../../entities/MuscleResource'
 import {Row} from '../dumb/Row'
 import {musclesSortedSelector} from '../../selectors/muscles'
+import {colors} from '../../constants/colors'
+
+const ModalView = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${colors.backgroundColor};
+`
 
 const mapStateToProps = state => ({
   muscleArray: musclesSortedSelector(state),
@@ -77,7 +83,7 @@ export class MuscleSelectField extends React.Component {
           transparent={true}
           animationType="slide"
         >
-          <View style={globalStyles.modal}>
+          <ModalView>
             <Button title="Close" onPress={this.toggleModal} />
 
             <FlatList
@@ -87,7 +93,7 @@ export class MuscleSelectField extends React.Component {
               }))}
               renderItem={this.renderRow}
             />
-          </View>
+          </ModalView>
         </Modal>
       </View>
     )
