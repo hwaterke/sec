@@ -2,13 +2,14 @@ import React from 'react'
 import {SectionList, Text} from 'react-native'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {head} from 'ramda'
+import {flatten, head, identity, uniq} from 'ramda'
 import moment from 'moment'
 import styled from 'styled-components'
 import {select} from 'redux-crud-provider'
 import {WorkoutSetResource} from '../../../entities/WorkoutSetResource'
 import {
   workoutSetsByDateDescSelector,
+  workoutSetsByDaySelector,
   workoutSetsGroupedByDateExerciseSectionsSelector,
 } from '../../../selectors/workout_sets'
 import {Screen} from '../../dumb/Screen'
@@ -16,7 +17,9 @@ import {SectionHeader} from '../../dumb/SectionHeader'
 import {extractUuid} from '../../../constants/keyExtractor'
 import {ExerciseResource} from '../../../entities/ExerciseResource'
 import {WorkoutSetRow} from '../../summary/WorkoutSetRow'
+import {exercisesGroupedByMuscleSelector} from '../../../selectors/exercises'
 import {TimeSince} from './TimeSince'
+import {ExerciseSuggestion} from './ExerciseSuggestion'
 
 const Container = styled.View`
   padding: 8px;
@@ -25,20 +28,49 @@ const Container = styled.View`
 
 const _TodayScreen = ({
   workoutSets,
+  workoutSetsByDay,
   workoutSetsGroupedByDateExerciseSections,
   exercisesById,
+  exercisesGroupedByMuscle,
   navigation,
 }) => {
   const today = moment().format('YYYY-MM-DD')
   const todaySets = workoutSetsGroupedByDateExerciseSections[today]
 
-  // eslint-disable-next-line react/prop-types
-  const renderRow = ({item}) => (
-    <WorkoutSetRow
-      workoutSet={item}
-      onPress={() => navigation.navigate('WorkoutSetsAdd', {workoutSet: item})}
-    />
+  const todayExercises = uniq(
+    (workoutSetsByDay[today] || []).map(s => s.exercise_uuid)
   )
+
+  const todayMuscles = uniq(
+    todayExercises.map(uuid => exercisesById[uuid].main_muscle).filter(identity)
+  )
+
+  // Some exercises for the same muscles
+  const exercisesSuggestions = flatten(
+    todayMuscles.map(m => exercisesGroupedByMuscle[m])
+  )
+    .map(e => e.uuid)
+    .filter(eUuid => !todayExercises.includes(eUuid))
+
+  // eslint-disable-next-line react/prop-types
+  const renderRow = ({item, section}) =>
+    section.title === 'Suggestions' ? (
+      <ExerciseSuggestion
+        exerciseUuid={item}
+        onPress={() =>
+          navigation.navigate('ExercisesDetail', {
+            exercise_uuid: item,
+          })
+        }
+      />
+    ) : (
+      <WorkoutSetRow
+        workoutSet={item}
+        onPress={() =>
+          navigation.navigate('WorkoutSetsAdd', {workoutSet: item})
+        }
+      />
+    )
 
   return (
     <Screen>
@@ -51,10 +83,19 @@ const _TodayScreen = ({
 
       {todaySets && (
         <SectionList
-          sections={todaySets}
+          sections={[
+            {title: 'Suggestions', data: exercisesSuggestions},
+            ...todaySets,
+          ]}
           renderItem={renderRow}
           renderSectionHeader={({section}) => (
-            <SectionHeader title={exercisesById[section.exerciseUuid].name} />
+            <SectionHeader
+              title={
+                section.title === 'Suggestions'
+                  ? section.title
+                  : exercisesById[section.exerciseUuid].name
+              }
+            />
           )}
           keyExtractor={extractUuid}
         />
@@ -65,8 +106,14 @@ const _TodayScreen = ({
 
 _TodayScreen.propTypes = {
   workoutSets: PropTypes.arrayOf(WorkoutSetResource.propType).isRequired,
+  workoutSetsByDay: PropTypes.objectOf(
+    PropTypes.arrayOf(WorkoutSetResource.propType).isRequired
+  ).isRequired,
   workoutSetsGroupedByDateExerciseSections: PropTypes.object.isRequired,
   exercisesById: PropTypes.objectOf(ExerciseResource.propType),
+  exercisesGroupedByMuscle: PropTypes.objectOf(
+    PropTypes.arrayOf(ExerciseResource.propType).isRequired
+  ),
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -74,10 +121,12 @@ _TodayScreen.propTypes = {
 
 const mapStateToProps = state => ({
   workoutSets: workoutSetsByDateDescSelector(state),
+  workoutSetsByDay: workoutSetsByDaySelector(state),
   workoutSetsGroupedByDateExerciseSections: workoutSetsGroupedByDateExerciseSectionsSelector(
     state
   ),
   exercisesById: select(ExerciseResource).byId(state),
+  exercisesGroupedByMuscle: exercisesGroupedByMuscleSelector(state),
 })
 
 export const TodayScreen = connect(mapStateToProps)(_TodayScreen)
