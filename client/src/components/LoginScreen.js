@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Button} from 'react-native'
 import {connect} from 'react-redux'
 import {Field, reduxForm} from 'redux-form'
 import axios from 'axios'
@@ -9,6 +8,7 @@ import {setBackendUrl} from '../reducers/backend'
 import {FieldWrapper} from './simple/FieldWrapper'
 import {TextInputField} from './simple/TextInputField'
 import {Screen} from './dumb/Screen'
+import {Button} from './dumb/Button'
 
 @connect(state => ({
   initialValues: {
@@ -82,10 +82,7 @@ export class LoginScreen extends React.Component {
           />
         </FieldWrapper>
 
-        <Button
-          title="Login"
-          onPress={this.props.handleSubmit(this.onSubmit)}
-        />
+        <Button onPress={this.props.handleSubmit(this.onSubmit)}>Login</Button>
       </Screen>
     )
   }

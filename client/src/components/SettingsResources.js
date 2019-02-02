@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Button, StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
+import reduxCrud from 'redux-crud'
 import {colors} from '../constants/colors'
 import {ExerciseResource} from '../entities/ExerciseResource'
 import {MuscleResource} from '../entities/MuscleResource'
 import {WorkoutSetResource} from '../entities/WorkoutSetResource'
 import {crudThunks} from '../thunks/crudThunks'
+import {Button} from './dumb/Button'
 
 const Row = styled.View`
   padding: 8px;
@@ -15,8 +17,21 @@ const Row = styled.View`
   justify-content: space-between;
 `
 
+const clearAll = () => dispatch => {
+  const resources = [WorkoutSetResource, ExerciseResource, MuscleResource]
+
+  resources.forEach(resource => {
+    const baseActionCreators = reduxCrud.actionCreatorsFor(resource.name, {
+      key: resource.key,
+    })
+
+    dispatch(baseActionCreators.fetchSuccess([], {replace: true}))
+  })
+}
+
 const mapDispatchToProps = {
   fetchAll: crudThunks.fetchAll,
+  clearAll,
 }
 
 @connect(
@@ -29,6 +44,7 @@ export class SettingsResources extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
     fetchAll: PropTypes.func.isRequired,
+    clearAll: PropTypes.func.isRequired,
   }
 
   fetchAll = async () => {
@@ -36,6 +52,8 @@ export class SettingsResources extends React.Component {
     await this.props.fetchAll({resource: ExerciseResource, replace: true})
     await this.props.fetchAll({resource: WorkoutSetResource, replace: true})
   }
+
+  clearAll = async () => {}
 
   render() {
     return (
@@ -47,7 +65,9 @@ export class SettingsResources extends React.Component {
           </Row>
         ))}
 
-        <Button title="Fetch from server" onPress={this.fetchAll} />
+        <Button onPress={this.fetchAll}>Fetch from server</Button>
+
+        <Button onPress={() => this.props.clearAll()}>Clear</Button>
       </View>
     )
   }

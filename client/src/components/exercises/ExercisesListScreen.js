@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Button} from 'react-native'
 import {Screen} from '../dumb/Screen'
+import {Button} from '../dumb/Button'
 import {ExercisesList} from './ExercisesList'
 
 export class ExercisesListScreen extends React.Component {
@@ -31,9 +31,10 @@ export class ExercisesListScreen extends React.Component {
       <Screen>
         {this.isEdit() && (
           <Button
-            title="Add"
             onPress={() => this.props.navigation.navigate('ExercisesAdd')}
-          />
+          >
+            Add
+          </Button>
         )}
         <ExercisesList onRowPress={this.onRowPress} />
       </Screen>

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import {
-  Button,
   FlatList,
   Modal,
   StyleSheet,
@@ -16,6 +15,7 @@ import {MuscleResource} from '../../entities/MuscleResource'
 import {Row} from '../dumb/Row'
 import {musclesSortedSelector} from '../../selectors/muscles'
 import {colors} from '../../constants/colors'
+import {Button} from '../dumb/Button'
 
 const ModalView = styled.SafeAreaView`
   flex: 1;
@@ -84,7 +84,7 @@ export class MuscleSelectField extends React.Component {
           animationType="slide"
         >
           <ModalView>
-            <Button title="Close" onPress={this.toggleModal} />
+            <Button onPress={this.toggleModal}>Close</Button>
 
             <FlatList
               data={[{name: 'NONE'}, ...this.props.muscleArray].map(m => ({

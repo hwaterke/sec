@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, {Fragment} from 'react'
-import {Button} from 'react-native'
 import {connect} from 'react-redux'
 import {select} from 'redux-crud-provider'
 import {descend, head, pipe, prop, sortWith, take, uniqBy} from 'ramda'
@@ -14,6 +13,7 @@ import {workoutSetsByExercise} from '../../selectors/workout_sets'
 import {WorkoutSetRow} from '../summary/WorkoutSetRow'
 import {SectionHeader} from '../dumb/SectionHeader'
 import {colors} from '../../constants/colors'
+import {Button} from '../dumb/Button'
 
 const TitleContainer = styled.View`
   padding: 0 16px;
@@ -82,11 +82,12 @@ export class ExercisesDetailScreen extends React.Component {
     return (
       <Screen scroll>
         <Button
-          title="Add"
           onPress={() =>
             this.props.navigation.navigate('WorkoutSetsAdd', {exercise_uuid})
           }
-        />
+        >
+          Add
+        </Button>
 
         <TitleContainer>
           <Title>{exercise.name}</Title>

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, ScrollView, Button, Text, Modal, StyleSheet} from 'react-native'
+import {View, ScrollView, Text, Modal, StyleSheet} from 'react-native'
 import {globalStyles} from '../../constants/styles'
+import {Button} from '../dumb/Button'
 
 export class JsonDebug extends React.Component {
   static propTypes = {
@@ -19,14 +20,14 @@ export class JsonDebug extends React.Component {
   render() {
     return (
       <View>
-        <Button onPress={this.toggleModal} title="JSON" />
+        <Button onPress={this.toggleModal}>JSON</Button>
         <Modal
           visible={this.state.modalVisible}
           transparent={true}
           animationType="slide"
         >
           <ScrollView style={globalStyles.modal}>
-            <Button onPress={this.toggleModal} title="Close" />
+            <Button onPress={this.toggleModal}>Close</Button>
             <Text style={styles.debug}>
               {JSON.stringify(this.props.value, undefined, 2)}
             </Text>

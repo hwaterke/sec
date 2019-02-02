@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Button, StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux'
 import {clearToken} from '../reducers/authentication'
 import {SettingsResources} from './SettingsResources'
 import {Screen} from './dumb/Screen'
+import {Button} from './dumb/Button'
 
 @connect(state => ({
   backend: state.backend,
@@ -23,13 +24,15 @@ export class SettingsScreen extends React.Component {
       <Screen>
         <View style={styles.box}>
           <Text>Logged in to {this.props.backend}</Text>
+
           <Button
-            title="Sign out"
             onPress={() => {
               this.props.dispatch(clearToken())
               this.props.navigation.navigate('Auth')
             }}
-          />
+          >
+            Sign out
+          </Button>
         </View>
 
         <SettingsResources />

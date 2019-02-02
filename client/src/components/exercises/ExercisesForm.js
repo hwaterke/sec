@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Alert, Button, View} from 'react-native'
+import {Alert, View} from 'react-native'
 import {Field, reduxForm} from 'redux-form'
 import {ExerciseResource} from '../../entities/ExerciseResource'
 import {FieldWrapper} from '../simple/FieldWrapper'
@@ -8,6 +8,7 @@ import {JsonDebug} from '../simple/JsonDebug'
 import {MuscleSelectField} from '../simple/MuscleSelectField'
 import {SwitchField} from '../simple/SwitchField'
 import {TextInputField} from '../simple/TextInputField'
+import {Button} from '../dumb/Button'
 
 @reduxForm({form: ExerciseResource.name})
 export class ExercisesForm extends React.Component {
@@ -54,18 +55,19 @@ export class ExercisesForm extends React.Component {
           />
         </FieldWrapper>
 
-        <Button title="Save" onPress={this.props.handleSubmit} />
+        <Button onPress={this.props.handleSubmit}>Save</Button>
 
         {this.props.isUpdate && (
           <Button
-            title="Delete"
             onPress={() =>
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
                 {text: 'Cancel'},
               ])
             }
-          />
+          >
+            Delete
+          </Button>
         )}
 
         {this.props.isUpdate && (

@@ -1,7 +1,7 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Alert, Button, Text, View} from 'react-native'
+import {Alert, Text, View} from 'react-native'
 import {connect} from 'react-redux'
 import {select} from 'redux-crud-provider'
 import {Field, reduxForm} from 'redux-form'
@@ -13,6 +13,7 @@ import {Title} from '../dumb/Title'
 import {FieldWrapper} from '../simple/FieldWrapper'
 import {JsonDebug} from '../simple/JsonDebug'
 import {TextInputField} from '../simple/TextInputField'
+import {Button} from '../dumb/Button'
 
 export const workoutSetsFormToResource = formData => {
   const resource = {...formData}
@@ -132,18 +133,19 @@ export class WorkoutSetsForm extends React.Component {
           />
         </FieldWrapper>
 
-        <Button title="Save" onPress={this.props.handleSubmit} />
+        <Button onPress={this.props.handleSubmit}>Save</Button>
 
         {this.props.isUpdate && (
           <Button
-            title="Delete"
             onPress={() =>
               Alert.alert('Delete', null, [
                 {text: 'Delete', onPress: this.props.deleteResource},
                 {text: 'Cancel'},
               ])
             }
-          />
+          >
+            Delete
+          </Button>
         )}
 
         {this.props.isUpdate && (
