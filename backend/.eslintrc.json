@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".android.js", ".ios.js"]
+      }
+    }
+  },
+  "rules": {
+    "no-console": "error",
+    "eqeqeq": "error",
+    "prefer-const": "error",
+    "curly": ["error", "all"],
+    "linebreak-style": ["error", "unix"],
+    "no-unexpected-multiline": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
+}
