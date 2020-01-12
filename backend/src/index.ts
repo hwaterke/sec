@@ -1,11 +1,49 @@
 import 'reflect-metadata'
 import {createConnection} from 'typeorm'
 import {databaseConfig} from './database/config'
+import {buildSchema} from 'type-graphql'
+import {ApolloServer} from 'apollo-server'
+import {RegisterResolver} from './graphql/auth/RegisterResolver'
+import {LoginResolver} from './graphql/auth/LoginResolver'
+import {HealthResolver} from './graphql/health/HealthResolver'
+import {JwtService} from './services/JwtService'
+import {Context} from './graphql/types'
+import {MeResolver} from './graphql/auth/MeResolver'
 
 const main = async () => {
-  console.log('Creating database connection')
   await createConnection(databaseConfig)
-  console.log('Database ready')
+
+  // Build GraphQL schema
+  const schema = await buildSchema({
+    resolvers: [HealthResolver, RegisterResolver, LoginResolver, MeResolver],
+    emitSchemaFile: './schema.gql',
+    authChecker: ({context}: {context: Context}) => {
+      return !!context.user
+    },
+  })
+
+  const server = new ApolloServer({
+    schema,
+    context: async ({req}) => {
+      try {
+        const token = req.headers.authorization
+
+        if (token) {
+          const user = await JwtService.getUserFromToken(token)
+          return {user}
+        }
+      } catch (e) {
+        return {}
+      }
+
+      return {}
+    },
+  })
+
+  const {url} = await server.listen()
+  // eslint-disable-next-line no-console
+  console.log(`Server ready at ${url}`)
 }
 
+// eslint-disable-next-line no-console
 main().catch(error => console.error(error))

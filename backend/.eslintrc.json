@@ -28,6 +28,7 @@
     "curly": ["error", "all"],
     "linebreak-style": ["error", "unix"],
     "no-unexpected-multiline": "off",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/member-delimiter-style": "off"
   }
 }
