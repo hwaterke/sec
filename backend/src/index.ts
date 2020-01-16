@@ -16,7 +16,7 @@ const main = async () => {
   // Build GraphQL schema
   const schema = await buildSchema({
     resolvers: [HealthResolver, RegisterResolver, LoginResolver, MeResolver],
-    emitSchemaFile: './schema.gql',
+    emitSchemaFile: './schema.graphql',
     authChecker: ({context}: {context: Context}) => {
       return !!context.user
     },

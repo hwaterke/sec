@@ -1,0 +1,4 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "packages/backend/src/graphql/schema.graphql"
+}
