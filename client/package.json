@@ -32,6 +32,8 @@
     "victory-native": "^31.0.0"
   },
   "devDependencies": {
+    "@types/react": "^16.9.17",
+    "@types/react-native": "^0.61.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^8.0.0",
     "eslint": "^5.10.0",
@@ -39,16 +41,16 @@
     "eslint-plugin-react": "^7.14.3",
     "husky": "^3.0.7",
     "lint-staged": "^9.4.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "typescript": "^3.7.5"
   },
   "lint-staged": {
     "*.js": [
       "eslint --no-eslintrc -c .eslintrc-import-order.json --fix",
-      "prettier --write",
       "eslint --max-warnings 0",
       "git add"
     ],
-    "*.{css,scss,json,md}": [
+    "*.{js,jsx,ts,tsx,css,scss,json,md}": [
       "prettier --write",
       "git add"
     ]
