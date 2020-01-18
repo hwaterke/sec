@@ -1,0 +1,25 @@
+{
+  "name": "sec",
+  "private": true,
+  "repository": "git@github.com:hwaterke/sec.git",
+  "author": "hwaterke <hwaterke@users.noreply.github.com>",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,scss,json,md,yml}\""
+  },
+  "devDependencies": {
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,scss,json,md,yml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
