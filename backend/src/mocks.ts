@@ -5,7 +5,9 @@ import {User} from './database/entities/User'
 
 export const loadMockData = async () => {
   const userRepo = getRepository(User)
-  const mainUser = await userRepo.find({where: {email: 'harold@example.com'}})
+  const mainUser = await userRepo.findOne({
+    where: {email: 'harold@example.com'},
+  })
 
   if (mainUser) {
     return
