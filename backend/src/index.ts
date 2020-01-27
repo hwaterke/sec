@@ -9,13 +9,22 @@ import {HealthResolver} from './graphql/health/HealthResolver'
 import {JwtService} from './services/JwtService'
 import {Context} from './graphql/types'
 import {MeResolver} from './graphql/auth/MeResolver'
+import {ExerciseResolver} from './graphql/exercise/ExerciseResolver'
+import {loadMockData} from './mocks'
+import {NODE_ENV} from './constants/env'
 
 const main = async () => {
   await createConnection(databaseConfig)
 
   // Build GraphQL schema
   const schema = await buildSchema({
-    resolvers: [HealthResolver, RegisterResolver, LoginResolver, MeResolver],
+    resolvers: [
+      HealthResolver,
+      RegisterResolver,
+      LoginResolver,
+      MeResolver,
+      ExerciseResolver,
+    ],
     emitSchemaFile: './schema.graphql',
     authChecker: ({context}: {context: Context}) => {
       return !!context.user
@@ -41,6 +50,11 @@ const main = async () => {
   })
 
   const {url} = await server.listen()
+
+  if (NODE_ENV === 'development') {
+    await loadMockData()
+  }
+
   // eslint-disable-next-line no-console
   console.log(`Server ready at ${url}`)
 }

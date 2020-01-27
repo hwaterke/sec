@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import {Field, ID, ObjectType} from 'type-graphql'
+import {Exercise} from './Exercise'
+import {WorkoutSet} from './WorkoutSet'
 
 @Entity()
 @ObjectType()
@@ -28,6 +31,18 @@ export class User {
   @Field()
   @Column()
   lastName: string
+
+  @OneToMany(
+    () => Exercise,
+    exercise => exercise.user
+  )
+  exercises: Exercise[]
+
+  @OneToMany(
+    () => WorkoutSet,
+    workoutSet => workoutSet.user
+  )
+  workoutSets: WorkoutSet[]
 
   @Field()
   @CreateDateColumn()

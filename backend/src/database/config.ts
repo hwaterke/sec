@@ -4,7 +4,7 @@ import {DATABASE_ENTITIES} from './entities'
 const configs: {[env: string]: ConnectionOptions} = {
   development: {
     type: 'sqlite',
-    database: ':memory:',
+    database: './dev.db',
     entities: DATABASE_ENTITIES,
     logging: true,
     synchronize: true,
