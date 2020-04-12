@@ -7,7 +7,8 @@
     "start": "nodemon",
     "build": "tsc",
     "lint": "eslint . --cache --ext .ts,.tsx",
-    "gen:graphql": "graphql-codegen --config codegen.yml"
+    "gen:graphql": "graphql-codegen --config codegen.yml",
+    "gen:schema": "TS_NODE_TRANSPILE_ONLY=true ts-node ./src/tools/output-schema.ts"
   },
   "dependencies": {
     "apollo-server": "^2.9.16",
