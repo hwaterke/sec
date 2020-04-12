@@ -58,8 +58,3 @@ export class WorkoutSet {
   @UpdateDateColumn()
   updatedAt: Date
 }
-
-/*
- foreign_key :exercise_uuid, :exercises, null: false, type: 'uuid'
- foreign_key :user_uuid, :users, null: false, type: 'uuid'
- */
