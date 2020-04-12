@@ -60,4 +60,4 @@ const main = async () => {
 }
 
 // eslint-disable-next-line no-console
-main().catch(error => console.error(error))
+main().catch((error) => console.error(error))

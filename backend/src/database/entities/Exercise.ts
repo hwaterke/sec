@@ -26,16 +26,10 @@ export class Exercise {
   @Column({type: 'text', nullable: true})
   description?: string
 
-  @ManyToOne(
-    () => User,
-    user => user.exercises
-  )
+  @ManyToOne(() => User, (user) => user.exercises)
   user: User
 
-  @OneToMany(
-    () => WorkoutSet,
-    workoutSet => workoutSet.exercise
-  )
+  @OneToMany(() => WorkoutSet, (workoutSet) => workoutSet.exercise)
   workoutSets: WorkoutSet[]
 
   @Field()

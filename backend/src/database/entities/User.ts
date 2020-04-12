@@ -32,16 +32,10 @@ export class User {
   @Column()
   lastName: string
 
-  @OneToMany(
-    () => Exercise,
-    exercise => exercise.user
-  )
+  @OneToMany(() => Exercise, (exercise) => exercise.user)
   exercises: Exercise[]
 
-  @OneToMany(
-    () => WorkoutSet,
-    workoutSet => workoutSet.user
-  )
+  @OneToMany(() => WorkoutSet, (workoutSet) => workoutSet.user)
   workoutSets: WorkoutSet[]
 
   @Field()
