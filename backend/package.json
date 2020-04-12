@@ -7,7 +7,6 @@
     "start": "nodemon",
     "build": "tsc",
     "lint": "eslint . --cache --ext .ts,.tsx",
-    "gen:graphql": "graphql-codegen --config codegen.yml",
     "gen:schema": "TS_NODE_TRANSPILE_ONLY=true ts-node ./src/tools/output-schema.ts"
   },
   "dependencies": {
@@ -23,12 +22,6 @@
     "typeorm": "^0.2.22"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.11.2",
-    "@graphql-codegen/introspection": "1.11.2",
-    "@graphql-codegen/typescript": "1.11.2",
-    "@graphql-codegen/typescript-operations": "1.11.2",
-    "@graphql-codegen/typescript-react-apollo": "1.11.2",
-    "@graphql-codegen/typescript-resolvers": "1.11.2",
     "@types/bcrypt": "^3.0.0",
     "@types/graphql": "^14.5.0",
     "@types/jsonwebtoken": "^8.3.5",
@@ -38,7 +31,6 @@
     "eslint": "^6.8.0",
     "eslint-config-hwaterke-node": "^0.0.1",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1",
     "ts-node": "^8.6.1",
     "typescript": "^3.7.4"
   }
