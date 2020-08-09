@@ -5,6 +5,19 @@ import {TextInput} from '../../components/TextInput'
 import {useLoginMutation} from '../../graphql/graphql.codegen'
 import {useDispatch} from 'react-redux'
 import {setToken} from '../../redux/reducers/tokenReducer'
+import {gql} from '@apollo/client'
+
+gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      user {
+        firstName
+        lastName
+      }
+      token
+    }
+  }
+`
 
 export const SignInScreen: React.FC = () => {
   const dispatch = useDispatch()

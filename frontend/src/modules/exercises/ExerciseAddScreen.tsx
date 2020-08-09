@@ -2,7 +2,7 @@ import React from 'react'
 import {useCreateExerciseMutation} from '../../graphql/graphql.codegen'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {ExerciseForm} from './ExerciseForm'
-import {gql} from 'apollo-boost'
+import {gql} from '@apollo/client'
 
 gql`
   mutation createExercise($payload: ExerciseInput!) {

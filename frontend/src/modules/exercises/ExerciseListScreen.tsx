@@ -1,9 +1,20 @@
 import React, {useEffect, useState} from 'react'
-import {SectionList, Text, TouchableOpacity, View} from 'react-native'
+import {SectionList, Text, TouchableOpacity} from 'react-native'
 import {ExercisesQuery, useExercisesQuery} from '../../graphql/graphql.codegen'
 import {groupBy, pipe, prop, sortBy} from 'ramda'
 import {SectionHeader} from '../../components/SectionHeader'
 import {useNavigation} from '@react-navigation/native'
+import {gql} from '@apollo/client'
+
+gql`
+  query exercises {
+    exercises {
+      uuid
+      name
+      muscle
+    }
+  }
+`
 
 export const ExerciseListScreen: React.FC = () => {
   const navigation = useNavigation()

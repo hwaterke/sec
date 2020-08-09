@@ -1,8 +1,7 @@
 import React, {useMemo} from 'react'
 import {useSelector} from 'react-redux'
-import {ApolloProvider} from '@apollo/react-hooks'
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
 import {selectToken} from '../redux/selectors/token'
-import ApolloClient from 'apollo-boost'
 
 export const ApolloProviderWithAuth: React.FC = ({children}) => {
   const token = useSelector(selectToken)
@@ -11,6 +10,7 @@ export const ApolloProviderWithAuth: React.FC = ({children}) => {
     return new ApolloClient({
       uri: 'http://localhost:4000',
       headers: token ? {authorization: token} : undefined,
+      cache: new InMemoryCache(),
     })
   }, [token])
 

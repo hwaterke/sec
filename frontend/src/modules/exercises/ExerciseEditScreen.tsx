@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {
   useExerciseQuery,
   useUpdateExerciseMutation,
 } from '../../graphql/graphql.codegen'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {ExerciseForm} from './ExerciseForm'
-import {gql} from 'apollo-boost'
+import {gql} from '@apollo/client'
 import {RouteProp} from '@react-navigation/native'
 import {Text, View} from 'react-native'
 import {ExerciseStackParamList} from './types'
