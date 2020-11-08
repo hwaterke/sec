@@ -1,12 +1,22 @@
-import {DefaultTheme} from '@react-navigation/native'
+import {StyleSheet} from 'react-native'
+import {DefaultTheme as DefaultNavigationTheme} from '@react-navigation/native'
+import type {DefaultTheme} from 'styled-components'
 
-export const theme = {
-  background: {
-    primary: '#2ab7ca',
+export const theme: DefaultTheme = {
+  colors: {
+    background: {
+      primary: '#2ab7ca',
+      secondary: '#eee',
+    },
+    border: '#ddd',
+    text: {
+      primary: '#222',
+      secondary: '#999',
+      link: DefaultNavigationTheme.colors.primary,
+    },
   },
-  text: {
-    primary: '#222',
-    link: DefaultTheme.colors.primary,
-  },
-  navigation: DefaultTheme,
+
+  borderWidth: StyleSheet.hairlineWidth,
+
+  navigation: DefaultNavigationTheme,
 }
