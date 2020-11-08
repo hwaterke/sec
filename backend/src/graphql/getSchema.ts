@@ -6,6 +6,7 @@ import {MeResolver} from './auth/MeResolver'
 import {ExerciseResolver} from './exercise/ExerciseResolver'
 import {Context} from './types'
 import {GraphQLSchema} from 'graphql'
+import {WorkoutSetResolver} from './workoutSet/WorkoutSetResolver'
 
 let schema: GraphQLSchema | null = null
 
@@ -18,6 +19,7 @@ export const getSchema = async (): Promise<GraphQLSchema> => {
         LoginResolver,
         MeResolver,
         ExerciseResolver,
+        WorkoutSetResolver,
       ],
       emitSchemaFile:
         process.env.NODE_ENV === 'production' ? './schema.graphql' : undefined,

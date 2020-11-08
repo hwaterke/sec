@@ -26,7 +26,7 @@ export class Exercise {
   @Column({type: 'text', nullable: true})
   description?: string
 
-  @ManyToOne(() => User, (user) => user.exercises)
+  @ManyToOne(() => User, (user) => user.exercises, {nullable: false})
   user: User
 
   @OneToMany(() => WorkoutSet, (workoutSet) => workoutSet.exercise)
