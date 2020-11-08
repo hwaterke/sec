@@ -38,7 +38,6 @@ type Props = {
 }
 
 export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
-  console.log('ExerciseEditScreen', route.params)
   const {data, loading} = useExerciseQuery({
     variables: {
       uuid: route.params.exerciseUuid,
