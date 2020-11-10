@@ -1,10 +1,22 @@
-import {Arg, Authorized, Ctx, ID, Mutation, Query, Resolver} from 'type-graphql'
+import {
+  Arg,
+  Authorized,
+  Ctx,
+  FieldResolver,
+  ID,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from 'type-graphql'
 import {ExerciseInput} from './ExerciseInput'
 import {ExerciseService} from '../../services/ExerciseService'
 import {Exercise} from '../../database/entities/Exercise'
 import {Context, DeletedOutput} from '../types'
+import {WorkoutSet} from '../../database/entities/WorkoutSet'
+import {getRepository} from 'typeorm'
 
-@Resolver()
+@Resolver(() => Exercise)
 export class ExerciseResolver {
   @Authorized()
   @Query(() => [Exercise])
@@ -52,5 +64,20 @@ export class ExerciseResolver {
   ): Promise<DeletedOutput> {
     await ExerciseService.remove({uuid})
     return {affected_uuids: [uuid]}
+  }
+
+  @FieldResolver(() => [WorkoutSet])
+  lastWorkoutSets(@Root() exercise: Exercise): Promise<WorkoutSet[]> {
+    return getRepository(WorkoutSet).find({
+      order: {
+        createdAt: 'DESC',
+      },
+      take: 10,
+      where: {
+        exercise: {
+          uuid: exercise.uuid,
+        },
+      },
+    })
   }
 }
