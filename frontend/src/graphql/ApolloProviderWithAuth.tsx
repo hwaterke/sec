@@ -11,6 +11,11 @@ export const ApolloProviderWithAuth: React.FC = ({children}) => {
       uri: 'http://localhost:4000',
       headers: token ? {authorization: token} : undefined,
       cache: new InMemoryCache(),
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: 'cache-and-network',
+        },
+      },
     })
   }, [token])
 
