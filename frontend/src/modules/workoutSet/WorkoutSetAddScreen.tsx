@@ -1,9 +1,13 @@
 import React from 'react'
-import {Button, Text, View} from 'react-native'
-import {RouteProp, useRoute} from '@react-navigation/native'
+import {Text} from 'react-native'
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 import {gql} from '@apollo/client'
-import {useCreateWorkoutSetMutation} from '../../graphql/graphql.codegen'
+import {
+  useCreateWorkoutSetMutation,
+  useExerciseDetailQuery,
+} from '../../graphql/graphql.codegen'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
+import {WorkoutSetForm} from './WorkoutSetForm'
 
 type WorkoutSetAddScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -20,26 +24,36 @@ gql`
 
 export const WorkoutSetAddScreen: React.FC = () => {
   const {params} = useRoute<WorkoutSetAddScreenNavigationProp>()
+  const navigation = useNavigation()
   const [createWorkoutSet] = useCreateWorkoutSetMutation()
 
-  return (
-    <View>
-      <Text>{JSON.stringify(params, null, 2)}</Text>
+  const {data, loading, error} = useExerciseDetailQuery({
+    variables: {uuid: params.exerciseUuid},
+  })
 
-      <Button
-        title="Add"
-        onPress={() => {
-          return createWorkoutSet({
-            variables: {
-              workoutSet: {
-                exerciseUuid: params.exerciseUuid,
-                repetitions: 22,
-                executedAt: new Date(),
-              },
+  if (!data) {
+    return <Text>No data</Text>
+  }
+
+  return (
+    <WorkoutSetForm
+      exercise={data.exercise}
+      onSubmit={async (v) => {
+        // TODO Handle null values and empty string for numbers parsing
+        await createWorkoutSet({
+          variables: {
+            workoutSet: {
+              exerciseUuid: params.exerciseUuid,
+              repetitions: Number(v.repetitions),
+              weight: Number(v.weight),
+              distance: Number(v.distance),
+              time: v.time,
+              executedAt: new Date(),
             },
-          })
-        }}
-      />
-    </View>
+          },
+        })
+        navigation.goBack()
+      }}
+    />
   )
 }

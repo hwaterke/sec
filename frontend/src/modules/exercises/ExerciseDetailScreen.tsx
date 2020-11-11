@@ -32,6 +32,9 @@ gql`
         uuid
         executedAt
         repetitions
+        weight
+        distance
+        time
       }
     }
   }
@@ -63,10 +66,6 @@ export const ExerciseDetailScreen: React.FC = () => {
       {data.exercise.lastWorkoutSets.map((ws) => (
         <WorkoutSetRow key={ws.uuid} value={ws} />
       ))}
-
-      <Text>{JSON.stringify(data, null, 2)}</Text>
-
-      <Text>Add SET</Text>
 
       <Button
         title="Add a set"

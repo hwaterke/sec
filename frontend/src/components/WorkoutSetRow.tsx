@@ -13,6 +13,9 @@ const View = styled.View`
 type Props = {
   executedAt: string
   repetitions?: number
+  weight?: number
+  distance?: number
+  time?: string
 }
 
 export const WorkoutSetRow = ({value}: {value: Props}) => {
@@ -23,6 +26,14 @@ export const WorkoutSetRow = ({value}: {value: Props}) => {
           DateTime.DATETIME_MED
         )}
       </Text>
+
+      {value.repetitions != null && <Text>{value.repetitions}</Text>}
+
+      {value.weight != null && <Text>{value.weight}kg</Text>}
+
+      {value.time != null && <Text>{value.time}</Text>}
+
+      {value.distance != null && <Text>{value.distance}m</Text>}
     </View>
   )
 }
