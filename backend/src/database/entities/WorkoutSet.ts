@@ -17,28 +17,28 @@ export class WorkoutSet {
   @PrimaryGeneratedColumn('uuid')
   uuid: string
 
-  @Field()
+  @Field({nullable: true})
   @Column({nullable: true})
-  repetitions: number
+  repetitions?: number
 
   // Weight in grams
-  @Field()
+  @Field({nullable: true})
   @Column({nullable: true})
-  weight: number
+  weight?: number
 
-  @Field()
+  @Field({nullable: true})
   @Column({nullable: true})
-  time: string
-
-  // Distance in meters
-  @Field()
-  @Column({nullable: true})
-  distance: number
+  time?: string
 
   // Distance in meters
-  @Field()
+  @Field({nullable: true})
   @Column({nullable: true})
-  notes: string
+  distance?: number
+
+  // Distance in meters
+  @Field({nullable: true})
+  @Column({nullable: true})
+  notes?: string
 
   @Field()
   @Column()
