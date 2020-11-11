@@ -17,6 +17,17 @@ gql`
     exercise(uuid: $uuid) {
       uuid
       name
+      description
+      hasRepetitions
+      hasWeight
+      hasDistance
+      hasTime
+      muscle
+      isCardio
+      isMachine
+      isDumbbell
+      isBarbell
+
       lastWorkoutSets {
         uuid
         executedAt

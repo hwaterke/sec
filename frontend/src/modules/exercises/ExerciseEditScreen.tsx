@@ -15,7 +15,17 @@ gql`
     exercise(uuid: $uuid) {
       uuid
       name
+      description
+      hasRepetitions
+      hasWeight
+      hasTime
+      hasDistance
       muscle
+
+      isCardio
+      isMachine
+      isDumbbell
+      isBarbell
     }
   }
 
@@ -56,7 +66,16 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
       <ExerciseForm
         initialValues={{
           name: data.exercise.name,
+          description: data.exercise.description,
+          hasRepetitions: data.exercise.hasRepetitions,
+          hasWeight: data.exercise.hasWeight,
+          hasTime: data.exercise.hasTime,
+          hasDistance: data.exercise.hasDistance,
           muscle: data.exercise.muscle,
+          isCardio: data.exercise.isCardio,
+          isMachine: data.exercise.isMachine,
+          isDumbbell: data.exercise.isDumbbell,
+          isBarbell: data.exercise.isBarbell,
         }}
         onSubmit={async (values) => {
           try {

@@ -23,7 +23,15 @@ export const loadMockData = async () => {
   for (let i = 0; i < 10; i++) {
     await ExerciseService.create({
       name: `Exercise ${i}`,
+      hasRepetitions: true,
+      hasWeight: true,
+      hasDistance: false,
+      hasTime: false,
       muscle: 'Chest',
+      isCardio: false,
+      isMachine: false,
+      isDumbbell: true,
+      isBarbell: false,
       user,
     })
   }

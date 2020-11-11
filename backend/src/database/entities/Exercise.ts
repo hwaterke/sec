@@ -22,7 +22,7 @@ export class Exercise {
   @Column({unique: true})
   name: string
 
-  @Field()
+  @Field({nullable: true})
   @Column({type: 'text', nullable: true})
   description?: string
 

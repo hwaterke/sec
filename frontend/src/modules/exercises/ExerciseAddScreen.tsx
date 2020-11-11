@@ -9,6 +9,7 @@ gql`
     createExercise(payload: $payload) {
       uuid
       name
+      muscle
     }
   }
 `
