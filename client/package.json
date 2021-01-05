@@ -9,7 +9,7 @@
     "format": "prettier --write 'src/**/*.js'"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "cuid": "^2.1.4",
     "expo": "^36.0.0",
     "moment": "^2.23.0",
