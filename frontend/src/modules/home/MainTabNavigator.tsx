@@ -15,7 +15,7 @@ export const MainTabNavigator: React.FC = () => {
         options={{
           title: 'Exercises',
           tabBarIcon: ({color}) => (
-            <Ionicons name="ios-list-box" size={26} style={{color}} />
+            <Ionicons name="ios-list" size={26} style={{color}} />
           ),
         }}
       />

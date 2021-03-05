@@ -6,7 +6,7 @@ import {AsyncStorage} from 'react-native'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['token'],
+  whitelist: ['backend', 'token'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

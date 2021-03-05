@@ -3,9 +3,16 @@ import {Button, View} from 'react-native'
 import {Formik} from 'formik'
 import {TextInput} from '../../components/TextInput'
 import {useLoginMutation} from '../../graphql/graphql.codegen'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {setToken} from '../../redux/reducers/tokenReducer'
 import {gql} from '@apollo/client'
+import {selectBackend} from '../../redux/selectors/backend'
+import styled from 'styled-components/native'
+import {clearBackend} from '../../redux/reducers/backendReducer'
+
+const SmallText = styled.Text`
+  font-size: 10px;
+`
 
 gql`
   mutation login($email: String!, $password: String!) {
@@ -20,6 +27,7 @@ gql`
 `
 
 export const SignInScreen: React.FC = () => {
+  const backend = useSelector(selectBackend)
   const dispatch = useDispatch()
   const [login] = useLoginMutation()
 
@@ -67,6 +75,12 @@ export const SignInScreen: React.FC = () => {
           </View>
         )}
       </Formik>
+
+      <SmallText>Backend: {backend}</SmallText>
+      <Button
+        title="Change backend"
+        onPress={() => dispatch(clearBackend())}
+      ></Button>
     </View>
   )
 }
