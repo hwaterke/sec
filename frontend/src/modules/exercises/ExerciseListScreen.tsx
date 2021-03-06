@@ -1,10 +1,21 @@
 import React, {useEffect, useState} from 'react'
-import {SectionList, Text, TouchableOpacity} from 'react-native'
+import {SectionList, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import {ExercisesQuery, useExercisesQuery} from '../../graphql/graphql.codegen'
 import {groupBy, pipe, prop, sortBy} from 'ramda'
 import {SectionHeader} from '../../components/SectionHeader'
 import {useNavigation} from '@react-navigation/native'
 import {gql} from '@apollo/client'
+import styled from 'styled-components/native'
+
+const Row = styled.View`
+  flex-direction: row;
+  padding: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: white;
+  border-bottom-color: #e5e5e5;
+  border-bottom-width: 0.5px;
+`
 
 gql`
   query exercises {
@@ -62,7 +73,9 @@ export const ExerciseListScreen: React.FC = () => {
             })
           }
         >
-          <Text>{item.name}</Text>
+          <Row>
+            <Text>{item.name}</Text>
+          </Row>
         </TouchableOpacity>
       )}
       renderSectionHeader={({section: {title}}) => (

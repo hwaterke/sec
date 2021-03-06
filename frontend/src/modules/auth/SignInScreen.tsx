@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, View} from 'react-native'
+import {View} from 'react-native'
 import {Formik} from 'formik'
 import {TextInput} from '../../components/TextInput'
 import {useLoginMutation} from '../../graphql/graphql.codegen'
@@ -9,9 +9,16 @@ import {gql} from '@apollo/client'
 import {selectBackend} from '../../redux/selectors/backend'
 import styled from 'styled-components/native'
 import {clearBackend} from '../../redux/reducers/backendReducer'
+import {Button} from '../../components/Button'
+import {Screen} from '../../design/layout/Screen'
+import {mt} from '../../design/constants/spacing'
 
 const SmallText = styled.Text`
   font-size: 10px;
+`
+
+const BackendView = styled.View`
+  ${mt(10)};
 `
 
 gql`
@@ -32,7 +39,7 @@ export const SignInScreen: React.FC = () => {
   const [login] = useLoginMutation()
 
   return (
-    <View>
+    <Screen withPadding>
       <Formik
         initialValues={{email: '', password: ''}}
         onSubmit={async ({email, password}) => {
@@ -71,16 +78,19 @@ export const SignInScreen: React.FC = () => {
               secureTextEntry
               placeholder="Password"
             />
-            <Button onPress={handleSubmit as any} title="Submit" />
+            <Button onPress={handleSubmit as any} withTopMargin>
+              Login
+            </Button>
           </View>
         )}
       </Formik>
 
-      <SmallText>Backend: {backend}</SmallText>
-      <Button
-        title="Change backend"
-        onPress={() => dispatch(clearBackend())}
-      ></Button>
-    </View>
+      <BackendView>
+        <SmallText>Backend: {backend}</SmallText>
+        <Button onPress={() => dispatch(clearBackend())} withTopMargin>
+          Change backend URL
+        </Button>
+      </BackendView>
+    </Screen>
   )
 }

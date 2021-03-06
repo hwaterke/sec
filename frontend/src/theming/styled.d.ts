@@ -1,24 +1,7 @@
 import 'styled-components'
-import type {Theme} from '@react-navigation/native'
+import type {Theme} from './theme'
 
-// and extend them!
 declare module 'styled-components' {
-  export interface DefaultTheme {
-    colors: {
-      background: {
-        primary: string
-        secondary: string
-      }
-      text: {
-        primary: string
-        secondary: string
-        link: string
-      }
-      border: string
-    }
-
-    borderWidth: number
-
-    navigation: Theme
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface DefaultTheme extends Theme {}
 }

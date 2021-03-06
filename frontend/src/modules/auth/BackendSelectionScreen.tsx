@@ -1,17 +1,19 @@
 import React from 'react'
-import {Button, View} from 'react-native'
+import {View} from 'react-native'
 import {useDispatch, useSelector} from 'react-redux'
 import {Formik} from 'formik'
 import {selectBackend} from '../../redux/selectors/backend'
 import {TextInput} from '../../components/TextInput'
 import {setBackend} from '../../redux/reducers/backendReducer'
+import {Button} from '../../components/Button'
+import {Screen} from '../../design/layout/Screen'
 
 export const BackendSelectionScreen = () => {
   const backend = useSelector(selectBackend)
   const dispatch = useDispatch()
 
   return (
-    <View>
+    <Screen withPadding>
       <Formik
         initialValues={{backend: backend ?? ''}}
         onSubmit={(values) => {
@@ -30,10 +32,12 @@ export const BackendSelectionScreen = () => {
               placeholder="URL"
             />
 
-            <Button onPress={handleSubmit as any} title="Submit" />
+            <Button withTopMargin onPress={handleSubmit as any}>
+              Submit
+            </Button>
           </View>
         )}
       </Formik>
-    </View>
+    </Screen>
   )
 }
