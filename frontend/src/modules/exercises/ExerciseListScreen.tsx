@@ -6,15 +6,21 @@ import {SectionHeader} from '../../components/SectionHeader'
 import {useNavigation} from '@react-navigation/native'
 import {gql} from '@apollo/client'
 import styled from 'styled-components/native'
+import {px, py} from '../../design/constants/spacing'
 
 const Row = styled.View`
   flex-direction: row;
-  padding: 16px;
+  ${px(4)};
+  ${py(4)};
   align-items: center;
   justify-content: flex-start;
-  background-color: white;
+  background-color: ${({theme}) => theme.colors.background.secondary};
   border-bottom-color: #e5e5e5;
   border-bottom-width: 0.5px;
+`
+
+const RowText = styled.Text`
+  color: ${({theme}) => theme.colors.text.primary};
 `
 
 gql`
@@ -74,7 +80,7 @@ export const ExerciseListScreen: React.FC = () => {
           }
         >
           <Row>
-            <Text>{item.name}</Text>
+            <RowText>{item.name}</RowText>
           </Row>
         </TouchableOpacity>
       )}
