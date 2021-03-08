@@ -5,17 +5,14 @@ import {SignInScreen} from './SignInScreen'
 import {useSelector} from 'react-redux'
 import {selectToken} from '../../redux/selectors/token'
 import {ThemeProvider} from 'styled-components/native'
-import {darkTheme, Theme, theme} from '../../theming/theme'
+import {Theme, theme} from '../../theming/theme'
 import {MainStackNavigator} from '../home/MainStackNavigator'
 import {selectBackend} from '../../redux/selectors/backend'
 import {ApolloProviderWithAuth} from '../../graphql/ApolloProviderWithAuth'
 import {BackendSelectionScreen} from './BackendSelectionScreen'
+import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
 
 const Stack = createStackNavigator()
-
-export const ThemeSetterContext = React.createContext<
-  ((theme: Theme) => void) | null
->(null)
 
 export const AuthLoader: React.FC = () => {
   const backend = useSelector(selectBackend)

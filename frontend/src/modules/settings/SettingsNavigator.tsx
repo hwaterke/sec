@@ -1,11 +1,11 @@
 import React, {useContext} from 'react'
-import {Button, Switch, View, Text} from 'react-native'
+import {Button, Switch, Text, View} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {useDispatch} from 'react-redux'
 import {clearToken} from '../../redux/reducers/tokenReducer'
-import {ThemeSetterContext} from '../auth/AuthLoader'
 import {ThemeContext} from 'styled-components/native'
 import {darkTheme, theme} from '../../theming/theme'
+import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
 
 const Stack = createStackNavigator()
 
