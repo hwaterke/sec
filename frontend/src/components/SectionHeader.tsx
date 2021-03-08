@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import {pl, py} from '../design/constants/spacing'
 
 const Container = styled.View`
   background-color: ${({theme}) => theme.colors.background.primary};
-  padding-left: 8px;
+  ${pl(2)};
+  ${py(1)};
 `
 
 const Text = styled.Text`
