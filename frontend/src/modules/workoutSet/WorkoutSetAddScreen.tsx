@@ -39,15 +39,14 @@ export const WorkoutSetAddScreen: React.FC = () => {
     <WorkoutSetForm
       exercise={data.exercise}
       onSubmit={async (v) => {
-        // TODO Handle null values and empty string for numbers parsing
         await createWorkoutSet({
           variables: {
             workoutSet: {
               exerciseUuid: params.exerciseUuid,
-              repetitions: Number(v.repetitions),
-              weight: Number(v.weight),
-              distance: Number(v.distance),
-              time: v.time,
+              repetitions: v.repetitions === '' ? null : Number(v.repetitions),
+              weight: v.weight === '' ? null : Number(v.weight),
+              distance: v.distance === '' ? null : Number(v.distance),
+              time: v.time === '' ? null : v.time,
               executedAt: new Date(),
             },
           },

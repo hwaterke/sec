@@ -5,6 +5,8 @@ import {DateTime} from 'luxon'
 import {WorkoutSetMetrics} from './WorkoutSetMetrics'
 
 const View = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
   padding: 8px 12px;
   background-color: white;
   border-bottom-width: ${({theme}) => theme.borderWidth}px;
@@ -12,19 +14,22 @@ const View = styled.View`
 `
 
 type Props = {
-  executedAt: string
-  repetitions?: number
-  weight?: number
-  distance?: number
-  time?: string
+  value: {
+    executedAt: string
+    repetitions?: number
+    weight?: number
+    distance?: number
+    time?: string
+  }
+  withDate?: boolean
 }
 
-export const WorkoutSetRow = ({value}: {value: Props}) => {
+export const WorkoutSetRow = ({value, withDate}: Props) => {
   return (
     <View>
       <Text>
         {DateTime.fromISO(value.executedAt).toLocaleString(
-          DateTime.DATETIME_MED
+          withDate ? DateTime.DATETIME_MED : DateTime.TIME_24_SIMPLE
         )}
       </Text>
 

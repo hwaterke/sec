@@ -8,10 +8,12 @@ import styled from 'styled-components/native'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {Button} from '../../components/Button'
 import {Screen} from '../../design/layout/Screen'
+import {mb, ml} from '../../design/constants/spacing'
 
 const Title = styled.Text`
   font-size: 24px;
-  padding: 8px 16px;
+  ${ml(2)};
+  ${mb(2)};
 `
 
 gql`
@@ -75,6 +77,7 @@ export const ExerciseDetailScreen: React.FC = () => {
             exerciseUuid: params.exerciseUuid,
           })
         }}
+        withTopMargin
       >
         Add a set
       </Button>

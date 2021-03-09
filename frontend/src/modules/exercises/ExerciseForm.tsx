@@ -1,7 +1,18 @@
 import React from 'react'
-import {Button, Text, View, Switch} from 'react-native'
+import {View, Switch} from 'react-native'
 import {TextInput} from '../../components/TextInput'
 import {Formik} from 'formik'
+import styled from 'styled-components/native'
+import {Text} from '../../components/Text'
+import {py} from '../../design/constants/spacing'
+import {Button} from '../../components/Button'
+
+const SwitchRow = styled.View`
+  ${py(1)};
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export type FormValues = {
   name: string
@@ -62,68 +73,89 @@ export const ExerciseForm: React.FC<Props> = ({
             placeholder="Muscle"
           />
 
-          <Text>Repetitions</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('hasRepetitions', value)
-            }}
-            value={values.hasRepetitions}
-          />
+          <SwitchRow>
+            <Text>Repetitions</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('hasRepetitions', value)
+              }}
+              value={values.hasRepetitions}
+            />
+          </SwitchRow>
 
-          <Text>Weight</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('hasWeight', value)
-            }}
-            value={values.hasWeight}
-          />
+          <SwitchRow>
+            <Text>Weight</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('hasWeight', value)
+              }}
+              value={values.hasWeight}
+            />
+          </SwitchRow>
 
-          <Text>Time</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('hasTime', value)
-            }}
-            value={values.hasTime}
-          />
+          <SwitchRow>
+            <Text>Time</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('hasTime', value)
+              }}
+              value={values.hasTime}
+            />
+          </SwitchRow>
 
-          <Text>Distance</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('hasDistance', value)
-            }}
-            value={values.hasDistance}
-          />
+          <SwitchRow>
+            <Text>Distance</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('hasDistance', value)
+              }}
+              value={values.hasDistance}
+            />
+          </SwitchRow>
 
-          <Text>isCardio</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('isCardio', value)
-            }}
-            value={values.isCardio}
-          />
-          <Text>isMachine</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('isMachine', value)
-            }}
-            value={values.isMachine}
-          />
-          <Text>isDumbbell</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('isDumbbell', value)
-            }}
-            value={values.isDumbbell}
-          />
-          <Text>isBarbell</Text>
-          <Switch
-            onValueChange={(value) => {
-              setFieldValue('isBarbell', value)
-            }}
-            value={values.isBarbell}
-          />
+          <SwitchRow>
+            <Text>isCardio</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('isCardio', value)
+              }}
+              value={values.isCardio}
+            />
+          </SwitchRow>
 
-          <Button onPress={handleSubmit as any} title="Submit" />
+          <SwitchRow>
+            <Text>isMachine</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('isMachine', value)
+              }}
+              value={values.isMachine}
+            />
+          </SwitchRow>
+
+          <SwitchRow>
+            <Text>isDumbbell</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('isDumbbell', value)
+              }}
+              value={values.isDumbbell}
+            />
+          </SwitchRow>
+
+          <SwitchRow>
+            <Text>isBarbell</Text>
+            <Switch
+              onValueChange={(value) => {
+                setFieldValue('isBarbell', value)
+              }}
+              value={values.isBarbell}
+            />
+          </SwitchRow>
+
+          <Button onPress={handleSubmit as any} withTopMargin>
+            Save
+          </Button>
         </View>
       )}
     </Formik>
