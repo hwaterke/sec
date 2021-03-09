@@ -7,14 +7,14 @@ import {
 export const theme = {
   colors: {
     background: {
-      primary: '#2ab7ca',
+      primary: '#80CBC4',
       secondary: '#eee',
     },
     border: '#ddd',
     text: {
       primary: '#222',
       secondary: '#999',
-      link: DefaultNavigationTheme.colors.primary,
+      link: 'white',
     },
     button: {
       primary: {
@@ -26,7 +26,15 @@ export const theme = {
 
   borderWidth: StyleSheet.hairlineWidth,
 
-  navigation: DefaultNavigationTheme,
+  navigation: {
+    ...DefaultNavigationTheme,
+    colors: {
+      ...DefaultNavigationTheme.colors,
+      primary: 'white',
+      card: '#80CBC4',
+      text: 'white',
+    },
+  },
 }
 
 export type Theme = typeof theme

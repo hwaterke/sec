@@ -2,6 +2,7 @@ import React from 'react'
 import {Text} from 'react-native'
 import styled from 'styled-components/native'
 import {DateTime} from 'luxon'
+import {WorkoutSetMetrics} from './WorkoutSetMetrics'
 
 const View = styled.View`
   padding: 8px 12px;
@@ -27,13 +28,12 @@ export const WorkoutSetRow = ({value}: {value: Props}) => {
         )}
       </Text>
 
-      {value.repetitions != null && <Text>{value.repetitions}</Text>}
-
-      {value.weight != null && <Text>{value.weight}kg</Text>}
-
-      {value.time != null && <Text>{value.time}</Text>}
-
-      {value.distance != null && <Text>{value.distance}m</Text>}
+      <WorkoutSetMetrics
+        repetitions={value.repetitions}
+        weight={value.weight}
+        distance={value.distance}
+        time={value.time}
+      />
     </View>
   )
 }

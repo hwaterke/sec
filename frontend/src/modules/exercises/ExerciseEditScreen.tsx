@@ -7,8 +7,10 @@ import {StackNavigationProp} from '@react-navigation/stack'
 import {ExerciseForm} from './ExerciseForm'
 import {gql} from '@apollo/client'
 import {RouteProp} from '@react-navigation/native'
-import {Text, View} from 'react-native'
+import {Text} from 'react-native'
 import {ExerciseStackParamList} from './types'
+import {Screen} from '../../design/layout/Screen'
+import {ScrollView} from '../../design/layout/ScrollView'
 
 gql`
   query exercise($uuid: ID!) {
@@ -61,33 +63,35 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
   }
 
   return (
-    <View>
-      <Text>EDITING</Text>
-      <ExerciseForm
-        initialValues={{
-          name: data.exercise.name,
-          description: data.exercise.description,
-          hasRepetitions: data.exercise.hasRepetitions,
-          hasWeight: data.exercise.hasWeight,
-          hasTime: data.exercise.hasTime,
-          hasDistance: data.exercise.hasDistance,
-          muscle: data.exercise.muscle,
-          isCardio: data.exercise.isCardio,
-          isMachine: data.exercise.isMachine,
-          isDumbbell: data.exercise.isDumbbell,
-          isBarbell: data.exercise.isBarbell,
-        }}
-        onSubmit={async (values) => {
-          try {
-            await updateExercise({
-              variables: {uuid: route.params.exerciseUuid, payload: values},
-            })
-            navigation.goBack()
-          } catch (err) {
-            alert('Update exercise error ' + err)
-          }
-        }}
-      />
-    </View>
+    <ScrollView>
+      <Screen withPadding>
+        <Text>EDITING</Text>
+        <ExerciseForm
+          initialValues={{
+            name: data.exercise.name,
+            description: data.exercise.description,
+            hasRepetitions: data.exercise.hasRepetitions,
+            hasWeight: data.exercise.hasWeight,
+            hasTime: data.exercise.hasTime,
+            hasDistance: data.exercise.hasDistance,
+            muscle: data.exercise.muscle,
+            isCardio: data.exercise.isCardio,
+            isMachine: data.exercise.isMachine,
+            isDumbbell: data.exercise.isDumbbell,
+            isBarbell: data.exercise.isBarbell,
+          }}
+          onSubmit={async (values) => {
+            try {
+              await updateExercise({
+                variables: {uuid: route.params.exerciseUuid, payload: values},
+              })
+              navigation.goBack()
+            } catch (err) {
+              alert('Update exercise error ' + err)
+            }
+          }}
+        />
+      </Screen>
+    </ScrollView>
   )
 }
