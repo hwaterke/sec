@@ -44,6 +44,7 @@ export class WorkoutSet {
   @Column()
   executedAt: Date
 
+  @Field(() => Exercise)
   @ManyToOne(() => Exercise, (exercise) => exercise.workoutSets, {
     nullable: false,
   })
