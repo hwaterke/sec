@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Text} from '../../components/Text'
 import {Screen} from '../../design/layout/Screen'
-import {useRoute} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import {ExerciseDetailScreenRouteProp} from '../exercises/types'
 import {gql} from '@apollo/client'
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../graphql/graphql.codegen'
 import {HistoryDayScreenRouteProp} from './types'
 import {groupBy, pipe, prop, sortBy} from 'ramda'
-import {SectionList} from 'react-native'
+import {SectionList, TouchableOpacity} from 'react-native'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {SectionHeader} from '../../components/SectionHeader'
 
@@ -35,6 +35,7 @@ gql`
 
 export const HistoryDayScreen = () => {
   const {params} = useRoute<HistoryDayScreenRouteProp>()
+  const navigation = useNavigation()
   const {data} = useWorkoutSetForDayQuery({
     variables: {
       date: params.date,
@@ -70,7 +71,22 @@ export const HistoryDayScreen = () => {
     <Screen>
       <SectionList
         sections={setByExercise}
-        renderItem={({item}) => <WorkoutSetRow value={item} />}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            key={item.uuid}
+            onPress={() => {
+              navigation.navigate('WorkoutSetAddScreen', {
+                exerciseUuid: item.exercise.uuid,
+                repetitions: item.repetitions,
+                weight: item.weight,
+                distance: item.distance,
+                time: item.time,
+              })
+            }}
+          >
+            <WorkoutSetRow value={item} />
+          </TouchableOpacity>
+        )}
         renderSectionHeader={(i) => (
           <SectionHeader>{i.section.title}</SectionHeader>
         )}

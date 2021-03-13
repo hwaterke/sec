@@ -38,6 +38,12 @@ export const WorkoutSetAddScreen: React.FC = () => {
   return (
     <WorkoutSetForm
       exercise={data.exercise}
+      initialValues={{
+        repetitions: params.repetitions ? `${params.repetitions}` : '',
+        weight: params.weight ? `${params.weight}` : '',
+        distance: params.distance ? `${params.distance}` : '',
+        time: params.time || '',
+      }}
       onSubmit={async (v) => {
         await createWorkoutSet({
           variables: {

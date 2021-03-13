@@ -7,6 +7,10 @@ export type MainStackNavigatorParamList = {
   Tabs: undefined
   WorkoutSetAddScreen: {
     exerciseUuid: string
+    repetitions?: number
+    weight?: number
+    distance?: number
+    time?: string
   }
 }
 

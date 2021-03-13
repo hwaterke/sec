@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text} from 'react-native'
+import {Text, TouchableOpacity} from 'react-native'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {gql} from '@apollo/client'
 import {useExerciseDetailQuery} from '../../graphql/graphql.codegen'
@@ -68,7 +68,20 @@ export const ExerciseDetailScreen: React.FC = () => {
       <Title>{data.exercise.name}</Title>
 
       {data.exercise.lastWorkoutSets.map((ws) => (
-        <WorkoutSetRow key={ws.uuid} value={ws} />
+        <TouchableOpacity
+          key={ws.uuid}
+          onPress={() => {
+            navigation.navigate('WorkoutSetAddScreen', {
+              exerciseUuid: params.exerciseUuid,
+              repetitions: ws.repetitions,
+              weight: ws.weight,
+              distance: ws.distance,
+              time: ws.time,
+            })
+          }}
+        >
+          <WorkoutSetRow value={ws} />
+        </TouchableOpacity>
       ))}
 
       <Button
