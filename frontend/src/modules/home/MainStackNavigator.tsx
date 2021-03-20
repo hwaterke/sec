@@ -1,7 +1,8 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
-import {MainTabNavigator} from './MainTabNavigator'
 import {WorkoutSetAddScreen} from '../workoutSet/WorkoutSetAddScreen'
+import {WorkoutSetEditScreen} from '../workoutSet/WorkoutSetEditScreen'
+import {MainTabNavigator} from './MainTabNavigator'
 
 export type MainStackNavigatorParamList = {
   Tabs: undefined
@@ -11,6 +12,9 @@ export type MainStackNavigatorParamList = {
     weight?: number
     distance?: number
     time?: string
+  }
+  WorkoutSetEditScreen: {
+    workoutSetUuid: string
   }
 }
 
@@ -27,6 +31,10 @@ export const MainStackNavigator = () => {
       <Stack.Screen
         name="WorkoutSetAddScreen"
         component={WorkoutSetAddScreen}
+      />
+      <Stack.Screen
+        name="WorkoutSetEditScreen"
+        component={WorkoutSetEditScreen}
       />
     </Stack.Navigator>
   )

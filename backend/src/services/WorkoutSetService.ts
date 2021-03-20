@@ -1,7 +1,7 @@
 import {getRepository} from 'typeorm'
-import {WorkoutSetInput} from '../graphql/workoutSet/WorkoutSetInput'
 import {WorkoutSet} from '../database/entities/WorkoutSet'
 import {WorkoutDayObjectType} from '../graphql/workoutSet/WorkoutDayObjectType'
+import {WorkoutSetUpdateInput} from '../graphql/workoutSet/WorkoutSetInput'
 
 type WorkoutSetCreationData = {
   repetitions?: number
@@ -14,6 +14,22 @@ type WorkoutSetCreationData = {
 }
 
 export const WorkoutSetService = {
+  getOne: ({
+    uuid,
+    userUuid,
+  }: {
+    uuid: string
+    userUuid: string
+  }): Promise<WorkoutSet | undefined> => {
+    const repository = getRepository(WorkoutSet)
+    return repository
+      .createQueryBuilder('workoutSet')
+      .leftJoinAndSelect('workoutSet.exercise', 'exercise')
+      .where('workoutSet.uuid = :uuid', {uuid})
+      .andWhere('workoutSet.user = :user', {user: userUuid})
+      .getOne()
+  },
+
   getAllForExercise: ({
     exerciseUuid,
   }: {
@@ -61,6 +77,20 @@ export const WorkoutSetService = {
     const repository = getRepository(WorkoutSet)
     const workoutSet = repository.create(workoutSetData)
     return repository.save(workoutSet)
+  },
+
+  update: async ({
+    uuid,
+    userUuid,
+    payload,
+  }: {
+    uuid: string
+    userUuid: string
+    payload: WorkoutSetUpdateInput
+  }): Promise<WorkoutSet | undefined> => {
+    const repository = getRepository(WorkoutSet)
+    await repository.update({uuid, user: {uuid: userUuid}}, payload)
+    return WorkoutSetService.getOne({uuid, userUuid})
   },
 
   remove: ({uuid}: {uuid: string}) => {

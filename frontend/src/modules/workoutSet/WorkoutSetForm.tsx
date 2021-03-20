@@ -1,9 +1,11 @@
+import {Formik} from 'formik'
+import {DateTime} from 'luxon'
 import React from 'react'
 import {Button, View} from 'react-native'
 import {TextInput} from '../../components/TextInput'
-import {Formik} from 'formik'
 
 export type WorkoutSetFormValues = {
+  executedAt: string
   repetitions: string
   weight: string
   distance: string
@@ -24,7 +26,13 @@ type Props = {
 export const WorkoutSetForm = ({
   exercise,
   onSubmit,
-  initialValues = {repetitions: '', weight: '', distance: '', time: ''},
+  initialValues = {
+    executedAt: DateTime.now().toISO(),
+    repetitions: '',
+    weight: '',
+    distance: '',
+    time: '',
+  },
 }: Props) => {
   return (
     <Formik<WorkoutSetFormValues>
@@ -33,6 +41,13 @@ export const WorkoutSetForm = ({
     >
       {({handleChange, handleBlur, handleSubmit, values}) => (
         <View>
+          <TextInput
+            onChangeText={handleChange('executedAt')}
+            onBlur={handleBlur('executedAt')}
+            value={values.executedAt}
+            placeholder="Executed at"
+          />
+
           {exercise.hasRepetitions && (
             <TextInput
               onChangeText={handleChange('repetitions')}

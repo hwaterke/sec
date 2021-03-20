@@ -1,7 +1,8 @@
+import {gql} from '@apollo/client'
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
+import {DateTime} from 'luxon'
 import React from 'react'
 import {Text} from 'react-native'
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
-import {gql} from '@apollo/client'
 import {
   useCreateWorkoutSetMutation,
   useExerciseDetailQuery,
@@ -39,6 +40,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
     <WorkoutSetForm
       exercise={data.exercise}
       initialValues={{
+        executedAt: DateTime.now().toISO(),
         repetitions: params.repetitions ? `${params.repetitions}` : '',
         weight: params.weight ? `${params.weight}` : '',
         distance: params.distance ? `${params.distance}` : '',

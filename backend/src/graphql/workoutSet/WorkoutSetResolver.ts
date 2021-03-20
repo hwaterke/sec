@@ -1,9 +1,9 @@
 import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql'
 import {WorkoutSet} from '../../database/entities/WorkoutSet'
-import {Context} from '../types'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {WorkoutSetInput} from './WorkoutSetInput'
+import {Context} from '../types'
 import {WorkoutDayObjectType} from './WorkoutDayObjectType'
+import {WorkoutSetInput, WorkoutSetUpdateInput} from './WorkoutSetInput'
 
 @Resolver()
 export class WorkoutSetResolver {
@@ -19,6 +19,32 @@ export class WorkoutSetResolver {
         uuid: workoutSetInput.exerciseUuid,
       },
       user: {uuid: context.user!.uuid},
+    })
+  }
+
+  @Authorized()
+  @Mutation(() => WorkoutSet)
+  async updateWorkoutSet(
+    @Arg('uuid') uuid: string,
+    @Arg('payload') workoutSetInput: WorkoutSetUpdateInput,
+    @Ctx() context: Context
+  ) {
+    return WorkoutSetService.update({
+      uuid,
+      payload: workoutSetInput,
+      userUuid: context.user!.uuid,
+    })
+  }
+
+  @Authorized()
+  @Query(() => WorkoutSet)
+  async workoutSet(
+    @Arg('uuid') uuid: string,
+    @Ctx() context: Context
+  ): Promise<WorkoutSet | undefined> {
+    return WorkoutSetService.getOne({
+      uuid,
+      userUuid: context.user!.uuid,
     })
   }
 

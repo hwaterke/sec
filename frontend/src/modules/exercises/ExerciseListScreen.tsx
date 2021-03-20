@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import {SectionList, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import {ExercisesQuery, useExercisesQuery} from '../../graphql/graphql.codegen'
-import {groupBy, pipe, prop, sortBy} from 'ramda'
-import {SectionHeader} from '../../components/SectionHeader'
-import {useNavigation} from '@react-navigation/native'
 import {gql} from '@apollo/client'
+import {useFocusEffect, useNavigation} from '@react-navigation/native'
+import {groupBy, pipe, prop, sortBy} from 'ramda'
+import React, {useCallback, useEffect, useState} from 'react'
+import {SectionList, Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
+import {SectionHeader} from '../../components/SectionHeader'
 import {px, py} from '../../design/constants/spacing'
+import {
+  ExercisesQuery,
+  useExercisesLazyQuery,
+} from '../../graphql/graphql.codegen'
 
 const Row = styled.View`
   flex-direction: row;
@@ -35,12 +38,20 @@ gql`
 
 export const ExerciseListScreen: React.FC = () => {
   const navigation = useNavigation()
-  const {data, loading, refetch} = useExercisesQuery()
-
+  const [fetch, {data, loading, refetch}] = useExercisesLazyQuery()
   const [exercisesByMuscle, setExercisesByMuscle] = useState<
     {title: string; data: ExercisesQuery['exercises']}[]
   >([])
-  const [refreshing, setRefreshing] = useState<boolean>(false)
+
+  useFocusEffect(
+    useCallback(() => {
+      if (refetch) {
+        void refetch()
+      } else {
+        fetch()
+      }
+    }, [fetch, refetch])
+  )
 
   // Group exercises by muscle
   useEffect(() => {
@@ -58,17 +69,15 @@ export const ExerciseListScreen: React.FC = () => {
     }
   }, [data])
 
-  if (loading || !data) {
-    return <Text>Loading</Text>
+  if (!data) {
+    return <Text>No data</Text>
   }
 
   return (
     <SectionList
-      refreshing={refreshing}
+      refreshing={loading}
       onRefresh={async () => {
-        setRefreshing(true)
-        await refetch()
-        setRefreshing(false)
+        await refetch?.()
       }}
       style={{flex: 1}}
       renderItem={({item}) => (

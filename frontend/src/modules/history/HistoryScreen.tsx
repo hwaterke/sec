@@ -1,12 +1,12 @@
-import React from 'react'
-import {FlatList, TouchableOpacity} from 'react-native'
-import {Text} from '../../components/Text'
 import {gql} from '@apollo/client'
-import {useWorkoutDaysQuery} from '../../graphql/graphql.codegen'
+import {useFocusEffect, useNavigation} from '@react-navigation/native'
+import React, {useCallback} from 'react'
+import {FlatList, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
+import {Text} from '../../components/Text'
 import {px, py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
-import {useNavigation} from '@react-navigation/native'
+import {useWorkoutDaysLazyQuery} from '../../graphql/graphql.codegen'
 
 const Row = styled.View`
   flex-direction: row;
@@ -30,7 +30,21 @@ gql`
 
 export const HistoryScreen: React.FC = () => {
   const navigation = useNavigation()
-  const {data} = useWorkoutDaysQuery()
+  const [fetch, {data, loading, refetch}] = useWorkoutDaysLazyQuery()
+
+  useFocusEffect(
+    useCallback(() => {
+      if (refetch) {
+        void refetch()
+      } else {
+        fetch()
+      }
+    }, [fetch, refetch])
+  )
+
+  if (!data) {
+    return <Text>No data</Text>
+  }
 
   return (
     <Screen>
