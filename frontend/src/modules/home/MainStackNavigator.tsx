@@ -1,5 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {WorkoutSetAddScreen} from '../workoutSet/WorkoutSetAddScreen'
 import {WorkoutSetEditScreen} from '../workoutSet/WorkoutSetEditScreen'
 import {MainTabNavigator} from './MainTabNavigator'
@@ -22,7 +23,7 @@ const Stack = createStackNavigator<MainStackNavigatorParamList>()
 
 export const MainStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={globalScreenOptions}>
       <Stack.Screen
         name="Tabs"
         component={MainTabNavigator}

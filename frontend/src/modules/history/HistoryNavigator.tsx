@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
 import {Button} from 'react-native'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {HistoryDayScreen} from './HistoryDayScreen'
 import {HistoryScreen} from './HistoryScreen'
 import {
@@ -13,7 +14,7 @@ const Stack = createStackNavigator<HistoryStackParamList>()
 
 export const HistoryNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={globalScreenOptions}>
       <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
       <Stack.Screen
         name="HistoryDayScreen"

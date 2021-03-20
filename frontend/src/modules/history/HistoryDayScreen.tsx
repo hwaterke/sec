@@ -11,6 +11,7 @@ import {
   useWorkoutSetForDayLazyQuery,
   WorkoutSetForDayQuery,
 } from '../../graphql/graphql.codegen'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {HistoryDayScreenRouteProp} from './types'
 
 gql`
@@ -80,6 +81,7 @@ export const HistoryDayScreen = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
+        ...globalScreenOptions.headerStyle,
         backgroundColor: params.isEditing
           ? theme.colors.background.editing
           : theme.navigation.colors.card,

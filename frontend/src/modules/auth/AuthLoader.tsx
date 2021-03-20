@@ -6,6 +6,7 @@ import {ThemeProvider} from 'styled-components/native'
 import {ApolloProviderWithAuth} from '../../graphql/ApolloProviderWithAuth'
 import {selectBackend} from '../../redux/selectors/backend'
 import {selectToken} from '../../redux/selectors/token'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {Theme, theme} from '../../theming/theme'
 import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
 import {MainStackNavigator} from '../home/MainStackNavigator'
@@ -26,14 +27,14 @@ export const AuthLoader: React.FC = () => {
           <ApolloProviderWithAuth>
             {backend ? (
               token === null ? (
-                <Stack.Navigator>
+                <Stack.Navigator screenOptions={globalScreenOptions}>
                   <Stack.Screen name="Login" component={SignInScreen} />
                 </Stack.Navigator>
               ) : (
                 <MainStackNavigator />
               )
             ) : (
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={globalScreenOptions}>
                 <Stack.Screen
                   name="Backend"
                   component={BackendSelectionScreen}

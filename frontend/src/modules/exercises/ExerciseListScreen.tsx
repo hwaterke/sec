@@ -17,7 +17,7 @@ const Row = styled.View`
   ${py(4)};
   align-items: center;
   justify-content: flex-start;
-  background-color: ${({theme}) => theme.colors.background.secondary};
+  background-color: ${({theme}) => theme.colors.background.row};
   border-bottom-color: #e5e5e5;
   border-bottom-width: 0.5px;
 `

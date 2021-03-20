@@ -7,6 +7,7 @@ import {Button} from '../../components/Button'
 import {Text} from '../../components/Text'
 import {Screen} from '../../design/layout/Screen'
 import {clearToken} from '../../redux/reducers/tokenReducer'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {darkTheme, theme} from '../../theming/theme'
 import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
 
@@ -38,7 +39,7 @@ export const SettingsHome = () => {
 
 export const SettingsNavigator: React.FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={globalScreenOptions}>
       <Stack.Screen
         name="SettingsHome"
         component={SettingsHome}

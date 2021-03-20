@@ -10,6 +10,7 @@ export const theme = {
       primary: '#80CBC4',
       secondary: '#eee',
       editing: '#E9D460',
+      row: 'white',
     },
     border: '#ddd',
     text: {
@@ -46,6 +47,7 @@ export const darkTheme: Theme = {
       primary: '#222',
       secondary: 'black',
       editing: 'E9D460',
+      row: 'black',
     },
     border: '#ddd',
     text: {

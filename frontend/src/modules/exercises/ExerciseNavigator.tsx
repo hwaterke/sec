@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
 import {Button} from 'react-native'
 import {ButtonIcon} from '../../components/ButtonIcon'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {ExerciseAddScreen} from './ExerciseAddScreen'
 import {ExerciseDetailScreen} from './ExerciseDetailScreen'
 import {ExerciseEditScreen} from './ExerciseEditScreen'
@@ -16,7 +17,7 @@ const Stack = createStackNavigator<ExerciseStackParamList>()
 
 export const ExerciseNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={globalScreenOptions}>
       <Stack.Screen
         name="ExerciseListScreen"
         component={ExerciseListScreen}
