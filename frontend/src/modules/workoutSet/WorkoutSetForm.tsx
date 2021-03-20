@@ -1,7 +1,7 @@
 import {Formik} from 'formik'
-import {DateTime} from 'luxon'
 import React from 'react'
-import {Button, View} from 'react-native'
+import {View} from 'react-native'
+import {Button} from '../../components/Button'
 import {TextInput} from '../../components/TextInput'
 
 export type WorkoutSetFormValues = {
@@ -87,7 +87,9 @@ export const WorkoutSetForm = ({
             />
           )}
 
-          <Button onPress={handleSubmit as any} title="Submit" />
+          <Button onPress={handleSubmit as any} withTopMargin>
+            Save
+          </Button>
         </View>
       )}
     </Formik>

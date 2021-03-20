@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
-import {Button} from 'react-native'
 import {ButtonIcon} from '../../components/ButtonIcon'
+import {TextButton} from '../../components/TextButton'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {ExerciseAddScreen} from './ExerciseAddScreen'
 import {ExerciseDetailScreen} from './ExerciseDetailScreen'
@@ -43,7 +43,7 @@ export const ExerciseNavigator = () => {
         }) => ({
           title: 'Exercise',
           headerRight: () => (
-            <Button
+            <TextButton
               title="Edit"
               onPress={() => {
                 navigation.navigate('ExerciseEditScreen', {

@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import React from 'react'
-import {Button} from 'react-native'
+import {TextButton} from '../../components/TextButton'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {HistoryDayScreen} from './HistoryDayScreen'
 import {HistoryScreen} from './HistoryScreen'
@@ -28,7 +28,7 @@ export const HistoryNavigator = () => {
         }) => ({
           title: route.params.date,
           headerRight: () => (
-            <Button
+            <TextButton
               title={route.params.isEditing ? 'Done' : 'Edit'}
               onPress={() => {
                 navigation.setParams({

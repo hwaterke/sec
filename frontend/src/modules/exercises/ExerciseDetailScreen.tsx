@@ -1,13 +1,13 @@
 import {gql} from '@apollo/client'
-import {useNavigation, useRoute} from '@react-navigation/native'
-import React from 'react'
+import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
+import React, {useCallback} from 'react'
 import {Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import {Button} from '../../components/Button'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {mb, ml} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
-import {useExerciseDetailQuery} from '../../graphql/graphql.codegen'
+import {useExerciseDetailLazyQuery} from '../../graphql/graphql.codegen'
 import {ExerciseDetailScreenRouteProp} from './types'
 
 const Title = styled.Text`
@@ -47,9 +47,19 @@ gql`
 export const ExerciseDetailScreen: React.FC = () => {
   const {params} = useRoute<ExerciseDetailScreenRouteProp>()
   const navigation = useNavigation()
-  const {data, loading, error} = useExerciseDetailQuery({
+  const [fetch, {data, loading, error, refetch}] = useExerciseDetailLazyQuery({
     variables: {uuid: params.exerciseUuid},
   })
+
+  useFocusEffect(
+    useCallback(() => {
+      if (refetch) {
+        void refetch()
+      } else {
+        fetch()
+      }
+    }, [fetch, refetch])
+  )
 
   if (loading) {
     return <Text>Loading</Text>

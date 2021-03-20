@@ -17,6 +17,7 @@ export const theme = {
       primary: '#222',
       secondary: '#999',
       link: 'white',
+      header: 'white',
     },
     button: {
       primary: {
@@ -54,6 +55,7 @@ export const darkTheme: Theme = {
       primary: 'white',
       secondary: '#999',
       link: DefaultNavigationTheme.colors.primary,
+      header: 'white',
     },
     button: {
       primary: {
