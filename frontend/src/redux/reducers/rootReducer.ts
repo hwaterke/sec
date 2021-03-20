@@ -1,6 +1,6 @@
 import {combineReducers} from '@reduxjs/toolkit'
-import {tokenReducer} from './tokenReducer'
 import {backendReducer} from './backendReducer'
+import {tokenReducer} from './tokenReducer'
 
 export const rootReducer = combineReducers({
   backend: backendReducer,

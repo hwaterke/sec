@@ -1,12 +1,12 @@
+import {Formik} from 'formik'
 import React from 'react'
 import {View} from 'react-native'
 import {useDispatch, useSelector} from 'react-redux'
-import {Formik} from 'formik'
-import {selectBackend} from '../../redux/selectors/backend'
-import {TextInput} from '../../components/TextInput'
-import {setBackend} from '../../redux/reducers/backendReducer'
 import {Button} from '../../components/Button'
+import {TextInput} from '../../components/TextInput'
 import {Screen} from '../../design/layout/Screen'
+import {setBackend} from '../../redux/reducers/backendReducer'
+import {selectBackend} from '../../redux/selectors/backend'
 
 export const BackendSelectionScreen = () => {
   const backend = useSelector(selectBackend)

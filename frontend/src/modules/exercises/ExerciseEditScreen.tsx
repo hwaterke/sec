@@ -1,16 +1,16 @@
+import {gql} from '@apollo/client'
+import {RouteProp} from '@react-navigation/native'
+import {StackNavigationProp} from '@react-navigation/stack'
 import React from 'react'
+import {Text} from 'react-native'
+import {Screen} from '../../design/layout/Screen'
+import {ScrollView} from '../../design/layout/ScrollView'
 import {
   useExerciseQuery,
   useUpdateExerciseMutation,
 } from '../../graphql/graphql.codegen'
-import {StackNavigationProp} from '@react-navigation/stack'
 import {ExerciseForm} from './ExerciseForm'
-import {gql} from '@apollo/client'
-import {RouteProp} from '@react-navigation/native'
-import {Text} from 'react-native'
 import {ExerciseStackParamList} from './types'
-import {Screen} from '../../design/layout/Screen'
-import {ScrollView} from '../../design/layout/ScrollView'
 
 gql`
   query exercise($uuid: ID!) {

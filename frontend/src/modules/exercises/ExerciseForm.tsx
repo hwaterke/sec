@@ -1,11 +1,11 @@
-import React from 'react'
-import {View, Switch} from 'react-native'
-import {TextInput} from '../../components/TextInput'
 import {Formik} from 'formik'
+import React from 'react'
+import {Switch, View} from 'react-native'
 import styled from 'styled-components/native'
-import {Text} from '../../components/Text'
-import {py} from '../../design/constants/spacing'
 import {Button} from '../../components/Button'
+import {Text} from '../../components/Text'
+import {TextInput} from '../../components/TextInput'
+import {py} from '../../design/constants/spacing'
 
 const SwitchRow = styled.View`
   ${py(1)};

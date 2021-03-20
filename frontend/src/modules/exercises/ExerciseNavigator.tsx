@@ -1,11 +1,11 @@
-import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
-import {ExerciseListScreen} from './ExerciseListScreen'
-import {ExerciseAddScreen} from './ExerciseAddScreen'
-import {ButtonIcon} from '../../components/ButtonIcon'
-import {ExerciseDetailScreen} from './ExerciseDetailScreen'
+import React from 'react'
 import {Button} from 'react-native'
+import {ButtonIcon} from '../../components/ButtonIcon'
+import {ExerciseAddScreen} from './ExerciseAddScreen'
+import {ExerciseDetailScreen} from './ExerciseDetailScreen'
 import {ExerciseEditScreen} from './ExerciseEditScreen'
+import {ExerciseListScreen} from './ExerciseListScreen'
 import {
   ExerciseDetailScreenNavigationProp,
   ExerciseDetailScreenRouteProp,

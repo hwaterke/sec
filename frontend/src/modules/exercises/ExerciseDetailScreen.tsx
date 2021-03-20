@@ -1,14 +1,14 @@
+import {gql} from '@apollo/client'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import React from 'react'
 import {Text, TouchableOpacity} from 'react-native'
-import {useNavigation, useRoute} from '@react-navigation/native'
-import {gql} from '@apollo/client'
+import styled from 'styled-components/native'
+import {Button} from '../../components/Button'
+import {WorkoutSetRow} from '../../components/WorkoutSetRow'
+import {mb, ml} from '../../design/constants/spacing'
+import {Screen} from '../../design/layout/Screen'
 import {useExerciseDetailQuery} from '../../graphql/graphql.codegen'
 import {ExerciseDetailScreenRouteProp} from './types'
-import styled from 'styled-components/native'
-import {WorkoutSetRow} from '../../components/WorkoutSetRow'
-import {Button} from '../../components/Button'
-import {Screen} from '../../design/layout/Screen'
-import {mb, ml} from '../../design/constants/spacing'
 
 const Title = styled.Text`
   font-size: 24px;

@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native'
 import {
-  DefaultTheme as DefaultNavigationTheme,
   DarkTheme as DarkNavigationTheme,
+  DefaultTheme as DefaultNavigationTheme,
 } from '@react-navigation/native'
+import {StyleSheet} from 'react-native'
 
 export const theme = {
   colors: {

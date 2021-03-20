@@ -1,14 +1,14 @@
+import {createStackNavigator} from '@react-navigation/stack'
 import React, {useContext} from 'react'
 import {Switch} from 'react-native'
-import {createStackNavigator} from '@react-navigation/stack'
 import {useDispatch} from 'react-redux'
-import {clearToken} from '../../redux/reducers/tokenReducer'
 import {ThemeContext} from 'styled-components/native'
+import {Button} from '../../components/Button'
+import {Text} from '../../components/Text'
+import {Screen} from '../../design/layout/Screen'
+import {clearToken} from '../../redux/reducers/tokenReducer'
 import {darkTheme, theme} from '../../theming/theme'
 import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
-import {Text} from '../../components/Text'
-import {Button} from '../../components/Button'
-import {Screen} from '../../design/layout/Screen'
 
 const Stack = createStackNavigator()
 

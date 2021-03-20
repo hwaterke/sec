@@ -1,9 +1,9 @@
-import React from 'react'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {SettingsNavigator} from '../settings/SettingsNavigator'
-import {ExerciseNavigator} from '../exercises/ExerciseNavigator'
 import {Ionicons} from '@expo/vector-icons'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import React from 'react'
+import {ExerciseNavigator} from '../exercises/ExerciseNavigator'
 import {HistoryNavigator} from '../history/HistoryNavigator'
+import {SettingsNavigator} from '../settings/SettingsNavigator'
 
 const Tab = createBottomTabNavigator()
 

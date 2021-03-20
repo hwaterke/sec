@@ -1,10 +1,10 @@
-import React from 'react'
-import {useCreateExerciseMutation} from '../../graphql/graphql.codegen'
-import {StackNavigationProp} from '@react-navigation/stack'
-import {ExerciseForm} from './ExerciseForm'
 import {gql} from '@apollo/client'
+import {StackNavigationProp} from '@react-navigation/stack'
+import React from 'react'
 import {Screen} from '../../design/layout/Screen'
 import {ScrollView} from '../../design/layout/ScrollView'
+import {useCreateExerciseMutation} from '../../graphql/graphql.codegen'
+import {ExerciseForm} from './ExerciseForm'
 
 gql`
   mutation createExercise($payload: ExerciseInput!) {

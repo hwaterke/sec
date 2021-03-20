@@ -1,7 +1,7 @@
+import {DateTime} from 'luxon'
 import React from 'react'
 import {Text} from 'react-native'
 import styled from 'styled-components/native'
-import {DateTime} from 'luxon'
 import {WorkoutSetMetrics} from './WorkoutSetMetrics'
 
 const View = styled.View`

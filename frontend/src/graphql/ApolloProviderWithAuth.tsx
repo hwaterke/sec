@@ -1,8 +1,8 @@
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
 import React, {useMemo} from 'react'
 import {useSelector} from 'react-redux'
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
-import {selectToken} from '../redux/selectors/token'
 import {selectBackend} from '../redux/selectors/backend'
+import {selectToken} from '../redux/selectors/token'
 
 export const ApolloProviderWithAuth: React.FC = ({children}) => {
   const backend = useSelector(selectBackend)
