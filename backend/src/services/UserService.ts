@@ -1,7 +1,7 @@
+import bcrypt from 'bcrypt'
 import {getRepository} from 'typeorm'
 import {User} from '../database/entities/User'
 import {RegisterInput} from '../graphql/auth/RegisterInput'
-import bcrypt from 'bcrypt'
 
 export const UserService = {
   createUser: async (input: RegisterInput) => {

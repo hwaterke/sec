@@ -1,6 +1,6 @@
+import path from 'path'
 import 'reflect-metadata'
 import {emitSchemaDefinitionFile} from 'type-graphql'
-import path from 'path'
 import {getSchema} from '../graphql/getSchema'
 
 getSchema()

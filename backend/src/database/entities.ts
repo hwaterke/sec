@@ -1,5 +1,5 @@
-import {User} from './entities/User'
 import {Exercise} from './entities/Exercise'
+import {User} from './entities/User'
 import {WorkoutSet} from './entities/WorkoutSet'
 
 /**

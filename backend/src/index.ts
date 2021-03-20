@@ -1,11 +1,11 @@
+import {ApolloServer} from 'apollo-server'
 import 'reflect-metadata'
 import {createConnection} from 'typeorm'
-import {databaseConfig} from './database/config'
-import {ApolloServer} from 'apollo-server'
-import {JwtService} from './services/JwtService'
-import {loadMockData} from './mocks'
 import {NODE_ENV} from './constants/env'
+import {databaseConfig} from './database/config'
 import {getSchema} from './graphql/getSchema'
+import {loadMockData} from './mocks'
+import {JwtService} from './services/JwtService'
 
 const main = async () => {
   await createConnection(databaseConfig)

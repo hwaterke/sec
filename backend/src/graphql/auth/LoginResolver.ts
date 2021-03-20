@@ -1,9 +1,9 @@
-import {Args, Field, Mutation, ObjectType, Resolver} from 'type-graphql'
-import {UserService} from '../../services/UserService'
-import {LoginInput} from './LoginInput'
 import {AuthenticationError} from 'apollo-server'
+import {Args, Field, Mutation, ObjectType, Resolver} from 'type-graphql'
 import {User} from '../../database/entities/User'
 import {JwtService} from '../../services/JwtService'
+import {UserService} from '../../services/UserService'
+import {LoginInput} from './LoginInput'
 
 @ObjectType()
 class UserWithToken {

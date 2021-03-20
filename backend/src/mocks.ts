@@ -1,7 +1,7 @@
-import {UserService} from './services/UserService'
-import {ExerciseService} from './services/ExerciseService'
 import {getRepository} from 'typeorm'
 import {User} from './database/entities/User'
+import {ExerciseService} from './services/ExerciseService'
+import {UserService} from './services/UserService'
 
 export const loadMockData = async () => {
   const userRepo = getRepository(User)

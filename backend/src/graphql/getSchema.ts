@@ -1,11 +1,11 @@
+import {GraphQLSchema} from 'graphql'
 import {buildSchema} from 'type-graphql'
-import {HealthResolver} from './health/HealthResolver'
-import {RegisterResolver} from './auth/RegisterResolver'
 import {LoginResolver} from './auth/LoginResolver'
 import {MeResolver} from './auth/MeResolver'
+import {RegisterResolver} from './auth/RegisterResolver'
 import {ExerciseResolver} from './exercise/ExerciseResolver'
+import {HealthResolver} from './health/HealthResolver'
 import {Context} from './types'
-import {GraphQLSchema} from 'graphql'
 import {WorkoutSetResolver} from './workoutSet/WorkoutSetResolver'
 
 let schema: GraphQLSchema | null = null

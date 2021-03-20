@@ -9,12 +9,12 @@ import {
   Resolver,
   Root,
 } from 'type-graphql'
-import {ExerciseInput} from './ExerciseInput'
-import {ExerciseService} from '../../services/ExerciseService'
-import {Exercise} from '../../database/entities/Exercise'
-import {Context, DeletedOutput} from '../types'
-import {WorkoutSet} from '../../database/entities/WorkoutSet'
 import {getRepository} from 'typeorm'
+import {Exercise} from '../../database/entities/Exercise'
+import {WorkoutSet} from '../../database/entities/WorkoutSet'
+import {ExerciseService} from '../../services/ExerciseService'
+import {Context, DeletedOutput} from '../types'
+import {ExerciseInput} from './ExerciseInput'
 
 @Resolver(() => Exercise)
 export class ExerciseResolver {

@@ -1,5 +1,5 @@
-import {ArgsType, Field} from 'type-graphql'
 import {IsEmail, Length} from 'class-validator'
+import {ArgsType, Field} from 'type-graphql'
 import {User} from '../../database/entities/User'
 
 @ArgsType()

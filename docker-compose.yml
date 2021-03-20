@@ -10,5 +10,6 @@ services:
     environment:
       - WARDEN_TOKEN=abc
     ports:
-      - "8080:8080"
-    command: "rerun --background -- bundle exec rackup --host :: -p 8080 -s thin"
+      - '8080:8080'
+    command:
+      'rerun --background -- bundle exec rackup --host :: -p 8080 -s thin'

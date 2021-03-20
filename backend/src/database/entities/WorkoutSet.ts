@@ -1,3 +1,4 @@
+import {Field, ID, ObjectType} from 'type-graphql'
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import {Field, ID, ObjectType} from 'type-graphql'
 import {Exercise} from './Exercise'
 import {User} from './User'
 
