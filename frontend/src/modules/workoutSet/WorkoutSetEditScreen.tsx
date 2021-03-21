@@ -92,7 +92,10 @@ export const WorkoutSetEditScreen = () => {
               payload: {
                 repetitions:
                   v.repetitions === '' ? null : Number(v.repetitions),
-                weight: v.weight === '' ? null : Number(v.weight),
+                weight:
+                  v.weight === ''
+                    ? null
+                    : Number(v.weight.replaceAll(',', '.')),
                 distance: v.distance === '' ? null : Number(v.distance),
                 time: v.time === '' ? null : v.time,
                 executedAt: v.executedAt,

@@ -19,21 +19,11 @@ type Props = {
     hasDistance: boolean
     hasTime: boolean
   }
-  initialValues?: WorkoutSetFormValues
+  initialValues: WorkoutSetFormValues
   onSubmit: (values: WorkoutSetFormValues) => void | Promise<any>
 }
 
-export const WorkoutSetForm = ({
-  exercise,
-  onSubmit,
-  initialValues = {
-    executedAt: DateTime.now().toISO(),
-    repetitions: '',
-    weight: '',
-    distance: '',
-    time: '',
-  },
-}: Props) => {
+export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
   return (
     <Formik<WorkoutSetFormValues>
       onSubmit={onSubmit}
