@@ -70,6 +70,7 @@ export const WorkoutSetService = {
       .leftJoinAndSelect('workoutSet.exercise', 'exercise')
       .where('workoutSet.user = :user', {user: userUuid})
       .andWhere('date(workoutSet.executedAt) = date(:date)', {date})
+      .orderBy('workoutSet.executedAt', 'ASC')
       .getMany()
   },
 
