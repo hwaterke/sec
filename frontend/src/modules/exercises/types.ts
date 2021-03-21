@@ -8,6 +8,11 @@ export type ExerciseStackParamList = {
   ExerciseEditScreen: {exerciseUuid: string}
 }
 
+export type ExerciseListScreenNavigationProp = StackNavigationProp<
+  ExerciseStackParamList,
+  'ExerciseListScreen'
+>
+
 export type ExerciseDetailScreenNavigationProp = StackNavigationProp<
   ExerciseStackParamList,
   'ExerciseDetailScreen'
@@ -16,4 +21,14 @@ export type ExerciseDetailScreenNavigationProp = StackNavigationProp<
 export type ExerciseDetailScreenRouteProp = RouteProp<
   ExerciseStackParamList,
   'ExerciseDetailScreen'
+>
+
+export type ExerciseEditScreenNavigationProp = StackNavigationProp<
+  ExerciseStackParamList,
+  'ExerciseEditScreen'
+>
+
+export type ExerciseEditScreenRouteProp = RouteProp<
+  ExerciseStackParamList,
+  'ExerciseEditScreen'
 >

@@ -1,16 +1,19 @@
 import {gql} from '@apollo/client'
-import {RouteProp} from '@react-navigation/native'
-import {StackNavigationProp} from '@react-navigation/stack'
 import React from 'react'
 import {Text} from 'react-native'
+import {Button} from '../../components/Button'
 import {Screen} from '../../design/layout/Screen'
 import {ScrollView} from '../../design/layout/ScrollView'
 import {
+  useDeleteExerciseMutation,
   useExerciseQuery,
   useUpdateExerciseMutation,
 } from '../../graphql/graphql.codegen'
 import {ExerciseForm} from './ExerciseForm'
-import {ExerciseStackParamList} from './types'
+import {
+  ExerciseEditScreenNavigationProp,
+  ExerciseEditScreenRouteProp,
+} from './types'
 
 gql`
   query exercise($uuid: ID!) {
@@ -38,15 +41,17 @@ gql`
       muscle
     }
   }
+
+  mutation deleteExercise($uuid: ID!) {
+    deleteExercise(uuid: $uuid) {
+      affected_uuids
+    }
+  }
 `
 
-type ProfileScreenRouteProp = RouteProp<
-  ExerciseStackParamList,
-  'ExerciseEditScreen'
->
 type Props = {
-  navigation: StackNavigationProp<{}>
-  route: ProfileScreenRouteProp
+  navigation: ExerciseEditScreenNavigationProp
+  route: ExerciseEditScreenRouteProp
 }
 
 export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
@@ -57,6 +62,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
     fetchPolicy: 'network-only',
   })
   const [updateExercise] = useUpdateExerciseMutation()
+  const [deleteExercise] = useDeleteExerciseMutation()
 
   if (loading || !data) {
     return <Text>Loading</Text>
@@ -91,6 +97,20 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
             }
           }}
         />
+
+        <Button
+          withTopMargin
+          onPress={async () => {
+            await deleteExercise({
+              variables: {
+                uuid: route.params.exerciseUuid,
+              },
+            })
+            navigation.replace('ExerciseListScreen')
+          }}
+        >
+          Delete
+        </Button>
       </Screen>
     </ScrollView>
   )

@@ -1,7 +1,7 @@
-import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql'
+import {Arg, Authorized, Ctx, ID, Mutation, Query, Resolver} from 'type-graphql'
 import {WorkoutSet} from '../../database/entities/WorkoutSet'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {Context} from '../types'
+import {Context, DeletedOutput} from '../types'
 import {WorkoutDayObjectType} from './WorkoutDayObjectType'
 import {WorkoutSetInput, WorkoutSetUpdateInput} from './WorkoutSetInput'
 
@@ -66,5 +66,14 @@ export class WorkoutSetResolver {
       date,
       userUuid: context.user!.uuid,
     })
+  }
+
+  @Authorized()
+  @Mutation(() => DeletedOutput)
+  async deleteWorkoutSet(
+    @Arg('uuid', () => ID) uuid: string
+  ): Promise<DeletedOutput> {
+    await WorkoutSetService.remove({uuid})
+    return {affected_uuids: [uuid]}
   }
 }
