@@ -1,5 +1,6 @@
 import {gql} from '@apollo/client'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
+import {DateTime} from 'luxon'
 import React, {useCallback} from 'react'
 import {FlatList, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
@@ -59,7 +60,11 @@ export const HistoryScreen: React.FC = () => {
             }
           >
             <Row>
-              <Text>{date}</Text>
+              <Text>
+                {DateTime.fromISO(date).toLocaleString(
+                  DateTime.DATE_MED_WITH_WEEKDAY
+                )}
+              </Text>
               <Text>{count}</Text>
             </Row>
           </TouchableOpacity>
