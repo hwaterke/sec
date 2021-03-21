@@ -18,7 +18,7 @@ type WorkoutSetEditScreenNavigationProp = RouteProp<
 >
 
 gql`
-  query workoutSet($uuid: String!) {
+  query workoutSet($uuid: ID!) {
     workoutSet(uuid: $uuid) {
       uuid
       exercise {
@@ -36,7 +36,7 @@ gql`
     }
   }
 
-  mutation updateWorkoutSet($uuid: String!, $payload: WorkoutSetUpdateInput!) {
+  mutation updateWorkoutSet($uuid: ID!, $payload: WorkoutSetUpdateInput!) {
     updateWorkoutSet(uuid: $uuid, payload: $payload) {
       uuid
       repetitions

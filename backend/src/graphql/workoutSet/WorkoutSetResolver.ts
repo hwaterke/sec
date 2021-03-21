@@ -25,7 +25,7 @@ export class WorkoutSetResolver {
   @Authorized()
   @Mutation(() => WorkoutSet)
   async updateWorkoutSet(
-    @Arg('uuid') uuid: string,
+    @Arg('uuid', () => ID) uuid: string,
     @Arg('payload') workoutSetInput: WorkoutSetUpdateInput,
     @Ctx() context: Context
   ) {
@@ -39,7 +39,7 @@ export class WorkoutSetResolver {
   @Authorized()
   @Query(() => WorkoutSet)
   async workoutSet(
-    @Arg('uuid') uuid: string,
+    @Arg('uuid', () => ID) uuid: string,
     @Ctx() context: Context
   ): Promise<WorkoutSet | undefined> {
     return WorkoutSetService.getOne({
