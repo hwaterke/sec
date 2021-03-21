@@ -90,7 +90,7 @@ export const ExerciseDetailScreen: React.FC = () => {
             })
           }}
         >
-          <WorkoutSetRow value={ws} />
+          <WorkoutSetRow value={ws} withDate />
         </TouchableOpacity>
       ))}
 

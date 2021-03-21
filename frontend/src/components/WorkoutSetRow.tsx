@@ -29,7 +29,7 @@ export const WorkoutSetRow = ({value, withDate}: Props) => {
     <View>
       <Text>
         {DateTime.fromISO(value.executedAt).toLocaleString(
-          withDate ? DateTime.DATETIME_MED : DateTime.TIME_24_SIMPLE
+          withDate ? DateTime.DATETIME_SHORT : DateTime.TIME_24_SIMPLE
         )}
       </Text>
 
