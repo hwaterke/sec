@@ -3,6 +3,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 import {DateTime} from 'luxon'
 import React from 'react'
 import {Text} from 'react-native'
+import {Screen} from '../../design/layout/Screen'
 import {
   useCreateWorkoutSetMutation,
   useExerciseDetailQuery,
@@ -37,30 +38,33 @@ export const WorkoutSetAddScreen: React.FC = () => {
   }
 
   return (
-    <WorkoutSetForm
-      exercise={data.exercise}
-      initialValues={{
-        executedAt: DateTime.now().toISO(),
-        repetitions: params.repetitions ? `${params.repetitions}` : '',
-        weight: params.weight ? `${params.weight}` : '',
-        distance: params.distance ? `${params.distance}` : '',
-        time: params.time || '',
-      }}
-      onSubmit={async (v) => {
-        await createWorkoutSet({
-          variables: {
-            workoutSet: {
-              exerciseUuid: params.exerciseUuid,
-              repetitions: v.repetitions === '' ? null : Number(v.repetitions),
-              weight: v.weight === '' ? null : Number(v.weight),
-              distance: v.distance === '' ? null : Number(v.distance),
-              time: v.time === '' ? null : v.time,
-              executedAt: new Date(),
+    <Screen withPadding>
+      <WorkoutSetForm
+        exercise={data.exercise}
+        initialValues={{
+          executedAt: DateTime.now().toISO(),
+          repetitions: params.repetitions ? `${params.repetitions}` : '',
+          weight: params.weight ? `${params.weight}` : '',
+          distance: params.distance ? `${params.distance}` : '',
+          time: params.time || '',
+        }}
+        onSubmit={async (v) => {
+          await createWorkoutSet({
+            variables: {
+              workoutSet: {
+                exerciseUuid: params.exerciseUuid,
+                repetitions:
+                  v.repetitions === '' ? null : Number(v.repetitions),
+                weight: v.weight === '' ? null : Number(v.weight),
+                distance: v.distance === '' ? null : Number(v.distance),
+                time: v.time === '' ? null : v.time,
+                executedAt: new Date(),
+              },
             },
-          },
-        })
-        navigation.goBack()
-      }}
-    />
+          })
+          navigation.goBack()
+        }}
+      />
+    </Screen>
   )
 }
