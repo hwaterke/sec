@@ -61,7 +61,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
                     : Number(v.weight.replaceAll(',', '.')),
                 distance: v.distance === '' ? null : Number(v.distance),
                 time: v.time === '' ? null : v.time,
-                executedAt: new Date(),
+                executedAt: v.executedAt,
               },
             },
           })

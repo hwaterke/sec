@@ -73,11 +73,13 @@ export const HistoryDayScreen = () => {
   const {params} = useRoute<HistoryDayScreenRouteProp>()
   const navigation = useNavigation()
   const theme = useTheme()
-  const [fetch, {data, loading, refetch}] = useWorkoutSetForDayLazyQuery({
-    variables: {
-      date: params.date,
-    },
-  })
+  const [fetch, {data, error, loading, refetch}] = useWorkoutSetForDayLazyQuery(
+    {
+      variables: {
+        date: params.date,
+      },
+    }
+  )
   const [setByExercise, setSetByExercise] = useState<
     {
       title: string
@@ -127,6 +129,18 @@ export const HistoryDayScreen = () => {
 
   if (!data) {
     return <Text>No data</Text>
+  }
+
+  if (error) {
+    return <Text>{JSON.stringify(error, null, 2)}</Text>
+  }
+
+  if (data.workoutSetForDay.length === 0) {
+    return (
+      <Screen withPadding>
+        <Text>Nothing on that day</Text>
+      </Screen>
+    )
   }
 
   const timeStart = DateTime.fromISO(data.workoutSetForDay[0].executedAt)
