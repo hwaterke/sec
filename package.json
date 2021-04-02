@@ -4,6 +4,7 @@
   "repository": "git@github.com:hwaterke/sec.git",
   "author": "hwaterke <hwaterke@users.noreply.github.com>",
   "scripts": {
+    "prepare": "husky install",
     "codegen": "(cd ./backend && yarn gen:schema) && graphql-codegen",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,scss,json,md,yml}\""
   },
@@ -14,7 +15,7 @@
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-react-apollo": "2.2.3",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
-    "husky": "^4.2.5",
+    "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "prettier-plugin-organize-imports": "^1.1.1",
@@ -24,11 +25,6 @@
     "*.{js,jsx,ts,tsx,css,scss,json,md,yml}": [
       "prettier --write"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "graphql": "^15.5.0"
