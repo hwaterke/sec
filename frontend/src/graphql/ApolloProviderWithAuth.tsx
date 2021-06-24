@@ -11,7 +11,7 @@ export const ApolloProviderWithAuth: React.FC = ({children}) => {
   const client = useMemo(() => {
     return new ApolloClient({
       uri: backend ?? undefined,
-      headers: token ? {authorization: token} : undefined,
+      headers: token ? {authorization: `Bearer ${token}`} : undefined,
       cache: new InMemoryCache({
         dataIdFromObject: (object: any) => object.uuid || null,
       }),

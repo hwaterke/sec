@@ -1,4 +1,4 @@
-schema: 'backend/schema.graphql'
+schema: 'backend/schema.gql'
 overwrite: true
 generates:
   ./frontend/src/graphql/graphql.codegen.tsx:
