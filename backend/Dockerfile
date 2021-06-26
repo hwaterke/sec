@@ -1,6 +1,8 @@
 FROM node:14-alpine AS builder
 WORKDIR /app
+RUN apk add --update-cache build-base python python-dev
 COPY ./package.json ./
+COPY ./yarn.lock ./
 COPY ./tools ./tools
 RUN yarn
 COPY . .
