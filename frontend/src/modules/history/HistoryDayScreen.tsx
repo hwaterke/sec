@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import {DateTime} from 'luxon'
-import {groupBy, pipe, prop, sortBy} from 'ramda'
+import {groupBy} from 'ramda'
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react'
 import {SectionList, TouchableOpacity} from 'react-native'
 import {useTheme} from 'styled-components'
@@ -97,7 +97,6 @@ export const HistoryDayScreen = () => {
     }, [fetch, refetch])
   )
 
-  // Group exercises by muscle
   useEffect(() => {
     if (data?.workoutSetForDay) {
       const byExercise = groupBy(
@@ -106,12 +105,10 @@ export const HistoryDayScreen = () => {
       )
 
       setSetByExercise(
-        pipe(sortBy(prop('title')))(
-          Object.entries(byExercise).map(([exerciseUuid, workoutSets]) => ({
-            title: workoutSets[0].exercise.name,
-            data: workoutSets,
-          }))
-        )
+        Object.entries(byExercise).map(([exerciseUuid, workoutSets]) => ({
+          title: workoutSets[0].exercise.name,
+          data: workoutSets,
+        }))
       )
     }
   }, [data])
