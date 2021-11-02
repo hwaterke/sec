@@ -1,5 +1,5 @@
 import {Field, InputType} from '@nestjs/graphql'
-import {IsInt, IsPositive, Matches} from 'class-validator'
+import {IsInt, IsOptional, IsPositive, Matches} from 'class-validator'
 
 @InputType()
 export class WorkoutSetInput {
@@ -9,6 +9,7 @@ export class WorkoutSetInput {
   @Field()
   executedAt!: Date
 
+  @IsOptional()
   @IsInt()
   @IsPositive()
   @Field({nullable: true})
@@ -17,10 +18,12 @@ export class WorkoutSetInput {
   @Field({nullable: true})
   weight?: number
 
+  @IsOptional()
   @Matches(/^\d\d:\d\d:\d\d$/)
   @Field({nullable: true})
   time?: string
 
+  @IsOptional()
   @IsInt()
   @IsPositive()
   @Field({nullable: true})
@@ -35,6 +38,7 @@ export class WorkoutSetUpdateInput {
   @Field()
   executedAt!: Date
 
+  @IsOptional()
   @IsInt()
   @IsPositive()
   @Field({nullable: true})
@@ -43,10 +47,12 @@ export class WorkoutSetUpdateInput {
   @Field({nullable: true})
   weight?: number
 
+  @IsOptional()
   @Matches(/^\d\d:\d\d:\d\d$/)
   @Field({nullable: true})
   time?: string
 
+  @IsOptional()
   @IsInt()
   @IsPositive()
   @Field({nullable: true})
