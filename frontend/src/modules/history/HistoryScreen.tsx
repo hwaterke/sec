@@ -1,10 +1,12 @@
 import {gql} from '@apollo/client'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import {DateTime} from 'luxon'
-import React, {useCallback} from 'react'
+import React, {useCallback, useLayoutEffect, useState} from 'react'
 import {FlatList, TouchableOpacity} from 'react-native'
+import {Calendar} from 'react-native-calendars'
 import styled from 'styled-components/native'
 import {Text} from '../../components/Text'
+import {TextButton} from '../../components/TextButton'
 import {px, py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {useWorkoutDaysLazyQuery} from '../../graphql/graphql.codegen'
@@ -30,8 +32,20 @@ gql`
 `
 
 export const HistoryScreen: React.FC = () => {
+  const [showCalendar, setShowCalendar] = useState(true)
   const navigation = useNavigation()
   const [fetch, {data, loading, refetch}] = useWorkoutDaysLazyQuery()
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TextButton
+          onPress={() => setShowCalendar(!showCalendar)}
+          title={showCalendar ? 'List' : 'Calendar'}
+        />
+      ),
+    })
+  }, [navigation, showCalendar, setShowCalendar])
 
   useFocusEffect(
     useCallback(() => {
@@ -49,28 +63,50 @@ export const HistoryScreen: React.FC = () => {
 
   return (
     <Screen>
-      <FlatList
-        data={data?.workoutDays}
-        renderItem={({item: {date, count}}) => (
-          <TouchableOpacity
-            onPress={() =>
+      {showCalendar ? (
+        <Calendar
+          markedDates={data.workoutDays.reduce(
+            (acc: {[date: string]: {selected: boolean}}, day) => {
+              acc[day.date] = {selected: true}
+              return acc
+            },
+            {}
+          )}
+          onDayPress={(day) => {
+            const workoutDay = data.workoutDays.find(
+              ({date}) => date === day.dateString
+            )
+            if (workoutDay) {
               navigation.navigate('HistoryDayScreen', {
-                date: date,
+                date: workoutDay.date,
               })
             }
-          >
-            <Row>
-              <Text>
-                {DateTime.fromISO(date).toLocaleString(
-                  DateTime.DATE_MED_WITH_WEEKDAY
-                )}
-              </Text>
-              <Text>{count}</Text>
-            </Row>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.date}
-      />
+          }}
+        />
+      ) : (
+        <FlatList
+          data={data?.workoutDays}
+          renderItem={({item: {date, count}}) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('HistoryDayScreen', {
+                  date: date,
+                })
+              }
+            >
+              <Row>
+                <Text>
+                  {DateTime.fromISO(date).toLocaleString(
+                    DateTime.DATE_MED_WITH_WEEKDAY
+                  )}
+                </Text>
+                <Text>{count}</Text>
+              </Row>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.date}
+        />
+      )}
     </Screen>
   )
 }
