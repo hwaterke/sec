@@ -65,6 +65,7 @@ export const HistoryScreen: React.FC = () => {
     <Screen>
       {showCalendar ? (
         <Calendar
+          firstDay={1}
           markedDates={data.workoutDays.reduce(
             (acc: {[date: string]: {selected: boolean}}, day) => {
               acc[day.date] = {selected: true}
