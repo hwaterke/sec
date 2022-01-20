@@ -7,9 +7,11 @@ import {SettingsNavigator} from '../settings/SettingsNavigator'
 
 const Tab = createBottomTabNavigator()
 
+const mainTabNavigatorScreenOptions = {headerShown: false}
+
 export const MainTabNavigator: React.FC = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={mainTabNavigatorScreenOptions}>
       <Tab.Screen
         name="ExerciseTab"
         component={ExerciseNavigator}
