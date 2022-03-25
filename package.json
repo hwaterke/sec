@@ -8,25 +8,25 @@
     "codegen": "(cd backend && yarn gen:schema) && graphql-codegen",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,scss,json,md,yml}\""
   },
+  "dependencies": {
+    "graphql": "^16.3.0"
+  },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.21.3",
-    "@graphql-codegen/introspection": "1.18.1",
-    "@graphql-codegen/typescript": "1.21.1",
-    "@graphql-codegen/typescript-operations": "1.17.15",
-    "@graphql-codegen/typescript-react-apollo": "2.2.3",
-    "@graphql-codegen/typescript-resolvers": "1.19.0",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
+    "@graphql-codegen/typescript-resolvers": "2.6.1",
     "husky": "^7.0.4",
-    "lint-staged": "^12.2.1",
+    "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
     "prettier-plugin-organize-imports": "^2.3.4",
-    "typescript": "^4.5.4"
+    "typescript": "^4.6.3"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,json,md,yml}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "graphql": "^15.5.0"
   }
 }
