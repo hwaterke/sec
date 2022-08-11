@@ -47,7 +47,7 @@ export class WorkoutSetsResolver {
   async workoutSet(
     @Args('uuid', {type: () => ID}) uuid: string,
     @CurrentUser() user: User
-  ): Promise<WorkoutSet | undefined> {
+  ): Promise<WorkoutSet | null> {
     return this.workoutSetsService.getOne({
       uuid,
       userUuid: user.uuid,

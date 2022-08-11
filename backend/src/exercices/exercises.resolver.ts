@@ -8,7 +8,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql'
-import {getRepository} from 'typeorm'
+import {DataSource} from 'typeorm'
 import {CurrentUser} from '../auth/current-user.decorator'
 import {GqlAuthGuard} from '../auth/gql-auth-guard'
 import {DeletedOutput} from '../types'
@@ -20,7 +20,10 @@ import {ExercisesService} from './exercises.service'
 
 @Resolver(() => Exercise)
 export class ExercisesResolver {
-  constructor(private readonly exercisesService: ExercisesService) {}
+  constructor(
+    private readonly exercisesService: ExercisesService,
+    private dataSource: DataSource
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [Exercise])
@@ -72,7 +75,7 @@ export class ExercisesResolver {
 
   @ResolveField(() => [WorkoutSet])
   lastWorkoutSets(@Parent() exercise: Exercise): Promise<WorkoutSet[]> {
-    return getRepository(WorkoutSet).find({
+    return this.dataSource.getRepository(WorkoutSet).find({
       order: {
         createdAt: 'DESC',
       },

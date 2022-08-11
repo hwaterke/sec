@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   async login(loginInput: LoginInput) {
-    const user = await this.userRepository.findOne({email: loginInput.email})
+    const user = await this.userRepository.findOneBy({email: loginInput.email})
 
     if (user) {
       const passwordMatch = await this.checkPassword(
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   async isEmailAvailable(email: string) {
-    const totalEmails = await this.userRepository.count({email})
+    const totalEmails = await this.userRepository.countBy({email})
     return totalEmails === 0
   }
 

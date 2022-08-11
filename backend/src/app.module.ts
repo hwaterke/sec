@@ -1,3 +1,4 @@
+import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo'
 import {Module} from '@nestjs/common'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {GraphQLModule} from '@nestjs/graphql'
@@ -19,7 +20,8 @@ import {WorkoutSetsModule} from './workout_sets/workout_sets.module'
         return getDatabaseConfig(config)
       },
     }),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       debug: !isProduction(),
       playground: !isProduction(),
       autoSchemaFile: 'schema.gql',

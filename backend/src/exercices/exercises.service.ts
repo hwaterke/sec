@@ -35,7 +35,7 @@ export class ExercisesService {
     payload: ExerciseInput
   }): Promise<Exercise> {
     await this.exerciseRepository.update(uuid, payload)
-    return this.exerciseRepository.findOneOrFail(uuid)
+    return this.exerciseRepository.findOneByOrFail({uuid})
   }
 
   remove({uuid}: {uuid: string}) {

@@ -28,7 +28,7 @@ export class WorkoutSetsService {
   }: {
     uuid: string
     userUuid: string
-  }): Promise<WorkoutSet | undefined> {
+  }): Promise<WorkoutSet | null> {
     return this.workoutSetRepository
       .createQueryBuilder('workoutSet')
       .leftJoinAndSelect('workoutSet.exercise', 'exercise')
@@ -91,7 +91,7 @@ export class WorkoutSetsService {
     uuid: string
     userUuid: string
     payload: WorkoutSetUpdateInput
-  }): Promise<WorkoutSet | undefined> {
+  }): Promise<WorkoutSet | null> {
     await this.workoutSetRepository.update(
       {uuid, user: {uuid: userUuid}},
       payload
