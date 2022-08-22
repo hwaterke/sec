@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,scss,json,md,yml}\""
   },
   "dependencies": {
-    "graphql": "^16.5.0"
+    "graphql": "^16.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.11.6",
