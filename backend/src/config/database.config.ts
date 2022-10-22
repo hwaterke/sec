@@ -27,7 +27,20 @@ export const getDatabaseConfig = (
       return devDatabaseConfig
     case 'test':
       return testDatabaseConfig
-    case 'production':
+    case 'production': {
+      const databaseUrl = configService.get<string>('DATABASE_URL')
+      if (databaseUrl) {
+        return {
+          type: 'postgres',
+          url: databaseUrl,
+          entities: ENTITIES,
+          logging: false,
+          synchronize: false,
+          migrationsRun: true,
+          migrations: ['dist/database/migrations/*.{ts,js}'],
+        }
+      }
+
       return {
         type: 'sqlite',
         database: configService.get<string>('DB_PATH', './sec.db'),
@@ -37,5 +50,6 @@ export const getDatabaseConfig = (
         migrationsRun: true,
         migrations: ['dist/database/migrations/*.{ts,js}'],
       }
+    }
   }
 }
