@@ -2,3 +2,14 @@
 .idea
 node_modules
 graphql.schema.json
+
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
