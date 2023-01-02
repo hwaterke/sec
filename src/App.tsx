@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
+import {Text} from 'react-native'
 import {ThemeProvider} from 'styled-components/native'
 import {DATASOURCE} from './database/datasource'
 import {MainStackNavigator} from './modules/home/MainStackNavigator'
@@ -24,7 +25,7 @@ export const App: React.FC = () => {
   }, [])
 
   if (!databaseReady) {
-    return null
+    return <Text>Database not ready</Text>
   }
 
   return (
