@@ -7,10 +7,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm'
-import type {Exercise} from './exercise.entity'
+} from 'typeorm/browser'
+import {Exercise} from './exercise.entity'
 
-@Entity()
+@Entity('workout_set')
 @Check('repetitions > 0')
 @Check('weight >= 0')
 @Check("time IS strftime('%H:%M:%S', time)")
@@ -40,7 +40,7 @@ export class WorkoutSet {
   @Column('datetime', {name: 'executed_at'})
   executedAt!: Date
 
-  @ManyToOne('Exercise', 'workoutSets', {
+  @ManyToOne(() => Exercise, {
     nullable: false,
   })
   @JoinColumn({name: 'exercise_uuid'})

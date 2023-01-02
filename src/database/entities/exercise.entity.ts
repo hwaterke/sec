@@ -2,13 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm'
-import type {WorkoutSet} from './workout_set.entity'
+} from 'typeorm/browser'
 
-@Entity()
+@Entity('exercise')
 export class Exercise {
   @PrimaryGeneratedColumn('uuid')
   uuid!: string
@@ -18,9 +16,6 @@ export class Exercise {
 
   @Column('text', {nullable: true})
   description?: string
-
-  @OneToMany('WorkoutSet', 'exercise')
-  workoutSets!: WorkoutSet[]
 
   @Column('boolean', {name: 'has_repetitions', default: false})
   hasRepetitions!: boolean

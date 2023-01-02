@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
-import {Text} from 'react-native'
+import {Alert, SafeAreaView, Text} from 'react-native'
 import {ThemeProvider} from 'styled-components/native'
 import {DATASOURCE} from './database/datasource'
 import {MainStackNavigator} from './modules/home/MainStackNavigator'
@@ -14,10 +14,12 @@ export const App: React.FC = () => {
   useEffect(() => {
     const main = async () => {
       if (!DATASOURCE.isInitialized) {
-        console.log('DATASOURCE.initialize')
-        await DATASOURCE.initialize()
+        try {
+          await DATASOURCE.initialize()
+        } catch (err) {
+          Alert.alert('Error', `${err}`)
+        }
         setDatabaseReady(true)
-        console.log('DATASOURCE.initialized')
       }
     }
 
@@ -25,7 +27,11 @@ export const App: React.FC = () => {
   }, [])
 
   if (!databaseReady) {
-    return <Text>Database not ready</Text>
+    return (
+      <SafeAreaView>
+        <Text>Database not ready</Text>
+      </SafeAreaView>
+    )
   }
 
   return (
