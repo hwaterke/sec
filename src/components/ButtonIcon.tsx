@@ -4,7 +4,7 @@ import {TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 
 type Props = {
-  name: string
+  name: keyof typeof Ionicons.glyphMap
   onPress: () => void
 }
 

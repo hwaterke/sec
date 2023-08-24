@@ -14,6 +14,8 @@ import {Screen} from '../../design/layout/Screen'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 import {HistoryDayScreenRouteProp} from './types'
+import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
+import {NavigationProp} from '@react-navigation/core/src/types'
 
 const SummaryView = styled.View`
   background-color: ${({theme}) => theme.colors.background.row};
@@ -49,7 +51,8 @@ const StatsValue = styled(Text)`
 
 export const HistoryDayScreen = () => {
   const {params} = useRoute<HistoryDayScreenRouteProp>()
-  const navigation = useNavigation()
+  const navigation =
+    useNavigation<NavigationProp<MainStackNavigatorParamList>>()
   const theme = useTheme()
   const [workoutSets, setWorkoutSets] = useState<WorkoutSet[]>([])
 
@@ -78,8 +81,8 @@ export const HistoryDayScreen = () => {
 
       setSetByExercise(
         Object.entries(byExercise).map(([exerciseUuid, workoutSets]) => ({
-          title: workoutSets[0].exercise.name,
-          data: workoutSets,
+          title: workoutSets![0].exercise.name,
+          data: workoutSets!,
         }))
       )
     }

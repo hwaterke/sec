@@ -9,10 +9,9 @@ import {WorkoutSet} from '../../database/entities/workout_set.entity'
 import {mb, ml} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {ExerciseService} from './ExerciseService'
-import {
-  ExerciseDetailScreenNavigationProp,
-  ExerciseDetailScreenRouteProp,
-} from './types'
+import {ExerciseDetailScreenRouteProp} from './types'
+import {NavigationProp} from '@react-navigation/core/src/types'
+import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 
 const Title = styled.Text`
   font-size: 24px;
@@ -22,7 +21,8 @@ const Title = styled.Text`
 
 export const ExerciseDetailScreen: React.FC = () => {
   const {params} = useRoute<ExerciseDetailScreenRouteProp>()
-  const navigation = useNavigation<ExerciseDetailScreenNavigationProp>()
+  const navigation =
+    useNavigation<NavigationProp<MainStackNavigatorParamList>>()
 
   const [exercise, setExercise] = useState<Exercise | null>(null)
   const [lastSets, setLastSets] = useState<WorkoutSet[]>([])

@@ -58,7 +58,7 @@ export const ExerciseListScreen: React.FC = () => {
       pipe(sortBy(prop('title')))(
         Object.entries(byMuscle).map(([muscle, exercises]) => ({
           title: muscle,
-          data: exercises,
+          data: exercises!,
         }))
       )
     )

@@ -30,7 +30,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
       <WorkoutSetForm
         exercise={exercise}
         initialValues={{
-          executedAt: DateTime.now().toISO(),
+          executedAt: DateTime.now().toISO()!,
           repetitions: params.repetitions ? `${params.repetitions}` : '',
           weight: params.weight ? `${params.weight}` : '',
           distance: params.distance ? `${params.distance}` : '',

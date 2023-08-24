@@ -3,6 +3,7 @@ import * as FileSystem from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 import {DATABASE_NAME} from './constants'
 import {DATASOURCE} from './datasource'
+import {isNil} from 'ramda'
 
 const databaseFolder = () => {
   return FileSystem.documentDirectory + 'SQLite'
@@ -22,12 +23,12 @@ export const DatabaseService = {
       copyToCacheDirectory: true,
     })
 
-    if (file.type === 'success') {
+    if (!isNil(file.assets) && file.assets.length > 0) {
       if (!(await FileSystem.getInfoAsync(databaseFolder())).exists) {
         await FileSystem.makeDirectoryAsync(databaseFolder())
       }
       await FileSystem.copyAsync({
-        from: file.uri,
+        from: file.assets[0].uri,
         to: databaseFile(),
       })
     }

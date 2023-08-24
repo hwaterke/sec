@@ -9,6 +9,8 @@ import {TextButton} from '../../components/TextButton'
 import {px, py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
+import {HistoryStackParamList} from './types'
+import {NavigationProp} from '@react-navigation/core/src/types'
 
 const Row = styled.View`
   flex-direction: row;
@@ -23,7 +25,7 @@ const Row = styled.View`
 
 export const HistoryScreen: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState(true)
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationProp<HistoryStackParamList>>()
 
   const [workoutDays, setWorkoutDays] = useState<
     {date: string; count: number}[]
@@ -69,6 +71,7 @@ export const HistoryScreen: React.FC = () => {
             if (workoutDay) {
               navigation.navigate('HistoryDayScreen', {
                 date: workoutDay.date,
+                isEditing: false,
               })
             }
           }}
@@ -81,6 +84,7 @@ export const HistoryScreen: React.FC = () => {
               onPress={() =>
                 navigation.navigate('HistoryDayScreen', {
                   date: date,
+                  isEditing: false,
                 })
               }
             >
