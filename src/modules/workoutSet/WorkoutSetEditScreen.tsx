@@ -24,7 +24,7 @@ export const WorkoutSetEditScreen = () => {
       setWorkoutSet(data)
     }
     main()
-  })
+  }, [params.workoutSetUuid])
 
   if (!ws) {
     return <Text>No data</Text>
