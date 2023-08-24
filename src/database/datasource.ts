@@ -11,5 +11,5 @@ export const DATASOURCE = new DataSource({
   entities: ENTITIES,
   migrations: MIGRATIONS,
   migrationsRun: true,
-  logging: true,
+  logging: false,
 })

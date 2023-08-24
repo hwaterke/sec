@@ -39,6 +39,8 @@ export const SettingsHome = () => {
       <Button onPress={() => DatabaseService.resetDatabase()}>
         Reset database
       </Button>
+
+      <Text>Expo 49</Text>
     </Screen>
   )
 }
