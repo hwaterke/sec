@@ -50,7 +50,7 @@
     "@types/react": "~18.2.14",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "babel-preset-expo": "^9.5.0",
-    "eslint": "^7.22.0",
+    "eslint": "^8.52.0",
     "eslint-config-hwaterke-react-native": "^0.0.3",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
