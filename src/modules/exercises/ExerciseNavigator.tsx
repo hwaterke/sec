@@ -1,8 +1,7 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
 import {ButtonIcon} from '../../components/ButtonIcon'
 import {TextButton} from '../../components/TextButton'
-import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {ExerciseAddScreen} from './ExerciseAddScreen'
 import {ExerciseDetailScreen} from './ExerciseDetailScreen'
 import {ExerciseEditScreen} from './ExerciseEditScreen'
@@ -12,12 +11,15 @@ import {
   ExerciseDetailScreenRouteProp,
   ExerciseStackParamList,
 } from './types'
+import {useTheme} from 'styled-components'
 
-const Stack = createStackNavigator<ExerciseStackParamList>()
+const Stack = createNativeStackNavigator<ExerciseStackParamList>()
 
 export const ExerciseNavigator = () => {
+  const theme = useTheme()
+
   return (
-    <Stack.Navigator screenOptions={globalScreenOptions}>
+    <Stack.Navigator>
       <Stack.Screen
         name="ExerciseListScreen"
         component={ExerciseListScreen}
@@ -25,7 +27,7 @@ export const ExerciseNavigator = () => {
           title: 'Exercises',
           headerRight: () => (
             <ButtonIcon
-              name="ios-add"
+              name="add"
               onPress={() => navigation.navigate('ExerciseAddScreen')}
             />
           ),
@@ -66,6 +68,9 @@ export const ExerciseNavigator = () => {
         component={ExerciseEditScreen}
         options={{
           title: 'Edit exercise',
+          headerStyle: {
+            backgroundColor: theme.colors.background.editing,
+          },
         }}
       />
     </Stack.Navigator>

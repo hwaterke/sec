@@ -4,11 +4,10 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {SectionList, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
-import {Exercise} from '../../database/entities/exercise.entity'
 import {px, py} from '../../design/constants/spacing'
-import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 import {ExerciseService} from './ExerciseService'
 import {ExerciseListScreenNavigationProp} from './types'
+import {Exercise} from '../../database/entities'
 
 const Row = styled.View`
   flex-direction: row;
@@ -32,14 +31,6 @@ export const ExerciseListScreen: React.FC = () => {
     {title: string; data: Exercise[]}[]
   >([])
 
-  useEffect(() => {
-    const main = async () => {
-      const d = await WorkoutSetService.workoutDays()
-      console.log(d)
-    }
-    main()
-  }, [])
-
   useFocusEffect(
     useCallback(() => {
       const main = async () => {
@@ -52,7 +43,7 @@ export const ExerciseListScreen: React.FC = () => {
 
   // Group exercises by muscle
   useEffect(() => {
-    const byMuscle = groupBy(prop('muscle'), exercises)
+    const byMuscle = groupBy((exercise) => exercise.muscle, exercises)
 
     setExercisesByMuscle(
       pipe(sortBy(prop('title')))(

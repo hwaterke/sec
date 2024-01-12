@@ -47,7 +47,7 @@ export const darkTheme: Theme = {
     background: {
       primary: '#222',
       secondary: 'black',
-      editing: 'E9D460',
+      editing: '#E9D460',
       row: 'black',
     },
     border: '#ddd',

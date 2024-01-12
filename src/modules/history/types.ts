@@ -1,12 +1,12 @@
 import {RouteProp} from '@react-navigation/native'
-import {StackNavigationProp} from '@react-navigation/stack'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 
 export type HistoryStackParamList = {
   HistoryScreen: undefined
   HistoryDayScreen: {date: string; isEditing: boolean}
 }
 
-export type HistoryDayScreenNavigationProp = StackNavigationProp<
+export type HistoryDayScreenNavigationProp = NativeStackNavigationProp<
   HistoryStackParamList,
   'HistoryDayScreen'
 >

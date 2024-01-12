@@ -1,4 +1,4 @@
-import {StackNavigationProp} from '@react-navigation/stack'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import React from 'react'
 import {Screen} from '../../design/layout/Screen'
 import {ScrollView} from '../../design/layout/ScrollView'
@@ -6,7 +6,7 @@ import {ExerciseForm} from './ExerciseForm'
 import {ExerciseService} from './ExerciseService'
 
 type Props = {
-  navigation: StackNavigationProp<{}>
+  navigation: NativeStackNavigationProp<{}>
 }
 
 export const ExerciseAddScreen: React.FC<Props> = ({navigation}) => {

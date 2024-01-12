@@ -1,5 +1,5 @@
 import {RouteProp} from '@react-navigation/native'
-import {StackNavigationProp} from '@react-navigation/stack'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 
 export type ExerciseStackParamList = {
   ExerciseListScreen: undefined
@@ -8,12 +8,12 @@ export type ExerciseStackParamList = {
   ExerciseEditScreen: {exerciseUuid: string}
 }
 
-export type ExerciseListScreenNavigationProp = StackNavigationProp<
+export type ExerciseListScreenNavigationProp = NativeStackNavigationProp<
   ExerciseStackParamList,
   'ExerciseListScreen'
 >
 
-export type ExerciseDetailScreenNavigationProp = StackNavigationProp<
+export type ExerciseDetailScreenNavigationProp = NativeStackNavigationProp<
   ExerciseStackParamList,
   'ExerciseDetailScreen'
 >
@@ -23,7 +23,7 @@ export type ExerciseDetailScreenRouteProp = RouteProp<
   'ExerciseDetailScreen'
 >
 
-export type ExerciseEditScreenNavigationProp = StackNavigationProp<
+export type ExerciseEditScreenNavigationProp = NativeStackNavigationProp<
   ExerciseStackParamList,
   'ExerciseEditScreen'
 >

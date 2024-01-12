@@ -10,6 +10,7 @@ export type WorkoutSetFormValues = {
   weight: string
   distance: string
   time: string
+  notes: string
 }
 
 type Props = {
@@ -81,6 +82,15 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
               placeholderTextColor="grey"
             />
           )}
+
+          <TextInput
+            onChangeText={handleChange('notes')}
+            onBlur={handleBlur('notes')}
+            value={values.notes}
+            placeholder="Notes"
+            placeholderTextColor="grey"
+            multiline
+          />
 
           <Button onPress={handleSubmit as any} withTopMargin>
             Save

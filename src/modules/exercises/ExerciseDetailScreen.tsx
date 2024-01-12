@@ -4,14 +4,14 @@ import {Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import {Button} from '../../components/Button'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
-import {Exercise} from '../../database/entities/exercise.entity'
-import {WorkoutSet} from '../../database/entities/workout_set.entity'
 import {mb, ml} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {ExerciseService} from './ExerciseService'
 import {ExerciseDetailScreenRouteProp} from './types'
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
+import {Exercise, WorkoutSet} from '../../database/entities'
+import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 
 const Title = styled.Text`
   font-size: 24px;
@@ -30,9 +30,9 @@ export const ExerciseDetailScreen: React.FC = () => {
   useFocusEffect(
     useCallback(() => {
       const main = async () => {
-        const data = await ExerciseService.getOne(params.exerciseUuid)
+        const data = (await ExerciseService.getOne(params.exerciseUuid)) ?? null
         setExercise(data)
-        const setData = await ExerciseService.getLastWorkoutSets(
+        const setData = await WorkoutSetService.getLastWorkoutSetsForExercise(
           params.exerciseUuid
         )
         setLastSets(setData)
@@ -55,10 +55,11 @@ export const ExerciseDetailScreen: React.FC = () => {
           onPress={() => {
             navigation.navigate('WorkoutSetAddScreen', {
               exerciseUuid: params.exerciseUuid,
-              repetitions: ws.repetitions,
-              weight: ws.weight,
-              distance: ws.distance,
-              time: ws.time,
+              repetitions: ws.repetitions ?? undefined,
+              weight: ws.weight ?? undefined,
+              distance: ws.distance ?? undefined,
+              time: ws.time ?? undefined,
+              // Notes are not passed
             })
           }}
         >

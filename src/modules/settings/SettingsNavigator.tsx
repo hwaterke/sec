@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React, {useContext} from 'react'
 import {Switch} from 'react-native'
 import {ThemeContext} from 'styled-components/native'
@@ -6,11 +6,10 @@ import {Button} from '../../components/Button'
 import {Text} from '../../components/Text'
 import {DatabaseService} from '../../database/database-service'
 import {Screen} from '../../design/layout/Screen'
-import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {darkTheme, theme} from '../../theming/theme'
 import {ThemeSetterContext} from '../../theming/ThemeSetterContext'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export const SettingsHome = () => {
   const setTheme = useContext(ThemeSetterContext)
@@ -40,14 +39,14 @@ export const SettingsHome = () => {
         Reset database
       </Button>
 
-      <Text>Expo 49</Text>
+      <Text>Expo 50</Text>
     </Screen>
   )
 }
 
 export const SettingsNavigator: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={globalScreenOptions}>
+    <Stack.Navigator>
       <Stack.Screen
         name="SettingsHome"
         component={SettingsHome}

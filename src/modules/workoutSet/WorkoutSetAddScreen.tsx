@@ -35,19 +35,18 @@ export const WorkoutSetAddScreen: React.FC = () => {
           weight: params.weight ? `${params.weight}` : '',
           distance: params.distance ? `${params.distance}` : '',
           time: params.time || '',
+          notes: params.notes || '',
         }}
         onSubmit={async (v) => {
           await WorkoutSetService.create({
             exerciseUuid: params.exerciseUuid,
-            repetitions:
-              v.repetitions === '' ? undefined : Number(v.repetitions),
+            repetitions: v.repetitions === '' ? null : Number(v.repetitions),
             weight:
-              v.weight === ''
-                ? undefined
-                : Number(v.weight.replaceAll(',', '.')),
-            distance: v.distance === '' ? undefined : Number(v.distance),
-            time: v.time === '' ? undefined : v.time,
+              v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
+            distance: v.distance === '' ? null : Number(v.distance),
+            time: v.time === '' ? null : v.time,
             executedAt: v.executedAt,
+            notes: v.notes,
           })
 
           navigation.goBack()

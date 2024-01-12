@@ -56,6 +56,7 @@ export const HistoryScreen: React.FC = () => {
     <Screen>
       {showCalendar ? (
         <Calendar
+          enableSwipeMonths
           firstDay={1}
           markedDates={workoutDays.reduce(
             (acc: {[date: string]: {selected: boolean}}, day) => {

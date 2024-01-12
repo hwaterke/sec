@@ -117,7 +117,7 @@ export const ExerciseForm: React.FC<Props> = ({
           </SwitchRow>
 
           <SwitchRow>
-            <Text>isCardio</Text>
+            <Text>Cardio</Text>
             <Switch
               onValueChange={(value) => {
                 setFieldValue('isCardio', value)
@@ -127,7 +127,7 @@ export const ExerciseForm: React.FC<Props> = ({
           </SwitchRow>
 
           <SwitchRow>
-            <Text>isMachine</Text>
+            <Text>Machine</Text>
             <Switch
               onValueChange={(value) => {
                 setFieldValue('isMachine', value)
@@ -137,7 +137,7 @@ export const ExerciseForm: React.FC<Props> = ({
           </SwitchRow>
 
           <SwitchRow>
-            <Text>isDumbbell</Text>
+            <Text>Dumbbell</Text>
             <Switch
               onValueChange={(value) => {
                 setFieldValue('isDumbbell', value)
@@ -147,7 +147,7 @@ export const ExerciseForm: React.FC<Props> = ({
           </SwitchRow>
 
           <SwitchRow>
-            <Text>isBarbell</Text>
+            <Text>Barbell</Text>
             <Switch
               onValueChange={(value) => {
                 setFieldValue('isBarbell', value)

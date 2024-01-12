@@ -1,7 +1,6 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
 import {TextButton} from '../../components/TextButton'
-import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {HistoryDayScreen} from './HistoryDayScreen'
 import {HistoryScreen} from './HistoryScreen'
 import {
@@ -10,11 +9,11 @@ import {
   HistoryStackParamList,
 } from './types'
 
-const Stack = createStackNavigator<HistoryStackParamList>()
+const Stack = createNativeStackNavigator<HistoryStackParamList>()
 
 export const HistoryNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={globalScreenOptions}>
+    <Stack.Navigator>
       <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
       <Stack.Screen
         name="HistoryDayScreen"

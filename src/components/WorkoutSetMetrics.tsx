@@ -11,10 +11,10 @@ const LightText = styled.Text`
 `
 
 type Props = {
-  repetitions?: number
-  weight?: number
-  distance?: number
-  time?: string
+  repetitions?: number | null
+  weight?: number | null
+  distance?: number | null
+  time?: string | null
 }
 
 export const WorkoutSetMetrics = ({

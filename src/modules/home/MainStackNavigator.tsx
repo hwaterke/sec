@@ -1,9 +1,9 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
-import {globalScreenOptions} from '../../theming/globalScreenOption'
+import {MainTabNavigator} from './MainTabNavigator'
 import {WorkoutSetAddScreen} from '../workoutSet/WorkoutSetAddScreen'
 import {WorkoutSetEditScreen} from '../workoutSet/WorkoutSetEditScreen'
-import {MainTabNavigator} from './MainTabNavigator'
+import {useTheme} from 'styled-components'
 
 export type MainStackNavigatorParamList = {
   Tabs: undefined
@@ -13,17 +13,20 @@ export type MainStackNavigatorParamList = {
     weight?: number
     distance?: number
     time?: string
+    notes?: string
   }
   WorkoutSetEditScreen: {
     workoutSetUuid: string
   }
 }
 
-const Stack = createStackNavigator<MainStackNavigatorParamList>()
+const Stack = createNativeStackNavigator<MainStackNavigatorParamList>()
 
 export const MainStackNavigator = () => {
+  const theme = useTheme()
+
   return (
-    <Stack.Navigator screenOptions={globalScreenOptions}>
+    <Stack.Navigator>
       <Stack.Screen
         name="Tabs"
         component={MainTabNavigator}
@@ -36,6 +39,11 @@ export const MainStackNavigator = () => {
       <Stack.Screen
         name="WorkoutSetEditScreen"
         component={WorkoutSetEditScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: theme.colors.background.editing,
+          },
+        }}
       />
     </Stack.Navigator>
   )

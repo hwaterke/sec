@@ -18,7 +18,7 @@ export const MainTabNavigator = () => {
         options={{
           title: 'Exercises',
           tabBarIcon: ({color}) => (
-            <Ionicons name="ios-list" size={26} style={{color}} />
+            <Ionicons name="list" size={26} style={{color}} />
           ),
         }}
       />
@@ -28,7 +28,7 @@ export const MainTabNavigator = () => {
         options={{
           title: 'History',
           tabBarIcon: ({color}) => (
-            <Ionicons name="ios-calendar-outline" size={26} style={{color}} />
+            <Ionicons name="calendar-outline" size={26} style={{color}} />
           ),
         }}
       />
@@ -38,7 +38,7 @@ export const MainTabNavigator = () => {
         options={{
           title: 'Settings',
           tabBarIcon: ({color}) => (
-            <Ionicons name="ios-cog" size={26} style={{color}} />
+            <Ionicons name="cog" size={26} style={{color}} />
           ),
         }}
       />

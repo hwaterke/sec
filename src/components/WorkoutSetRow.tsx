@@ -15,11 +15,11 @@ const View = styled.View`
 
 type Props = {
   value: {
-    executedAt: Date
-    repetitions?: number
-    weight?: number
-    distance?: number
-    time?: string
+    executedAt: string
+    repetitions?: number | null
+    weight?: number | null
+    distance?: number | null
+    time?: string | null
   }
   withDate?: boolean
 }
@@ -28,7 +28,7 @@ export const WorkoutSetRow = ({value, withDate}: Props) => {
   return (
     <View>
       <Text>
-        {DateTime.fromJSDate(value.executedAt).toLocaleString(
+        {DateTime.fromISO(value.executedAt).toLocaleString(
           withDate ? DateTime.DATETIME_SHORT : DateTime.TIME_24_SIMPLE
         )}
       </Text>

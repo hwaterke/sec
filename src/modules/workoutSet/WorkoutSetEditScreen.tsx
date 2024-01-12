@@ -2,11 +2,11 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
 import {Button} from '../../components/Button'
 import {Text} from '../../components/Text'
-import {WorkoutSet} from '../../database/entities/workout_set.entity'
 import {Screen} from '../../design/layout/Screen'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from './WorkoutSetService'
+import {WorkoutSetWithExercise} from '../../database/entities'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -16,7 +16,7 @@ type WorkoutSetEditScreenNavigationProp = RouteProp<
 export const WorkoutSetEditScreen = () => {
   const {params} = useRoute<WorkoutSetEditScreenNavigationProp>()
   const navigation = useNavigation()
-  const [ws, setWorkoutSet] = useState<WorkoutSet | null>(null)
+  const [ws, setWorkoutSet] = useState<WorkoutSetWithExercise | null>(null)
 
   useEffect(() => {
     const main = async () => {
@@ -35,26 +35,25 @@ export const WorkoutSetEditScreen = () => {
       <WorkoutSetForm
         exercise={ws.exercise}
         initialValues={{
-          executedAt: ws.executedAt.toISOString(),
+          executedAt: ws.executedAt,
           repetitions: ws.repetitions ? `${ws.repetitions}` : '',
           weight: ws.weight ? `${ws.weight}` : '',
           distance: ws.distance ? `${ws.distance}` : '',
           time: ws.time || '',
+          notes: ws.notes || '',
         }}
         onSubmit={async (v) => {
           await WorkoutSetService.update({
             uuid: ws.uuid,
             data: {
               exerciseUuid: ws?.exerciseUuid,
-              repetitions:
-                v.repetitions === '' ? undefined : Number(v.repetitions),
+              repetitions: v.repetitions === '' ? null : Number(v.repetitions),
               weight:
-                v.weight === ''
-                  ? undefined
-                  : Number(v.weight.replaceAll(',', '.')),
-              distance: v.distance === '' ? undefined : Number(v.distance),
-              time: v.time === '' ? undefined : v.time,
+                v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
+              distance: v.distance === '' ? null : Number(v.distance),
+              time: v.time === '' ? null : v.time,
               executedAt: v.executedAt,
+              notes: v.notes,
             },
           })
 

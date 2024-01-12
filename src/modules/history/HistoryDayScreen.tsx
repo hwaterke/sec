@@ -8,7 +8,6 @@ import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
 import {Text} from '../../components/Text'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
-import {WorkoutSet} from '../../database/entities/workout_set.entity'
 import {py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
@@ -16,6 +15,7 @@ import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 import {HistoryDayScreenRouteProp} from './types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {NavigationProp} from '@react-navigation/core/src/types'
+import {WorkoutSetWithExercise} from '../../database/entities'
 
 const SummaryView = styled.View`
   background-color: ${({theme}) => theme.colors.background.row};
@@ -54,12 +54,12 @@ export const HistoryDayScreen = () => {
   const navigation =
     useNavigation<NavigationProp<MainStackNavigatorParamList>>()
   const theme = useTheme()
-  const [workoutSets, setWorkoutSets] = useState<WorkoutSet[]>([])
+  const [workoutSets, setWorkoutSets] = useState<WorkoutSetWithExercise[]>([])
 
   const [setByExercise, setSetByExercise] = useState<
     {
       title: string
-      data: WorkoutSet[]
+      data: WorkoutSetWithExercise[]
     }[]
   >([])
 
@@ -77,7 +77,7 @@ export const HistoryDayScreen = () => {
 
   useEffect(() => {
     if (workoutSets) {
-      const byExercise = groupBy((ws) => ws.exercise.uuid, workoutSets)
+      const byExercise = groupBy((ws) => ws.exerciseUuid, workoutSets)
 
       setSetByExercise(
         Object.entries(byExercise).map(([exerciseUuid, workoutSets]) => ({
@@ -107,8 +107,8 @@ export const HistoryDayScreen = () => {
     )
   }
 
-  const timeStart = DateTime.fromJSDate(workoutSets[0].executedAt)
-  const timeEnd = DateTime.fromJSDate(
+  const timeStart = DateTime.fromISO(workoutSets[0].executedAt)
+  const timeEnd = DateTime.fromISO(
     workoutSets[workoutSets.length - 1].executedAt
   )
   const duration = Math.round(timeEnd.diff(timeStart, 'minutes').minutes)
@@ -162,10 +162,10 @@ export const HistoryDayScreen = () => {
                   })
                 : navigation.navigate('WorkoutSetAddScreen', {
                     exerciseUuid: item.exerciseUuid,
-                    repetitions: item.repetitions,
-                    weight: item.weight,
-                    distance: item.distance,
-                    time: item.time,
+                    repetitions: item.repetitions ?? undefined,
+                    weight: item.weight ?? undefined,
+                    distance: item.distance ?? undefined,
+                    time: item.time ?? undefined,
                   })
             }}
           >
