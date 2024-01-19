@@ -15,11 +15,6 @@ export const App = () => {
 
   useEffect(() => {
     const main = async () => {
-      // TODO Remove
-      // await knex.schema.dropTableIfExists(MIGRATION_TABLE_NAME)
-      // await knex.schema.dropTableIfExists('exercise')
-      // await knex.schema.dropTableIfExists('workout_set')
-
       try {
         await DatabaseService.runMigrations()
       } catch (error) {

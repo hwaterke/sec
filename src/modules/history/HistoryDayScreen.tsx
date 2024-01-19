@@ -16,6 +16,7 @@ import {HistoryDayScreenRouteProp} from './types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {WorkoutSetWithExercise} from '../../database/entities'
+import {TimeSince} from '../../components/TimeSince'
 
 const SummaryView = styled.View`
   background-color: ${({theme}) => theme.colors.background.row};
@@ -146,6 +147,15 @@ export const HistoryDayScreen = () => {
                     {timeEnd.toLocaleString(DateTime.TIME_24_SIMPLE)}
                   </StatsValue>
                   <StatsTitle>END</StatsTitle>
+                </Stats>
+              </TimeView>
+
+              <TimeView>
+                <Stats>
+                  <StatsValue>
+                    <TimeSince date={timeEnd} />
+                  </StatsValue>
+                  <StatsTitle>Time since last exercise</StatsTitle>
                 </Stats>
               </TimeView>
             </SummaryView>
