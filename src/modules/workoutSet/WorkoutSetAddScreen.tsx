@@ -7,6 +7,7 @@ import {useExercise} from '../exercises/ExerciseService'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from './WorkoutSetService'
+import {isNil} from 'ramda'
 
 type WorkoutSetAddScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -31,9 +32,9 @@ export const WorkoutSetAddScreen: React.FC = () => {
         exercise={exercise}
         initialValues={{
           executedAt: DateTime.now().toISO()!,
-          repetitions: params.repetitions ? `${params.repetitions}` : '',
-          weight: params.weight ? `${params.weight}` : '',
-          distance: params.distance ? `${params.distance}` : '',
+          repetitions: isNil(params.repetitions) ? `${params.repetitions}` : '',
+          weight: isNil(params.weight) ? `${params.weight}` : '',
+          distance: isNil(params.distance) ? `${params.distance}` : '',
           time: params.time || '',
           notes: params.notes || '',
         }}
