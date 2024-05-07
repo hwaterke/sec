@@ -1,11 +1,19 @@
 {
-  "extends": "hwaterke-react-native",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "universe/native"
+  ],
   "parserOptions": {
     "project": ["./tsconfig.json"]
   },
   "rules": {
-    "react/display-name": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "react-native/no-raw-text": "off"
+    "import/order": "off",
+    "no-void": ["error", {"allowAsStatement": true}],
+    "react-hooks/exhaustive-deps": "warn",
+    "react/display-name": "off"
   }
 }

@@ -37,7 +37,7 @@ export const ExerciseDetailScreen: React.FC = () => {
         )
         setLastSets(setData)
       }
-      main()
+      void main()
     }, [])
   )
 

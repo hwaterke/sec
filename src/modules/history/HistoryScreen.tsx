@@ -48,7 +48,7 @@ export const HistoryScreen: React.FC = () => {
         const data = await WorkoutSetService.workoutDays()
         setWorkoutDays(data)
       }
-      main()
+      void main()
     }, [])
   )
 
@@ -59,7 +59,7 @@ export const HistoryScreen: React.FC = () => {
           enableSwipeMonths
           firstDay={1}
           markedDates={workoutDays.reduce(
-            (acc: {[date: string]: {selected: boolean}}, day) => {
+            (acc: Record<string, {selected: boolean}>, day) => {
               acc[day.date] = {selected: true}
               return acc
             },
@@ -84,7 +84,7 @@ export const HistoryScreen: React.FC = () => {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('HistoryDayScreen', {
-                  date: date,
+                  date,
                   isEditing: false,
                 })
               }
