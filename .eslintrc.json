@@ -11,6 +11,8 @@
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error",
     "import/order": "off",
     "no-void": ["error", {"allowAsStatement": true}],
     "react-hooks/exhaustive-deps": "warn",
