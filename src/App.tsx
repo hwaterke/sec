@@ -7,6 +7,9 @@ import {NavigationContainer} from '@react-navigation/native'
 import {MainStackNavigator} from './modules/home/MainStackNavigator'
 import {DatabaseService} from './database/database-service'
 import {knex} from './database/datasource'
+import {isNil} from 'ramda'
+// See https://github.com/expo/expo/issues/28618
+import 'react-native-reanimated'
 
 export const App = () => {
   const [databaseReady, setDatabaseReady] = useState(false)
@@ -23,10 +26,10 @@ export const App = () => {
       setDatabaseReady(true)
     }
 
-    main()
+    void main()
 
     return () => {
-      knex.destroy()
+      void knex.destroy()
     }
   }, [])
 
@@ -34,6 +37,14 @@ export const App = () => {
     return (
       <SafeAreaView>
         <Text>Database not ready</Text>
+      </SafeAreaView>
+    )
+  }
+
+  if (!isNil(error)) {
+    return (
+      <SafeAreaView>
+        <Text>{error}</Text>
       </SafeAreaView>
     )
   }

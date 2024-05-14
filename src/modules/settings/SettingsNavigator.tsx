@@ -39,7 +39,7 @@ export const SettingsHome = () => {
         Reset database
       </Button>
 
-      <Text>Expo 50</Text>
+      <Text>Expo 51</Text>
     </Screen>
   )
 }
