@@ -19,7 +19,7 @@
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
-    "expo": "~51.0.4",
+    "expo": "~51.0.8",
     "expo-crypto": "~13.0.2",
     "expo-document-picker": "~12.0.1",
     "expo-file-system": "~17.0.1",
@@ -27,7 +27,7 @@
     "expo-splash-screen": "~0.27.4",
     "expo-sqlite": "~14.0.3",
     "expo-status-bar": "~1.12.1",
-    "expo-updates": "~0.25.11",
+    "expo-updates": "~0.25.14",
     "formik": "^2.4.6",
     "knex": "^3.1.0",
     "luxon": "^3.4.4",
@@ -57,7 +57,7 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "sqlite3": "^5.1.6",
     "ts-node": "^10.9.1",
-    "typescript": "~5.4.5",
+    "typescript": "~5.3.3",
     "typescript-eslint": "^7.8.0"
   },
   "lint-staged": {
