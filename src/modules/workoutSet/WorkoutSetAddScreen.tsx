@@ -34,9 +34,9 @@ export const WorkoutSetAddScreen: React.FC = () => {
         exercise={exercise}
         initialValues={{
           executedAt: DateTime.now().toISO()!,
-          repetitions: isNil(params.repetitions) ? `${params.repetitions}` : '',
-          weight: isNil(params.weight) ? `${params.weight}` : '',
-          distance: isNil(params.distance) ? `${params.distance}` : '',
+          repetitions: isNil(params.repetitions) ? '' : `${params.repetitions}`,
+          weight: isNil(params.weight) ? '' : `${params.weight}`,
+          distance: isNil(params.distance) ? '' : `${params.distance}`,
           time: params.time ?? '',
           notes: params.notes ?? '',
         }}
