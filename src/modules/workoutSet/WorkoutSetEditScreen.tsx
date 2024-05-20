@@ -24,7 +24,7 @@ export const WorkoutSetEditScreen = () => {
       const data = await WorkoutSetService.getOne(params.workoutSetUuid)
       setWorkoutSet(data)
     }
-    main()
+    void main()
   }, [params.workoutSetUuid])
 
   if (!ws) {
@@ -37,17 +37,17 @@ export const WorkoutSetEditScreen = () => {
         exercise={ws.exercise}
         initialValues={{
           executedAt: ws.executedAt,
-          repetitions: isNil(ws.repetitions) ? `${ws.repetitions}` : '',
-          weight: isNil(ws.weight) ? `${ws.weight}` : '',
-          distance: isNil(ws.distance) ? `${ws.distance}` : '',
-          time: ws.time || '',
-          notes: ws.notes || '',
+          repetitions: isNil(ws.repetitions) ? '' : `${ws.repetitions}`,
+          weight: isNil(ws.weight) ? '' : `${ws.weight}`,
+          distance: isNil(ws.distance) ? '' : `${ws.distance}`,
+          time: ws.time ?? '',
+          notes: ws.notes ?? '',
         }}
         onSubmit={async (v) => {
           await WorkoutSetService.update({
             uuid: ws.uuid,
             data: {
-              exerciseUuid: ws?.exerciseUuid,
+              exerciseUuid: ws.exerciseUuid,
               repetitions: v.repetitions === '' ? null : Number(v.repetitions),
               weight:
                 v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
