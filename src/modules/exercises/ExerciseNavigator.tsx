@@ -49,7 +49,7 @@ export const ExerciseNavigator = () => {
               title="Edit"
               onPress={() => {
                 navigation.navigate('ExerciseEditScreen', {
-                  exerciseUuid: route.params.exerciseUuid,
+                  exerciseId: route.params.exerciseId,
                 })
               }}
             />

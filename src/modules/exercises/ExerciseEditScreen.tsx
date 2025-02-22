@@ -17,7 +17,7 @@ type Props = {
 
 export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
   const [exercise] = useExercise({
-    uuid: route.params.exerciseUuid,
+    id: route.params.exerciseId,
     refreshOnFocus: false,
   })
 
@@ -32,7 +32,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
         <ExerciseForm
           initialValues={{
             name: exercise.name,
-            description: exercise.description || '',
+            description: exercise.description ?? '',
             hasRepetitions: exercise.hasRepetitions,
             hasWeight: exercise.hasWeight,
             hasTime: exercise.hasTime,
@@ -46,7 +46,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
           onSubmit={async (values) => {
             try {
               await ExerciseService.update({
-                uuid: route.params.exerciseUuid,
+                id: route.params.exerciseId,
                 data: values,
               })
               navigation.goBack()
@@ -59,7 +59,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
         <Button
           withTopMargin
           onPress={async () => {
-            await ExerciseService.remove({uuid: route.params.exerciseUuid})
+            await ExerciseService.remove({id: route.params.exerciseId})
             navigation.replace('ExerciseListScreen')
           }}
         >

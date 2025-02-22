@@ -1,103 +1,78 @@
-import {knex} from '../../database/datasource'
+import {desc, eq, sql} from 'drizzle-orm'
+import {db} from '../../database/datasource'
 import {
-  DatabaseWorkoutSet,
+  exercisesTable,
+  InsertWorkoutSet,
   WorkoutSet,
+  workoutSetsTable,
   WorkoutSetWithExercise,
-} from '../../database/entities'
-import {randomUUID} from 'expo-crypto'
+} from '../../database/schema'
 import {nilAndEmptyToNull} from '../../database/utils'
-
-type WorkoutSetPayload = {
-  exerciseUuid: string
-  repetitions: number | null
-  weight: number | null
-  distance: number | null
-  time: string | null
-  executedAt: string
-  notes: string | null
-}
-
-// convert database types
-const convertWorkoutSet = (workoutSet: DatabaseWorkoutSet): WorkoutSet => {
-  return {
-    ...workoutSet,
-    executedAt: workoutSet.executed_at,
-    exerciseUuid: workoutSet.exercise_uuid,
-    createdAt: workoutSet.created_at,
-    updatedAt: workoutSet.updated_at,
-  }
-}
-
-const convertPayloadToDatabase = (payload: WorkoutSetPayload) => {
-  return {
-    exercise_uuid: payload.exerciseUuid,
-    executed_at: payload.executedAt,
-    repetitions: payload.repetitions,
-    weight: payload.weight,
-    distance: payload.distance,
-    time: nilAndEmptyToNull(payload.time),
-    notes: nilAndEmptyToNull(payload.notes),
-  }
-}
 
 export const WorkoutSetService = {
   getOne: async (uuid: string): Promise<WorkoutSetWithExercise> => {
-    const workoutSet = await knex<DatabaseWorkoutSet>('workout_set')
-      .select(
-        'workout_set.*',
-        'exercise.name as exercise_name',
-        'exercise.has_repetitions as exercise_has_repetitions',
-        'exercise.has_weight as exercise_has_weight',
-        'exercise.has_time as exercise_has_time',
-        'exercise.has_distance as exercise_has_distance'
+    const results = await db
+      .select()
+      .from(workoutSetsTable)
+      .innerJoin(
+        exercisesTable,
+        eq(exercisesTable.id, workoutSetsTable.exerciseId)
       )
-      .join('exercise', 'exercise.uuid', 'workout_set.exercise_uuid')
-      .where('workout_set.uuid', uuid)
-      .first()
+      .where(eq(workoutSetsTable.id, uuid))
+      .limit(1)
+
+    const workoutSetData = results[0]
+
     return {
-      ...convertWorkoutSet(workoutSet),
-      exercise: {
-        name: workoutSet.exercise_name,
-        hasRepetitions: workoutSet.exercise_has_repetitions === 1,
-        hasWeight: workoutSet.exercise_has_weight === 1,
-        hasTime: workoutSet.exercise_has_time === 1,
-        hasDistance: workoutSet.exercise_has_distance === 1,
-      },
+      ...workoutSetData.workout_set,
+      exercise: workoutSetData.exercise,
     }
   },
 
   getLastWorkoutSetsForExercise: async (
-    exerciseUuid: string
+    exerciseId: string
   ): Promise<WorkoutSet[]> => {
-    const workoutSets = await knex<DatabaseWorkoutSet>('workout_set')
-      .where('exercise_uuid', exerciseUuid)
-      .orderBy('created_at', 'desc')
+    const workoutSets = await db
+      .select()
+      .from(workoutSetsTable)
+      .where(eq(workoutSetsTable.exerciseId, exerciseId))
+      .orderBy(desc(workoutSetsTable.createdAt))
       .limit(10)
-    return workoutSets.map(convertWorkoutSet)
+
+    return workoutSets
   },
 
-  create: (data: WorkoutSetPayload) => {
-    return knex<WorkoutSet>('workout_set').insert({
-      uuid: randomUUID(),
-      ...convertPayloadToDatabase(data),
+  create: async (data: InsertWorkoutSet) => {
+    return db.insert(workoutSetsTable).values({
+      executedAt: data.executedAt,
+      exerciseId: data.exerciseId,
+      repetitions: data.repetitions,
+      weight: data.weight,
+      distance: data.distance,
+      time: nilAndEmptyToNull(data.time),
+      notes: nilAndEmptyToNull(data.notes),
     })
   },
 
-  update: ({uuid, data}: {uuid: string; data: WorkoutSetPayload}) => {
-    return knex<WorkoutSet>('workout_set')
-      .where('uuid', uuid)
-      .update(convertPayloadToDatabase(data))
-      .update('updated_at', knex.fn.now())
+  update: async ({id, data}: {id: string; data: InsertWorkoutSet}) => {
+    return db
+      .update(workoutSetsTable)
+      .set(data)
+      .where(eq(workoutSetsTable.id, id))
   },
 
-  remove: ({uuid}: {uuid: string}) => {
-    return knex<WorkoutSet>('workout_set').where('uuid', uuid).del()
+  remove: async ({id}: {id: string}) => {
+    return db.delete(workoutSetsTable).where(eq(workoutSetsTable.id, id))
   },
 
-  workoutDays: (): Promise<{date: string; count: number}[]> => {
-    return knex<DatabaseWorkoutSet>('workout_set')
-      .select(knex.raw('date(executed_at) as date, count(uuid) as count'))
-      .groupByRaw('date(executed_at)')
+  workoutDays: async (): Promise<{date: string; count: number}[]> => {
+    return db
+      .select({
+        date: sql<string>`date(${workoutSetsTable.executedAt})`,
+        count: sql<number>`count(${workoutSetsTable.id})`,
+      })
+      .from(workoutSetsTable)
+      .groupBy(sql`date(${workoutSetsTable.executedAt})`)
   },
 
   workoutSetsForDay: async ({
@@ -105,28 +80,19 @@ export const WorkoutSetService = {
   }: {
     date: string
   }): Promise<WorkoutSetWithExercise[]> => {
-    const workoutSets = await knex<DatabaseWorkoutSet>('workout_set')
-      .select(
-        'workout_set.*',
-        'exercise.name as exercise_name',
-        'exercise.has_repetitions as exercise_has_repetitions',
-        'exercise.has_weight as exercise_has_weight',
-        'exercise.has_time as exercise_has_time',
-        'exercise.has_distance as exercise_has_distance'
+    const results = await db
+      .select()
+      .from(workoutSetsTable)
+      .innerJoin(
+        exercisesTable,
+        eq(exercisesTable.id, workoutSetsTable.exerciseId)
       )
-      .join('exercise', 'exercise.uuid', 'workout_set.exercise_uuid')
-      .whereRaw('date(executed_at) = ?', [date])
-      .orderBy('executed_at', 'ASC')
+      .where(sql`date(${workoutSetsTable.executedAt}) = ${date}`)
+      .orderBy(workoutSetsTable.executedAt)
 
-    return workoutSets.map((ws) => ({
-      ...convertWorkoutSet(ws),
-      exercise: {
-        name: ws.exercise_name,
-        hasRepetitions: ws.exercise_has_repetitions === 1,
-        hasWeight: ws.exercise_has_weight === 1,
-        hasTime: ws.exercise_has_time === 1,
-        hasDistance: ws.exercise_has_distance === 1,
-      },
+    return results.map((result) => ({
+      ...result.workout_set,
+      exercise: result.exercise,
     }))
   },
 }

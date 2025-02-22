@@ -7,7 +7,7 @@ import {SectionHeader} from '../../components/SectionHeader'
 import {px, py} from '../../design/constants/spacing'
 import {ExerciseService} from './ExerciseService'
 import {ExerciseListScreenNavigationProp} from './types'
-import {Exercise} from '../../database/entities'
+import {Exercise} from '../../database/schema'
 
 const Row = styled.View`
   flex-direction: row;
@@ -37,7 +37,7 @@ export const ExerciseListScreen: React.FC = () => {
         const data = await ExerciseService.getAll()
         setExercises(data)
       }
-      main()
+      void main()
     }, [])
   )
 
@@ -60,11 +60,11 @@ export const ExerciseListScreen: React.FC = () => {
       style={{flex: 1}}
       renderItem={({item}) => (
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('ExerciseDetailScreen', {
-              exerciseUuid: item.uuid,
+              exerciseId: item.id,
             })
-          }
+          }}
         >
           <Row>
             <RowText>{item.name}</RowText>
@@ -74,7 +74,7 @@ export const ExerciseListScreen: React.FC = () => {
       renderSectionHeader={({section: {title}}) => (
         <SectionHeader>{title}</SectionHeader>
       )}
-      keyExtractor={(item) => item.uuid}
+      keyExtractor={(item) => item.id}
       sections={exercisesByMuscle}
     />
   )

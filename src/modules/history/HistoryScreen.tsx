@@ -2,7 +2,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import {DateTime} from 'luxon'
 import React, {useCallback, useLayoutEffect, useState} from 'react'
 import {FlatList, TouchableOpacity} from 'react-native'
-import {Calendar} from 'react-native-calendars'
+import {Calendar, DateData} from 'react-native-calendars'
 import styled from 'styled-components/native'
 import {Text} from '../../components/Text'
 import {TextButton} from '../../components/TextButton'
@@ -35,7 +35,9 @@ export const HistoryScreen: React.FC = () => {
     navigation.setOptions({
       headerRight: () => (
         <TextButton
-          onPress={() => setShowCalendar(!showCalendar)}
+          onPress={() => {
+            setShowCalendar(!showCalendar)
+          }}
           title={showCalendar ? 'List' : 'Calendar'}
         />
       ),
@@ -65,7 +67,7 @@ export const HistoryScreen: React.FC = () => {
             },
             {}
           )}
-          onDayPress={(day) => {
+          onDayPress={(day: DateData) => {
             const workoutDay = workoutDays.find(
               ({date}) => date === day.dateString
             )
@@ -82,12 +84,12 @@ export const HistoryScreen: React.FC = () => {
           data={workoutDays}
           renderItem={({item: {date, count}}) => (
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
                 navigation.navigate('HistoryDayScreen', {
                   date,
                   isEditing: false,
                 })
-              }
+              }}
             >
               <Row>
                 <Text>

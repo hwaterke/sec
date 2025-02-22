@@ -6,7 +6,7 @@ import {Screen} from '../../design/layout/Screen'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from './WorkoutSetService'
-import {WorkoutSetWithExercise} from '../../database/entities'
+import {WorkoutSetWithExercise} from '../../database/schema'
 import {isNil} from 'ramda'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
@@ -21,11 +21,11 @@ export const WorkoutSetEditScreen = () => {
 
   useEffect(() => {
     const main = async () => {
-      const data = await WorkoutSetService.getOne(params.workoutSetUuid)
+      const data = await WorkoutSetService.getOne(params.workoutSetId)
       setWorkoutSet(data)
     }
     void main()
-  }, [params.workoutSetUuid])
+  }, [params.workoutSetId])
 
   if (!ws) {
     return <Text>No data</Text>
@@ -45,9 +45,9 @@ export const WorkoutSetEditScreen = () => {
         }}
         onSubmit={async (v) => {
           await WorkoutSetService.update({
-            uuid: ws.uuid,
+            id: ws.id,
             data: {
-              exerciseUuid: ws.exerciseUuid,
+              exerciseId: ws.exerciseId,
               repetitions: v.repetitions === '' ? null : Number(v.repetitions),
               weight:
                 v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
@@ -65,8 +65,7 @@ export const WorkoutSetEditScreen = () => {
       <Button
         withTopMargin
         onPress={async () => {
-          await WorkoutSetService.remove({uuid: params.workoutSetUuid})
-
+          await WorkoutSetService.remove({id: params.workoutSetId})
           navigation.goBack()
         }}
       >

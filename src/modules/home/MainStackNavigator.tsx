@@ -8,7 +8,7 @@ import {useTheme} from 'styled-components'
 export type MainStackNavigatorParamList = {
   Tabs: undefined
   WorkoutSetAddScreen: {
-    exerciseUuid: string
+    exerciseId: string
     repetitions?: number
     weight?: number
     distance?: number
@@ -16,7 +16,7 @@ export type MainStackNavigatorParamList = {
     notes?: string
   }
   WorkoutSetEditScreen: {
-    workoutSetUuid: string
+    workoutSetId: string
   }
 }
 

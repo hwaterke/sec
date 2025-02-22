@@ -3,9 +3,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 
 export type ExerciseStackParamList = {
   ExerciseListScreen: undefined
-  ExerciseDetailScreen: {exerciseUuid: string}
+  ExerciseDetailScreen: {exerciseId: string}
   ExerciseAddScreen: undefined
-  ExerciseEditScreen: {exerciseUuid: string}
+  ExerciseEditScreen: {exerciseId: string}
 }
 
 export type ExerciseListScreenNavigationProp = NativeStackNavigationProp<

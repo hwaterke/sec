@@ -15,7 +15,7 @@ import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 import {HistoryDayScreenRouteProp} from './types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {NavigationProp} from '@react-navigation/core/src/types'
-import {WorkoutSetWithExercise} from '../../database/entities'
+import {WorkoutSetWithExercise} from '../../database/schema'
 import {TimeSince} from '../../components/TimeSince'
 
 const SummaryView = styled.View`
@@ -72,21 +72,19 @@ export const HistoryDayScreen = () => {
         })
         setWorkoutSets(data)
       }
-      main()
+      void main()
     }, [])
   )
 
   useEffect(() => {
-    if (workoutSets) {
-      const byExercise = groupBy((ws) => ws.exerciseUuid, workoutSets)
+    const byExercise = groupBy((ws) => ws.exerciseId, workoutSets)
 
-      setSetByExercise(
-        Object.entries(byExercise).map(([exerciseUuid, workoutSets]) => ({
-          title: workoutSets![0].exercise.name,
-          data: workoutSets!,
-        }))
-      )
-    }
+    setSetByExercise(
+      Object.entries(byExercise).map(([exerciseId, workoutSets]) => ({
+        title: workoutSets![0].exercise.name,
+        data: workoutSets!,
+      }))
+    )
   }, [workoutSets])
 
   useLayoutEffect(() => {
@@ -164,14 +162,14 @@ export const HistoryDayScreen = () => {
         sections={setByExercise}
         renderItem={({item}) => (
           <TouchableOpacity
-            key={item.uuid}
+            key={item.id}
             onPress={() => {
               params.isEditing
                 ? navigation.navigate('WorkoutSetEditScreen', {
-                    workoutSetUuid: item.uuid,
+                    workoutSetId: item.id,
                   })
                 : navigation.navigate('WorkoutSetAddScreen', {
-                    exerciseUuid: item.exerciseUuid,
+                    exerciseId: item.exerciseId,
                     repetitions: item.repetitions ?? undefined,
                     weight: item.weight ?? undefined,
                     distance: item.distance ?? undefined,
@@ -185,7 +183,7 @@ export const HistoryDayScreen = () => {
         renderSectionHeader={(i) => (
           <SectionHeader>{i.section.title}</SectionHeader>
         )}
-        keyExtractor={(item) => item.uuid}
+        keyExtractor={(item) => item.id}
       />
     </Screen>
   )

@@ -20,7 +20,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
   const {params} = useRoute<WorkoutSetAddScreenNavigationProp>()
   const navigation = useNavigation<NavigationProp<HistoryStackParamList>>()
   const [exercise] = useExercise({
-    uuid: params.exerciseUuid,
+    id: params.exerciseId,
     refreshOnFocus: false,
   })
 
@@ -42,7 +42,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
         }}
         onSubmit={async (v) => {
           await WorkoutSetService.create({
-            exerciseUuid: params.exerciseUuid,
+            exerciseId: params.exerciseId,
             repetitions: v.repetitions === '' ? null : Number(v.repetitions),
             weight:
               v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),

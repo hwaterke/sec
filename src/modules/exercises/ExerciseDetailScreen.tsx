@@ -1,17 +1,17 @@
+import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useCallback, useState} from 'react'
 import {Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import {Button} from '../../components/Button'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
+import {Exercise, WorkoutSet} from '../../database/schema'
 import {mb, ml} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
+import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
+import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 import {ExerciseService} from './ExerciseService'
 import {ExerciseDetailScreenRouteProp} from './types'
-import {NavigationProp} from '@react-navigation/core/src/types'
-import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {Exercise, WorkoutSet} from '../../database/entities'
-import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
 
 const Title = styled.Text`
   font-size: 24px;
@@ -30,15 +30,15 @@ export const ExerciseDetailScreen: React.FC = () => {
   useFocusEffect(
     useCallback(() => {
       const main = async () => {
-        const data = (await ExerciseService.getOne(params.exerciseUuid)) ?? null
+        const data = await ExerciseService.getOne(params.exerciseId)
         setExercise(data)
         const setData = await WorkoutSetService.getLastWorkoutSetsForExercise(
-          params.exerciseUuid
+          params.exerciseId
         )
         setLastSets(setData)
       }
       void main()
-    }, [])
+    }, [params.exerciseId])
   )
 
   if (!exercise) {
@@ -51,10 +51,10 @@ export const ExerciseDetailScreen: React.FC = () => {
 
       {lastSets.map((ws) => (
         <TouchableOpacity
-          key={ws.uuid}
+          key={ws.id}
           onPress={() => {
             navigation.navigate('WorkoutSetAddScreen', {
-              exerciseUuid: params.exerciseUuid,
+              exerciseId: params.exerciseId,
               repetitions: ws.repetitions ?? undefined,
               weight: ws.weight ?? undefined,
               distance: ws.distance ?? undefined,
@@ -70,7 +70,7 @@ export const ExerciseDetailScreen: React.FC = () => {
       <Button
         onPress={() => {
           navigation.navigate('WorkoutSetAddScreen', {
-            exerciseUuid: params.exerciseUuid,
+            exerciseId: params.exerciseId,
           })
         }}
         withTopMargin
