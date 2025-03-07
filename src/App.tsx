@@ -12,6 +12,7 @@ import {ThemeSetterContext} from './theming/ThemeSetterContext'
 import {useDrizzleStudio} from 'expo-drizzle-studio-plugin'
 import 'react-native-reanimated'
 import {isNullish} from 'remeda'
+import './global.css'
 
 export const App = () => {
   const {success, error} = useMigrations(db, migrations)
