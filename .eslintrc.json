@@ -13,6 +13,10 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/strict-boolean-expressions": "error",
+    "@typescript-eslint/restrict-template-expressions": [
+      "error",
+      {"allowNumber": true}
+    ],
     "import/order": "off",
     "no-void": ["error", {"allowAsStatement": true}],
     "react-hooks/exhaustive-deps": "warn",

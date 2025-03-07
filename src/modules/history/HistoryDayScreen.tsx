@@ -127,7 +127,7 @@ export const HistoryDayScreen = () => {
 
                 <StatsTitle>
                   {duration > 60
-                    ? `${duration / 60}h ${Math.floor(duration % 60)}m`
+                    ? `${Math.floor(duration / 60)}h ${duration % 60}m`
                     : `${duration}m`}
                 </StatsTitle>
               </SummaryTitleView>
