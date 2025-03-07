@@ -2,7 +2,7 @@ import * as DocumentPicker from 'expo-document-picker'
 import * as FileSystem from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 import {DATABASE_NAME} from './constants'
-import {isNil} from 'ramda'
+import {isNullish} from 'remeda'
 
 const databaseFolder = () => {
   return `${FileSystem.documentDirectory}SQLite`
@@ -18,7 +18,7 @@ export const DatabaseService = {
       copyToCacheDirectory: true,
     })
 
-    if (!isNil(file.assets) && file.assets.length > 0) {
+    if (!isNullish(file.assets) && file.assets.length > 0) {
       if (!(await FileSystem.getInfoAsync(databaseFolder())).exists) {
         await FileSystem.makeDirectoryAsync(databaseFolder())
       }

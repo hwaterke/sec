@@ -1,6 +1,5 @@
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import {DateTime} from 'luxon'
-import {groupBy} from 'ramda'
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react'
 import {SectionList, TouchableOpacity} from 'react-native'
 import {useTheme} from 'styled-components'
@@ -17,6 +16,7 @@ import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {WorkoutSetWithExercise} from '../../database/schema'
 import {TimeSince} from '../../components/TimeSince'
+import {groupBy} from 'remeda'
 
 const SummaryView = styled.View`
   background-color: ${({theme}) => theme.colors.background.row};
@@ -77,12 +77,12 @@ export const HistoryDayScreen = () => {
   )
 
   useEffect(() => {
-    const byExercise = groupBy((ws) => ws.exerciseId, workoutSets)
+    const byExercise = groupBy(workoutSets, (ws) => ws.exerciseId)
 
     setSetByExercise(
       Object.entries(byExercise).map(([exerciseId, workoutSets]) => ({
-        title: workoutSets![0].exercise.name,
-        data: workoutSets!,
+        title: workoutSets[0].exercise.name,
+        data: workoutSets,
       }))
     )
   }, [workoutSets])

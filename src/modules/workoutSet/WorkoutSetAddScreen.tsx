@@ -7,9 +7,9 @@ import {useExercise} from '../../hooks/useExercise'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {isNil} from 'ramda'
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {HistoryStackParamList} from '../history/types'
+import {isNullish} from 'remeda'
 
 type WorkoutSetAddScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -34,9 +34,11 @@ export const WorkoutSetAddScreen: React.FC = () => {
         exercise={exercise}
         initialValues={{
           executedAt: DateTime.now().toISO(),
-          repetitions: isNil(params.repetitions) ? '' : `${params.repetitions}`,
-          weight: isNil(params.weight) ? '' : `${params.weight}`,
-          distance: isNil(params.distance) ? '' : `${params.distance}`,
+          repetitions: isNullish(params.repetitions)
+            ? ''
+            : `${params.repetitions}`,
+          weight: isNullish(params.weight) ? '' : `${params.weight}`,
+          distance: isNullish(params.distance) ? '' : `${params.distance}`,
           time: params.time ?? '',
           notes: params.notes ?? '',
         }}

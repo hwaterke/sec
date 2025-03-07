@@ -1,5 +1,4 @@
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
-import {groupBy, pipe, prop, sortBy} from 'ramda'
 import React, {useCallback, useEffect, useState} from 'react'
 import {SectionList, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
@@ -8,6 +7,7 @@ import {px, py} from '../../design/constants/spacing'
 import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseListScreenNavigationProp} from './types'
 import {Exercise} from '../../database/schema'
+import {groupBy, sortBy} from 'remeda'
 
 const Row = styled.View`
   flex-direction: row;
@@ -43,14 +43,15 @@ export const ExerciseListScreen: React.FC = () => {
 
   // Group exercises by muscle
   useEffect(() => {
-    const byMuscle = groupBy((exercise) => exercise.muscle, exercises)
+    const byMuscle = groupBy(exercises, (exercise) => exercise.muscle ?? '')
 
     setExercisesByMuscle(
-      pipe(sortBy(prop('title')))(
+      sortBy(
         Object.entries(byMuscle).map(([muscle, exercises]) => ({
           title: muscle,
-          data: exercises!,
-        }))
+          data: exercises,
+        })),
+        (item) => item.title
       )
     )
   }, [exercises])

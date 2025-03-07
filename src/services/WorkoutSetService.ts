@@ -8,7 +8,7 @@ import {
   WorkoutSetWithExercise,
 } from '../database/schema'
 import {nilAndEmptyToNull} from '../database/utils'
-import {isNil} from 'ramda'
+import {isNullish} from 'remeda'
 
 export const WorkoutSetService = {
   getOne: async (id: string): Promise<WorkoutSetWithExercise> => {
@@ -24,7 +24,7 @@ export const WorkoutSetService = {
 
     const workoutSetData = results[0]
 
-    if (isNil(workoutSetData)) {
+    if (isNullish(workoutSetData)) {
       throw new Error('Workout set not found')
     }
 

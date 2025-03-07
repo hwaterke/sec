@@ -7,7 +7,7 @@ import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {WorkoutSetWithExercise} from '../../database/schema'
-import {isNil} from 'ramda'
+import {isNullish} from 'remeda'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -37,9 +37,9 @@ export const WorkoutSetEditScreen = () => {
         exercise={ws.exercise}
         initialValues={{
           executedAt: ws.executedAt,
-          repetitions: isNil(ws.repetitions) ? '' : `${ws.repetitions}`,
-          weight: isNil(ws.weight) ? '' : `${ws.weight}`,
-          distance: isNil(ws.distance) ? '' : `${ws.distance}`,
+          repetitions: isNullish(ws.repetitions) ? '' : `${ws.repetitions}`,
+          weight: isNullish(ws.weight) ? '' : `${ws.weight}`,
+          distance: isNullish(ws.distance) ? '' : `${ws.distance}`,
           time: ws.time ?? '',
           notes: ws.notes ?? '',
         }}
