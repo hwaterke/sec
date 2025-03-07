@@ -9,8 +9,8 @@ import {Exercise, WorkoutSet} from '../../database/schema'
 import {mb, ml} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
-import {ExerciseService} from './ExerciseService'
+import {WorkoutSetService} from '../../services/WorkoutSetService'
+import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseDetailScreenRouteProp} from './types'
 
 const Title = styled.Text`

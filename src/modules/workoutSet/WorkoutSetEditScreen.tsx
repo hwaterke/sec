@@ -5,7 +5,7 @@ import {Text} from '../../components/Text'
 import {Screen} from '../../design/layout/Screen'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
-import {WorkoutSetService} from './WorkoutSetService'
+import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {WorkoutSetWithExercise} from '../../database/schema'
 import {isNil} from 'ramda'
 

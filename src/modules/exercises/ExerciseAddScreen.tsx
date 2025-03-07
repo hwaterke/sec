@@ -3,7 +3,7 @@ import React from 'react'
 import {Screen} from '../../design/layout/Screen'
 import {ScrollView} from '../../design/layout/ScrollView'
 import {ExerciseForm} from './ExerciseForm'
-import {ExerciseService} from './ExerciseService'
+import {ExerciseService} from '../../services/ExerciseService'
 
 type Props = {
   navigation: NativeStackNavigationProp<{}>

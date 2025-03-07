@@ -1,9 +1,7 @@
 import {eq} from 'drizzle-orm'
-import {db} from '../../database/datasource'
-import {Exercise, exercisesTable, InsertExercise} from '../../database/schema'
-import {nilAndEmptyToNull} from '../../database/utils'
-import {useCallback, useEffect, useState} from 'react'
-import {useFocusEffect} from '@react-navigation/native'
+import {db} from '../database/datasource'
+import {exercisesTable, InsertExercise} from '../database/schema'
+import {nilAndEmptyToNull} from '../database/utils'
 
 export const ExerciseService = {
   getAll: async () => {
@@ -57,38 +55,4 @@ export const ExerciseService = {
   remove: async ({id}: {id: string}) => {
     return db.delete(exercisesTable).where(eq(exercisesTable.id, id))
   },
-}
-
-export const useExercise = ({
-  id,
-  refreshOnFocus,
-}: {
-  id: string
-  refreshOnFocus: boolean
-}) => {
-  const [exercise, setExercise] = useState<Exercise | null>(null)
-
-  useEffect(() => {
-    if (!refreshOnFocus) {
-      const main = async () => {
-        const data = await ExerciseService.getOne(id)
-        setExercise(data)
-      }
-      void main()
-    }
-  }, [refreshOnFocus, id])
-
-  useFocusEffect(
-    useCallback(() => {
-      if (refreshOnFocus) {
-        const main = async () => {
-          const data = await ExerciseService.getOne(id)
-          setExercise(data)
-        }
-        void main()
-      }
-    }, [refreshOnFocus, id])
-  )
-
-  return [exercise]
 }

@@ -1,16 +1,17 @@
 import {desc, eq, sql} from 'drizzle-orm'
-import {db} from '../../database/datasource'
+import {db} from '../database/datasource'
 import {
   exercisesTable,
   InsertWorkoutSet,
   WorkoutSet,
   workoutSetsTable,
   WorkoutSetWithExercise,
-} from '../../database/schema'
-import {nilAndEmptyToNull} from '../../database/utils'
+} from '../database/schema'
+import {nilAndEmptyToNull} from '../database/utils'
+import {isNil} from 'ramda'
 
 export const WorkoutSetService = {
-  getOne: async (uuid: string): Promise<WorkoutSetWithExercise> => {
+  getOne: async (id: string): Promise<WorkoutSetWithExercise> => {
     const results = await db
       .select()
       .from(workoutSetsTable)
@@ -18,10 +19,14 @@ export const WorkoutSetService = {
         exercisesTable,
         eq(exercisesTable.id, workoutSetsTable.exerciseId)
       )
-      .where(eq(workoutSetsTable.id, uuid))
+      .where(eq(workoutSetsTable.id, id))
       .limit(1)
 
     const workoutSetData = results[0]
+
+    if (isNil(workoutSetData)) {
+      throw new Error('Workout set not found')
+    }
 
     return {
       ...workoutSetData.workout_set,

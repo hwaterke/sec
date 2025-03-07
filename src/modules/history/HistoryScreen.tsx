@@ -8,7 +8,7 @@ import {Text} from '../../components/Text'
 import {TextButton} from '../../components/TextButton'
 import {px, py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
-import {WorkoutSetService} from '../workoutSet/WorkoutSetService'
+import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {HistoryStackParamList} from './types'
 import {NavigationProp} from '@react-navigation/core/src/types'
 

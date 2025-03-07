@@ -5,7 +5,7 @@ import {SectionList, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
 import {px, py} from '../../design/constants/spacing'
-import {ExerciseService} from './ExerciseService'
+import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseListScreenNavigationProp} from './types'
 import {Exercise} from '../../database/schema'
 

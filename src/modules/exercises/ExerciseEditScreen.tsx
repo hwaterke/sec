@@ -3,8 +3,9 @@ import {Text} from 'react-native'
 import {Button} from '../../components/Button'
 import {Screen} from '../../design/layout/Screen'
 import {ScrollView} from '../../design/layout/ScrollView'
+import {useExercise} from '../../hooks/useExercise'
+import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseForm} from './ExerciseForm'
-import {ExerciseService, useExercise} from './ExerciseService'
 import {
   ExerciseEditScreenNavigationProp,
   ExerciseEditScreenRouteProp,
@@ -37,7 +38,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
             hasWeight: exercise.hasWeight,
             hasTime: exercise.hasTime,
             hasDistance: exercise.hasDistance,
-            muscle: exercise.muscle,
+            muscle: exercise.muscle ?? '',
             isCardio: exercise.isCardio,
             isMachine: exercise.isMachine,
             isDumbbell: exercise.isDumbbell,
