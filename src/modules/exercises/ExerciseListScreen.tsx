@@ -1,29 +1,11 @@
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import React, {useCallback, useEffect, useState} from 'react'
-import {SectionList, TouchableOpacity} from 'react-native'
-import styled from 'styled-components/native'
+import {SectionList, Text, TouchableOpacity, View} from 'react-native'
+import {groupBy, sortBy} from 'remeda'
 import {SectionHeader} from '../../components/SectionHeader'
-import {px, py} from '../../design/constants/spacing'
+import {Exercise} from '../../database/schema'
 import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseListScreenNavigationProp} from './types'
-import {Exercise} from '../../database/schema'
-import {groupBy, sortBy} from 'remeda'
-import {theme} from '../../theming/theme'
-
-const Row = styled.View`
-  flex-direction: row;
-  ${px(4)};
-  ${py(4)};
-  align-items: center;
-  justify-content: flex-start;
-  background-color: ${theme.colors.background.row};
-  border-bottom-color: #e5e5e5;
-  border-bottom-width: 0.5px;
-`
-
-const RowText = styled.Text`
-  color: ${theme.colors.text.primary};
-`
 
 export const ExerciseListScreen: React.FC = () => {
   const [exercises, setExercises] = useState<Exercise[]>([])
@@ -68,9 +50,9 @@ export const ExerciseListScreen: React.FC = () => {
             })
           }}
         >
-          <Row>
-            <RowText>{item.name}</RowText>
-          </Row>
+          <View className="flex flex-row items-center p-4 bg-white border-b border-gray-200">
+            <Text className="text-gray-900">{item.name}</Text>
+          </View>
         </TouchableOpacity>
       )}
       renderSectionHeader={({section: {title}}) => (
