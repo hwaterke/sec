@@ -4,7 +4,7 @@ import {z} from 'zod'
 import {Button} from '../../components/Button'
 import {ErrorText, Label} from '../../components/Text'
 import {TextInput} from '../../components/TextInput'
-import {View} from 'react-native'
+import {View, Text} from 'react-native'
 
 export type WorkoutSetFormValues = {
   executionDate: string
@@ -18,6 +18,7 @@ export type WorkoutSetFormValues = {
 
 type Props = {
   exercise: {
+    name: string
     hasRepetitions: boolean
     hasWeight: boolean
     hasDistance: boolean
@@ -37,72 +38,76 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
   return (
     <View className="gap-3">
-      <View>
-        <Label>Execution date</Label>
-        <form.Field
-          name="executionDate"
-          validators={{
-            onBlur: z
-              .string()
-              .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-                message: 'Must be a valid date in the format YYYY-MM-DD',
-              }),
-          }}
-          children={(field) => {
-            return (
-              <>
-                <TextInput
-                  onChangeText={field.handleChange}
-                  onBlur={field.handleBlur}
-                  value={field.state.value}
-                  placeholder="Execution date"
-                  placeholderTextColor="grey"
-                />
-                {field.state.meta.errors.length ? (
-                  <ErrorText>
-                    {field.state.meta.errors
-                      .map((error) => error?.message)
-                      .join(',')}
-                  </ErrorText>
-                ) : null}
-              </>
-            )
-          }}
-        />
-      </View>
+      <Text className="text-2xl">{exercise.name}</Text>
 
-      <View>
-        <Label>Execution time</Label>
-        <form.Field
-          name="executionTime"
-          validators={{
-            onBlur: z
-              .string()
-              .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
-                message: 'Must be a valid time in the format HH:MM:SS',
-              }),
-          }}
-          children={(field) => {
-            return (
-              <>
-                <TextInput
-                  onChangeText={field.handleChange}
-                  onBlur={field.handleBlur}
-                  value={field.state.value}
-                  placeholder="Execution time"
-                  placeholderTextColor="grey"
-                />
-                {field.state.meta.errors.length ? (
-                  <ErrorText>
-                    {field.state.meta.errors
-                      .map((error) => error?.message)
-                      .join(',')}
-                  </ErrorText>
-                ) : null}
-              </>
-            )
-          }}
-        />
+      <View className="flex-row gap-2">
+        <View className="flex-1">
+          <Label>Execution date</Label>
+          <form.Field
+            name="executionDate"
+            validators={{
+              onBlur: z
+                .string()
+                .refine((value) => /^\d{4}-[01]\d-\d{2}$/.test(value), {
+                  message: 'Must be a valid date in the format YYYY-MM-DD',
+                }),
+            }}
+            children={(field) => {
+              return (
+                <>
+                  <TextInput
+                    onChangeText={field.handleChange}
+                    onBlur={field.handleBlur}
+                    value={field.state.value}
+                    placeholder="Execution date"
+                    placeholderTextColor="grey"
+                  />
+                  {field.state.meta.errors.length ? (
+                    <ErrorText>
+                      {field.state.meta.errors
+                        .map((error) => error?.message)
+                        .join(',')}
+                    </ErrorText>
+                  ) : null}
+                </>
+              )
+            }}
+          />
+        </View>
+
+        <View className="flex-1">
+          <Label>Execution time</Label>
+          <form.Field
+            name="executionTime"
+            validators={{
+              onBlur: z
+                .string()
+                .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
+                  message: 'Must be a valid time in the format HH:MM:SS',
+                }),
+            }}
+            children={(field) => {
+              return (
+                <>
+                  <TextInput
+                    onChangeText={field.handleChange}
+                    onBlur={field.handleBlur}
+                    value={field.state.value}
+                    placeholder="Execution time"
+                    placeholderTextColor="grey"
+                  />
+                  {field.state.meta.errors.length ? (
+                    <ErrorText>
+                      {field.state.meta.errors
+                        .map((error) => error?.message)
+                        .join(',')}
+                    </ErrorText>
+                  ) : null}
+                </>
+              )
+            }}
+          />
+        </View>
       </View>
 
       {exercise.hasRepetitions && (
