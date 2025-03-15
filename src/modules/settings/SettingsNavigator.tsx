@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
-import {View} from 'react-native'
+import {View, Alert} from 'react-native'
 import {Button} from '../../components/Button'
 import {DatabaseService} from '../../database/database-service'
 
@@ -15,7 +15,12 @@ export const SettingsHome = () => {
       <Button onPress={() => DatabaseService.importDatabase()}>
         Import database
       </Button>
-      <Button onPress={() => DatabaseService.resetDatabase()}>
+      <Button
+        onPress={async () => {
+          await DatabaseService.resetDatabase()
+          Alert.alert('Database reset')
+        }}
+      >
         Reset database
       </Button>
     </View>

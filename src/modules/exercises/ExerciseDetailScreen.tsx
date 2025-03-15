@@ -11,6 +11,7 @@ import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {formatEpochTimestamp} from '../../utils/formatters'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {ExerciseDetailScreenRouteProp} from './types'
+import {Badge} from '../../components/Badge'
 
 export const ExerciseDetailScreen: React.FC = () => {
   const {params} = useRoute<ExerciseDetailScreenRouteProp>()
@@ -45,6 +46,16 @@ export const ExerciseDetailScreen: React.FC = () => {
         {!isNullish(exercise.description) && (
           <Text className="text-sm">{exercise.description}</Text>
         )}
+        <View className="flex flex-row gap-1">
+          {exercise.hasRepetitions && <Badge text="Repetitions" />}
+          {exercise.hasWeight && <Badge text="Weight" />}
+          {exercise.hasTime && <Badge text="Time" />}
+          {exercise.hasDistance && <Badge text="Distance" />}
+          {exercise.isCardio && <Badge text="Cardio" />}
+          {exercise.isMachine && <Badge text="Machine" />}
+          {exercise.isDumbbell && <Badge text="Dumbbell" />}
+          {exercise.isBarbell && <Badge text="Barbell" />}
+        </View>
       </View>
 
       {lastSets.map((ws) => (
