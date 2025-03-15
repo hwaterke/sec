@@ -1,15 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/native'
-import {Text} from '../components/Text'
-import {theme} from '../theming/theme'
-
-const Row = styled.View`
-  flex-direction: row;
-`
-
-const LightText = styled.Text`
-  color: ${theme.colors.text.secondary};
-`
+import {Text, View} from 'react-native'
 
 type Props = {
   repetitions?: number | null
@@ -25,18 +15,18 @@ export const WorkoutSetMetrics = ({
   time,
 }: Props) => {
   return (
-    <Row>
+    <View className="flex-row">
       {repetitions != null && (
         <>
           <Text>{repetitions}</Text>
-          <LightText> x </LightText>
+          <Text className="text-gray-500"> x </Text>
         </>
       )}
 
       {weight != null && (
         <>
           <Text>{weight}</Text>
-          <LightText> kg</LightText>
+          <Text className="text-gray-500"> kg</Text>
         </>
       )}
 
@@ -45,9 +35,9 @@ export const WorkoutSetMetrics = ({
       {distance != null && (
         <>
           <Text>{distance}</Text>
-          <LightText> m</LightText>
+          <Text className="text-gray-500"> m</Text>
         </>
       )}
-    </Row>
+    </View>
   )
 }

@@ -1,7 +1,9 @@
+import {Ionicons} from '@expo/vector-icons'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
-import {ButtonIcon} from '../../components/ButtonIcon'
+import {TouchableOpacity} from 'react-native'
 import {TextButton} from '../../components/TextButton'
+import {theme} from '../../theming/theme'
 import {ExerciseAddScreen} from './ExerciseAddScreen'
 import {ExerciseDetailScreen} from './ExerciseDetailScreen'
 import {ExerciseEditScreen} from './ExerciseEditScreen'
@@ -11,7 +13,6 @@ import {
   ExerciseDetailScreenRouteProp,
   ExerciseStackParamList,
 } from './types'
-import {theme} from '../../theming/theme'
 
 const Stack = createNativeStackNavigator<ExerciseStackParamList>()
 
@@ -24,10 +25,11 @@ export const ExerciseNavigator = () => {
         options={({navigation}) => ({
           title: 'Exercises',
           headerRight: () => (
-            <ButtonIcon
-              name="add"
+            <TouchableOpacity
               onPress={() => navigation.navigate('ExerciseAddScreen')}
-            />
+            >
+              <Ionicons name="add" size={24} color={theme.colors.text.link} />
+            </TouchableOpacity>
           ),
         })}
       />

@@ -1,15 +1,9 @@
-import styled from 'styled-components/native'
-import {theme} from '../theming/theme'
+import {Text} from 'react-native'
 
-export const Text = styled.Text`
-  color: ${theme.colors.text.primary};
-`
+export const ErrorText = ({text}: {text: string}) => {
+  return <Text className="text-red-500 text-sm">{text}</Text>
+}
 
-export const ErrorText = styled(Text)`
-  color: #e7000b;
-  font-size: 12px;
-`
-
-export const Label = styled(Text)`
-  font-size: 12px;
-`
+export const Label = ({text}: {text: string}) => {
+  return <Text className="mb-1  text-sm text-gray-700">{text}</Text>
+}

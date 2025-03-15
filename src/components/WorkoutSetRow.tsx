@@ -1,18 +1,7 @@
 import React from 'react'
-import {Text} from 'react-native'
-import styled from 'styled-components/native'
-import {theme} from '../theming/theme'
+import {Text, View} from 'react-native'
 import {formatEpochTimestamp} from '../utils/formatters'
 import {WorkoutSetMetrics} from './WorkoutSetMetrics'
-
-const View = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background-color: white;
-  border-bottom-width: ${theme.borderWidth}px;
-  border-bottom-color: ${theme.colors.border};
-`
 
 type Props = {
   value: {
@@ -27,7 +16,7 @@ type Props = {
 
 export const WorkoutSetRow = ({value}: Props) => {
   return (
-    <View>
+    <View className="flex-row justify-between p-2 bg-white border-b border-gray-200">
       <Text>{formatEpochTimestamp(value.executedAt)}</Text>
       <WorkoutSetMetrics
         repetitions={value.repetitions}

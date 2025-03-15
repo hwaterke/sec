@@ -1,27 +1,12 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import React, {useCallback, useLayoutEffect, useState} from 'react'
-import {FlatList, TouchableOpacity, View} from 'react-native'
+import {FlatList, Text, TouchableOpacity, View} from 'react-native'
 import {Calendar, DateData} from 'react-native-calendars'
-import styled from 'styled-components/native'
-import {Text} from '../../components/Text'
 import {TextButton} from '../../components/TextButton'
-import {px, py} from '../../design/constants/spacing'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {theme} from '../../theming/theme'
 import {formatDate} from '../../utils/formatters'
 import {HistoryStackParamList} from './types'
-
-const Row = styled.View`
-  flex-direction: row;
-  ${px(4)};
-  ${py(4)};
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${theme.colors.background.row};
-  border-bottom-color: #e5e5e5;
-  border-bottom-width: 0.5px;
-`
 
 export const HistoryScreen: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState(true)
@@ -91,10 +76,10 @@ export const HistoryScreen: React.FC = () => {
                 })
               }}
             >
-              <Row>
+              <View className="flex flex-row justify-between items-center p-4 bg-white border-b border-gray-200">
                 <Text>{formatDate(date)}</Text>
                 <Text>{count}</Text>
-              </Row>
+              </View>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.date}

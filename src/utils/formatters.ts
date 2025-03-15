@@ -44,12 +44,20 @@ export const formatTimeBetween = (
   const diffSeconds = Math.abs(timestampEnd - timestampStart)
 
   // Compute hours, minutes, seconds
-  const hours = Math.floor(diffSeconds / 3600)
+  const days = Math.floor(diffSeconds / 86400)
+  const hours = Math.floor((diffSeconds % 86400) / 3600)
   const minutes = Math.floor((diffSeconds % 3600) / 60)
   const seconds = diffSeconds % 60
 
-  // Create a human-readable string
-  return `${hours}h ${minutes}m ${seconds}s`
+  if (days > 0) {
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`
+  } else if (hours > 0) {
+    return `${hours}h ${minutes}m ${seconds}s`
+  } else if (minutes > 0) {
+    return `${minutes}m ${seconds}s`
+  } else {
+    return `${seconds}s`
+  }
 }
 
 export const epochFromDateAndTime = (dateISO: string, timeISO: string) => {

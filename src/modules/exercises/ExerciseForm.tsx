@@ -1,19 +1,10 @@
 import {useForm} from '@tanstack/react-form'
 import React from 'react'
-import {Switch} from 'react-native'
-import styled from 'styled-components/native'
-import {Button} from '../../components/Button'
-import {ErrorText, Text} from '../../components/Text'
-import {TextInput} from '../../components/TextInput'
-import {py} from '../../design/constants/spacing'
+import {Switch, Text, View} from 'react-native'
 import {z} from 'zod'
-
-const SwitchRow = styled.View`
-  ${py(1)};
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`
+import {Button} from '../../components/Button'
+import {ErrorText, Label} from '../../components/Text'
+import {Input, Textarea} from '../../components/TextInput'
 
 export type FormValues = {
   name: string
@@ -58,7 +49,7 @@ export const ExerciseForm: React.FC<Props> = ({
   })
 
   return (
-    <>
+    <View className="gap-2">
       <form.Field
         name="name"
         validators={{
@@ -66,8 +57,9 @@ export const ExerciseForm: React.FC<Props> = ({
         }}
         children={(field) => {
           return (
-            <>
-              <TextInput
+            <View>
+              <Label text="Name" />
+              <Input
                 onChangeText={field.handleChange}
                 onBlur={field.handleBlur}
                 value={field.state.value}
@@ -75,13 +67,13 @@ export const ExerciseForm: React.FC<Props> = ({
                 placeholderTextColor="grey"
               />
               {field.state.meta.errors.length ? (
-                <ErrorText>
-                  {field.state.meta.errors
+                <ErrorText
+                  text={field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </ErrorText>
+                />
               ) : null}
-            </>
+            </View>
           )
         }}
       />
@@ -93,8 +85,9 @@ export const ExerciseForm: React.FC<Props> = ({
         }}
         children={(field) => {
           return (
-            <>
-              <TextInput
+            <View>
+              <Label text="Description" />
+              <Textarea
                 onChangeText={field.handleChange}
                 onBlur={field.handleBlur}
                 value={field.state.value}
@@ -103,13 +96,13 @@ export const ExerciseForm: React.FC<Props> = ({
                 multiline
               />
               {field.state.meta.errors.length ? (
-                <ErrorText>
-                  {field.state.meta.errors
+                <ErrorText
+                  text={field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </ErrorText>
+                />
               ) : null}
-            </>
+            </View>
           )
         }}
       />
@@ -121,8 +114,9 @@ export const ExerciseForm: React.FC<Props> = ({
         }}
         children={(field) => {
           return (
-            <>
-              <TextInput
+            <View>
+              <Label text="Muscle" />
+              <Input
                 onChangeText={field.handleChange}
                 onBlur={field.handleBlur}
                 value={field.state.value}
@@ -130,13 +124,13 @@ export const ExerciseForm: React.FC<Props> = ({
                 placeholderTextColor="grey"
               />
               {field.state.meta.errors.length ? (
-                <ErrorText>
-                  {field.state.meta.errors
+                <ErrorText
+                  text={field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </ErrorText>
+                />
               ) : null}
-            </>
+            </View>
           )
         }}
       />
@@ -145,13 +139,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="hasRepetitions"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Repetitions</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -159,13 +153,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="hasWeight"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Weight</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -173,13 +167,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="hasTime"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Time</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -187,13 +181,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="hasDistance"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Distance</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -201,13 +195,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="isCardio"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Cardio</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -215,13 +209,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="isMachine"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Machine</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -230,13 +224,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="isDumbbell"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Dumbbell</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -245,13 +239,13 @@ export const ExerciseForm: React.FC<Props> = ({
         name="isBarbell"
         children={(field) => {
           return (
-            <SwitchRow>
+            <View className="flex-row justify-between items-center">
               <Text>Barbell</Text>
               <Switch
                 onValueChange={field.handleChange}
                 value={field.state.value}
               />
-            </SwitchRow>
+            </View>
           )
         }}
       />
@@ -260,10 +254,9 @@ export const ExerciseForm: React.FC<Props> = ({
         onPress={() => {
           void form.handleSubmit()
         }}
-        className="mt-4"
       >
         Save
       </Button>
-    </>
+    </View>
   )
 }

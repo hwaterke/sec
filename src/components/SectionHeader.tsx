@@ -1,17 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/native'
-import {pl, py} from '../design/constants/spacing'
-import {theme} from '../theming/theme'
-
-const Container = styled.View`
-  background-color: ${theme.colors.background.primary};
-  ${pl(2)};
-  ${py(1)};
-`
-
-const Text = styled.Text`
-  color: ${theme.colors.text.header};
-`
+import {Text, View} from 'react-native'
 
 type Props = {
   children: string
@@ -19,8 +7,8 @@ type Props = {
 
 export const SectionHeader: React.FC<Props> = ({children}) => {
   return (
-    <Container>
-      <Text>{children}</Text>
-    </Container>
+    <View className="bg-primary px-2 py-1">
+      <Text className="font-bold text-white">{children}</Text>
+    </View>
   )
 }

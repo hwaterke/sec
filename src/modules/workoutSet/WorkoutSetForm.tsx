@@ -3,7 +3,7 @@ import React from 'react'
 import {z} from 'zod'
 import {Button} from '../../components/Button'
 import {ErrorText, Label} from '../../components/Text'
-import {TextInput} from '../../components/TextInput'
+import {Input, Textarea} from '../../components/TextInput'
 import {View, Text} from 'react-native'
 
 export type WorkoutSetFormValues = {
@@ -42,7 +42,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       <View className="flex-row gap-2">
         <View className="flex-1">
-          <Label>Execution date</Label>
+          <Label text="Execution date" />
           <form.Field
             name="executionDate"
             validators={{
@@ -55,7 +55,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -63,11 +63,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -76,7 +76,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
         </View>
 
         <View className="flex-1">
-          <Label>Execution time</Label>
+          <Label text="Execution time" />
           <form.Field
             name="executionTime"
             validators={{
@@ -89,7 +89,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -97,11 +97,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -112,7 +112,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       {exercise.hasRepetitions && (
         <View>
-          <Label>Repetitions</Label>
+          <Label text="Repetitions" />
           <form.Field
             name="repetitions"
             validators={{
@@ -123,7 +123,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -132,11 +132,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -147,7 +147,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       {exercise.hasWeight && (
         <View>
-          <Label>Weight</Label>
+          <Label text="Weight" />
           <form.Field
             name="weight"
             validators={{
@@ -158,7 +158,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -167,11 +167,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -182,7 +182,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       {exercise.hasDistance && (
         <View>
-          <Label>Distance</Label>
+          <Label text="Distance" />
           <form.Field
             name="distance"
             validators={{
@@ -193,7 +193,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -202,11 +202,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -217,7 +217,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       {exercise.hasTime && (
         <View>
-          <Label>Time</Label>
+          <Label text="Time" />
           <form.Field
             name="time"
             validators={{
@@ -230,7 +230,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
             children={(field) => {
               return (
                 <>
-                  <TextInput
+                  <Input
                     onChangeText={field.handleChange}
                     onBlur={field.handleBlur}
                     value={field.state.value}
@@ -238,11 +238,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                     placeholderTextColor="grey"
                   />
                   {field.state.meta.errors.length ? (
-                    <ErrorText>
-                      {field.state.meta.errors
+                    <ErrorText
+                      text={field.state.meta.errors
                         .map((error) => error?.message)
                         .join(',')}
-                    </ErrorText>
+                    />
                   ) : null}
                 </>
               )
@@ -252,7 +252,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
       )}
 
       <View>
-        <Label>Notes</Label>
+        <Label text="Notes" />
         <form.Field
           name="notes"
           validators={{
@@ -261,7 +261,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
           children={(field) => {
             return (
               <>
-                <TextInput
+                <Textarea
                   onChangeText={field.handleChange}
                   onBlur={field.handleBlur}
                   value={field.state.value}
@@ -270,11 +270,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   multiline
                 />
                 {field.state.meta.errors.length ? (
-                  <ErrorText>
-                    {field.state.meta.errors
+                  <ErrorText
+                    text={field.state.meta.errors
                       .map((error) => error?.message)
                       .join(',')}
-                  </ErrorText>
+                  />
                 ) : null}
               </>
             )

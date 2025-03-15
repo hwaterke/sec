@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react'
-import {GestureResponderEvent, Pressable, Text} from 'react-native'
+import {GestureResponderEvent, Text, TouchableOpacity} from 'react-native'
 
 type Props = {
   onPress: (event: GestureResponderEvent) => void
@@ -12,11 +12,11 @@ export const Button = ({
   className,
 }: PropsWithChildren<Props>) => {
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
       className={`flex items-center justify-center bg-gray-600 rounded-lg p-4 ${className}`}
     >
       <Text className="text-white text-base font-bold">{children}</Text>
-    </Pressable>
+    </TouchableOpacity>
   )
 }

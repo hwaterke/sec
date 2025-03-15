@@ -1,15 +1,12 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react'
-import {SectionList, TouchableOpacity, View} from 'react-native'
+import {SectionList, Text, TouchableOpacity, View} from 'react-native'
 import {groupBy} from 'remeda'
-import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
-import {Text} from '../../components/Text'
 import {TimeSince} from '../../components/TimeSince'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {WorkoutSetWithExercise} from '../../database/schema'
-import {py} from '../../design/constants/spacing'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {theme} from '../../theming/theme'
@@ -20,38 +17,6 @@ import {
 } from '../../utils/formatters'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {HistoryDayScreenRouteProp} from './types'
-
-const SummaryView = styled.View`
-  background-color: ${theme.colors.background.row};
-`
-
-const SummaryTitleView = styled.View`
-  ${py(2)};
-  align-items: center;
-`
-
-const SummaryTitle = styled(Text)`
-  font-size: 20px;
-`
-
-const TimeView = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-`
-
-const Stats = styled.View`
-  ${py(2)}
-  align-items: center;
-`
-
-const StatsTitle = styled(Text)`
-  color: ${theme.colors.text.secondary};
-`
-
-const StatsValue = styled(Text)`
-  font-size: 20px;
-`
 
 export const HistoryDayScreen = () => {
   const {params} = useRoute<HistoryDayScreenRouteProp>()
@@ -113,47 +78,41 @@ export const HistoryDayScreen = () => {
     <SectionList
       ListHeaderComponent={() => {
         return (
-          <SummaryView>
-            <SummaryTitleView>
-              <SummaryTitle>{formatDate(params.date)}</SummaryTitle>
-
-              <StatsTitle>
-                {formatTimeBetween(
-                  workoutSets[0].executedAt,
-                  workoutSets[workoutSets.length - 1].executedAt
-                )}
-              </StatsTitle>
-            </SummaryTitleView>
-
-            <TimeView>
-              <Stats>
-                <StatsValue>
+          <View className="px-4 py-2 bg-white gap-2">
+            <Text className="text-xl font-bold">{formatDate(params.date)}</Text>
+            <View className="flex-row justify-between">
+              <View className="flex-row">
+                <Text className="text-gray-500">Total time: </Text>
+                <Text className="font-bold">
+                  {formatTimeBetween(
+                    workoutSets[0].executedAt,
+                    workoutSets[workoutSets.length - 1].executedAt
+                  )}
+                </Text>
+              </View>
+              <View className="flex-row">
+                <Text className="text-gray-500">From </Text>
+                <Text className="font-bold">
                   {formatEpochTime(workoutSets[0].executedAt)}
-                </StatsValue>
-                <StatsTitle>START</StatsTitle>
-              </Stats>
-
-              <Stats>
-                <StatsValue>
+                </Text>
+                <Text className="text-gray-500"> to </Text>
+                <Text className="font-bold">
                   {formatEpochTime(
                     workoutSets[workoutSets.length - 1].executedAt
                   )}
-                </StatsValue>
-                <StatsTitle>END</StatsTitle>
-              </Stats>
-            </TimeView>
+                </Text>
+              </View>
+            </View>
 
-            <TimeView>
-              <Stats>
-                <StatsValue>
-                  <TimeSince
-                    timestamp={workoutSets[workoutSets.length - 1].executedAt}
-                  />
-                </StatsValue>
-                <StatsTitle>Time since last exercise</StatsTitle>
-              </Stats>
-            </TimeView>
-          </SummaryView>
+            <View className="items-center justify-around">
+              <Text className="text-2xl font-bold">
+                <TimeSince
+                  timestamp={workoutSets[workoutSets.length - 1].executedAt}
+                />
+              </Text>
+              <Text className="text-gray-500">Time since last exercise</Text>
+            </View>
+          </View>
         )
       }}
       sections={setByExercise}

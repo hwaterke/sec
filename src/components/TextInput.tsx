@@ -1,11 +1,20 @@
-import styled from 'styled-components/native'
+import {TextInput, TextInputProps} from 'react-native'
 
-export const TextInput = styled.TextInput`
-  height: 40px;
-  margin-vertical: 4px;
-  padding-left: 8px;
-  background-color: white;
-  border-color: #d0d0d0;
-  border-width: 1px;
-  border-radius: 8px;
-`
+export const Input = (props: TextInputProps) => {
+  return (
+    <TextInput
+      className="h-10 px-2 bg-white border border-gray-300 rounded-md"
+      {...props}
+    />
+  )
+}
+
+export const Textarea = (props: TextInputProps) => {
+  return (
+    <TextInput
+      className="h-20 px-2 bg-white border border-gray-300 rounded-md"
+      {...props}
+      multiline
+    />
+  )
+}

@@ -40,8 +40,8 @@ export const ExerciseDetailScreen: React.FC = () => {
   }
 
   return (
-    <View className="flex-1 bg-light-bg p-6">
-      <View className="mb-2">
+    <View className="flex-1 bg-light-bg p-6 gap-2">
+      <View>
         <Text className="text-2xl">{exercise.name}</Text>
         {!isNullish(exercise.description) && (
           <Text className="text-sm">{exercise.description}</Text>
@@ -58,23 +58,27 @@ export const ExerciseDetailScreen: React.FC = () => {
         </View>
       </View>
 
-      {lastSets.map((ws) => (
-        <TouchableOpacity
-          key={ws.id}
-          onPress={() => {
-            navigation.navigate('WorkoutSetAddScreen', {
-              exerciseId: params.exerciseId,
-              repetitions: ws.repetitions ?? undefined,
-              weight: ws.weight ?? undefined,
-              distance: ws.distance ?? undefined,
-              time: ws.time ?? undefined,
-              // Notes are not passed
-            })
-          }}
-        >
-          <WorkoutSetRow value={ws} />
-        </TouchableOpacity>
-      ))}
+      {lastSets.length > 0 && (
+        <View>
+          {lastSets.map((ws) => (
+            <TouchableOpacity
+              key={ws.id}
+              onPress={() => {
+                navigation.navigate('WorkoutSetAddScreen', {
+                  exerciseId: params.exerciseId,
+                  repetitions: ws.repetitions ?? undefined,
+                  weight: ws.weight ?? undefined,
+                  distance: ws.distance ?? undefined,
+                  time: ws.time ?? undefined,
+                  // Notes are not passed
+                })
+              }}
+            >
+              <WorkoutSetRow value={ws} />
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
       <Button
         onPress={() => {
@@ -82,12 +86,11 @@ export const ExerciseDetailScreen: React.FC = () => {
             exerciseId: params.exerciseId,
           })
         }}
-        className="mt-4"
       >
         Add a set
       </Button>
 
-      <View className="flex-row mt-2">
+      <View className="flex-row">
         <Text>Created at:</Text>
         <Text>{formatEpochTimestamp(exercise.createdAt)}</Text>
       </View>
