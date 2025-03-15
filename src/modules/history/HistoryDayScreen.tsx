@@ -1,9 +1,8 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react'
-import {SectionList, TouchableOpacity} from 'react-native'
+import {SectionList, TouchableOpacity, View} from 'react-native'
 import {groupBy} from 'remeda'
-import {useTheme} from 'styled-components'
 import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
 import {Text} from '../../components/Text'
@@ -11,9 +10,9 @@ import {TimeSince} from '../../components/TimeSince'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {WorkoutSetWithExercise} from '../../database/schema'
 import {py} from '../../design/constants/spacing'
-import {Screen} from '../../design/layout/Screen'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
+import {theme} from '../../theming/theme'
 import {
   formatDate,
   formatEpochTime,
@@ -23,7 +22,7 @@ import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {HistoryDayScreenRouteProp} from './types'
 
 const SummaryView = styled.View`
-  background-color: ${({theme}) => theme.colors.background.row};
+  background-color: ${theme.colors.background.row};
 `
 
 const SummaryTitleView = styled.View`
@@ -47,7 +46,7 @@ const Stats = styled.View`
 `
 
 const StatsTitle = styled(Text)`
-  color: ${({theme}) => theme.colors.text.secondary};
+  color: ${theme.colors.text.secondary};
 `
 
 const StatsValue = styled(Text)`
@@ -59,7 +58,6 @@ export const HistoryDayScreen = () => {
 
   const navigation =
     useNavigation<NavigationProp<MainStackNavigatorParamList>>()
-  const theme = useTheme()
   const [workoutSets, setWorkoutSets] = useState<WorkoutSetWithExercise[]>([])
 
   const [setByExercise, setSetByExercise] = useState<
@@ -105,86 +103,84 @@ export const HistoryDayScreen = () => {
 
   if (workoutSets.length === 0) {
     return (
-      <Screen withPadding>
+      <View className="flex-1 bg-light-bg">
         <Text>Nothing on that day</Text>
-      </Screen>
+      </View>
     )
   }
 
   return (
-    <Screen>
-      <SectionList
-        ListHeaderComponent={() => {
-          return (
-            <SummaryView>
-              <SummaryTitleView>
-                <SummaryTitle>{formatDate(params.date)}</SummaryTitle>
+    <SectionList
+      ListHeaderComponent={() => {
+        return (
+          <SummaryView>
+            <SummaryTitleView>
+              <SummaryTitle>{formatDate(params.date)}</SummaryTitle>
 
-                <StatsTitle>
-                  {formatTimeBetween(
-                    workoutSets[0].executedAt,
+              <StatsTitle>
+                {formatTimeBetween(
+                  workoutSets[0].executedAt,
+                  workoutSets[workoutSets.length - 1].executedAt
+                )}
+              </StatsTitle>
+            </SummaryTitleView>
+
+            <TimeView>
+              <Stats>
+                <StatsValue>
+                  {formatEpochTime(workoutSets[0].executedAt)}
+                </StatsValue>
+                <StatsTitle>START</StatsTitle>
+              </Stats>
+
+              <Stats>
+                <StatsValue>
+                  {formatEpochTime(
                     workoutSets[workoutSets.length - 1].executedAt
                   )}
-                </StatsTitle>
-              </SummaryTitleView>
+                </StatsValue>
+                <StatsTitle>END</StatsTitle>
+              </Stats>
+            </TimeView>
 
-              <TimeView>
-                <Stats>
-                  <StatsValue>
-                    {formatEpochTime(workoutSets[0].executedAt)}
-                  </StatsValue>
-                  <StatsTitle>START</StatsTitle>
-                </Stats>
-
-                <Stats>
-                  <StatsValue>
-                    {formatEpochTime(
-                      workoutSets[workoutSets.length - 1].executedAt
-                    )}
-                  </StatsValue>
-                  <StatsTitle>END</StatsTitle>
-                </Stats>
-              </TimeView>
-
-              <TimeView>
-                <Stats>
-                  <StatsValue>
-                    <TimeSince
-                      timestamp={workoutSets[workoutSets.length - 1].executedAt}
-                    />
-                  </StatsValue>
-                  <StatsTitle>Time since last exercise</StatsTitle>
-                </Stats>
-              </TimeView>
-            </SummaryView>
-          )
-        }}
-        sections={setByExercise}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            key={item.id}
-            onPress={() => {
-              params.isEditing
-                ? navigation.navigate('WorkoutSetEditScreen', {
-                    workoutSetId: item.id,
-                  })
-                : navigation.navigate('WorkoutSetAddScreen', {
-                    exerciseId: item.exerciseId,
-                    repetitions: item.repetitions ?? undefined,
-                    weight: item.weight ?? undefined,
-                    distance: item.distance ?? undefined,
-                    time: item.time ?? undefined,
-                  })
-            }}
-          >
-            <WorkoutSetRow value={item} />
-          </TouchableOpacity>
-        )}
-        renderSectionHeader={(i) => (
-          <SectionHeader>{i.section.title}</SectionHeader>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </Screen>
+            <TimeView>
+              <Stats>
+                <StatsValue>
+                  <TimeSince
+                    timestamp={workoutSets[workoutSets.length - 1].executedAt}
+                  />
+                </StatsValue>
+                <StatsTitle>Time since last exercise</StatsTitle>
+              </Stats>
+            </TimeView>
+          </SummaryView>
+        )
+      }}
+      sections={setByExercise}
+      renderItem={({item}) => (
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => {
+            params.isEditing
+              ? navigation.navigate('WorkoutSetEditScreen', {
+                  workoutSetId: item.id,
+                })
+              : navigation.navigate('WorkoutSetAddScreen', {
+                  exerciseId: item.exerciseId,
+                  repetitions: item.repetitions ?? undefined,
+                  weight: item.weight ?? undefined,
+                  distance: item.distance ?? undefined,
+                  time: item.time ?? undefined,
+                })
+          }}
+        >
+          <WorkoutSetRow value={item} />
+        </TouchableOpacity>
+      )}
+      renderSectionHeader={(i) => (
+        <SectionHeader>{i.section.title}</SectionHeader>
+      )}
+      keyExtractor={(item) => item.id}
+    />
   )
 }

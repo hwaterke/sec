@@ -1,7 +1,4 @@
-import {
-  DarkTheme as DarkNavigationTheme,
-  DefaultTheme as DefaultNavigationTheme,
-} from '@react-navigation/native'
+import {DefaultTheme as DefaultNavigationTheme} from '@react-navigation/native'
 import {StyleSheet} from 'react-native'
 
 export const theme = {
@@ -42,31 +39,3 @@ export const theme = {
 }
 
 export type Theme = typeof theme
-
-export const darkTheme: Theme = {
-  colors: {
-    background: {
-      primary: '#222',
-      secondary: 'black',
-      editing: '#E9D460',
-      row: 'black',
-    },
-    border: '#ddd',
-    text: {
-      primary: 'white',
-      secondary: '#999',
-      link: DefaultNavigationTheme.colors.primary,
-      header: 'white',
-    },
-    button: {
-      primary: {
-        text: 'white',
-        background: '#333',
-      },
-    },
-  },
-
-  borderWidth: StyleSheet.hairlineWidth,
-
-  navigation: DarkNavigationTheme,
-}

@@ -2,6 +2,7 @@ import {Ionicons} from '@expo/vector-icons'
 import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
+import {theme} from '../theming/theme'
 
 type Props = {
   name: keyof typeof Ionicons.glyphMap
@@ -9,7 +10,7 @@ type Props = {
 }
 
 const Icon = styled(Ionicons)`
-  color: ${({theme}) => theme.colors.text.link};
+  color: ${theme.colors.text.link};
   padding: 0 8px;
 `
 

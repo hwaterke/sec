@@ -1,7 +1,8 @@
 import styled from 'styled-components/native'
+import {theme} from '../theming/theme'
 
 export const Text = styled.Text`
-  color: ${({theme}) => theme.colors.text.primary};
+  color: ${theme.colors.text.primary};
 `
 
 export const ErrorText = styled(Text)`

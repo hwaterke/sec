@@ -7,8 +7,8 @@ import styled from 'styled-components/native'
 import {Text} from '../../components/Text'
 import {TextButton} from '../../components/TextButton'
 import {px, py} from '../../design/constants/spacing'
-import {Screen} from '../../design/layout/Screen'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
+import {theme} from '../../theming/theme'
 import {formatDate} from '../../utils/formatters'
 import {HistoryStackParamList} from './types'
 
@@ -18,7 +18,7 @@ const Row = styled.View`
   ${py(4)};
   align-items: center;
   justify-content: space-between;
-  background-color: ${({theme}) => theme.colors.background.row};
+  background-color: ${theme.colors.background.row};
   border-bottom-color: #e5e5e5;
   border-bottom-width: 0.5px;
 `

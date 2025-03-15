@@ -1,9 +1,9 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
-import {MainTabNavigator} from './MainTabNavigator'
+import {theme} from '../../theming/theme'
 import {WorkoutSetAddScreen} from '../workoutSet/WorkoutSetAddScreen'
 import {WorkoutSetEditScreen} from '../workoutSet/WorkoutSetEditScreen'
-import {useTheme} from 'styled-components'
+import {MainTabNavigator} from './MainTabNavigator'
 
 export type MainStackNavigatorParamList = {
   Tabs: undefined
@@ -23,8 +23,6 @@ export type MainStackNavigatorParamList = {
 const Stack = createNativeStackNavigator<MainStackNavigatorParamList>()
 
 export const MainStackNavigator = () => {
-  const theme = useTheme()
-
   return (
     <Stack.Navigator>
       <Stack.Screen

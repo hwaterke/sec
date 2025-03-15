@@ -1,6 +1,7 @@
 import React from 'react'
 import {Text} from 'react-native'
 import styled from 'styled-components/native'
+import {theme} from '../theming/theme'
 import {formatEpochTimestamp} from '../utils/formatters'
 import {WorkoutSetMetrics} from './WorkoutSetMetrics'
 
@@ -9,8 +10,8 @@ const View = styled.View`
   justify-content: space-between;
   padding: 8px 12px;
   background-color: white;
-  border-bottom-width: ${({theme}) => theme.borderWidth}px;
-  border-bottom-color: ${({theme}) => theme.colors.border};
+  border-bottom-width: ${theme.borderWidth}px;
+  border-bottom-color: ${theme.colors.border};
 `
 
 type Props = {

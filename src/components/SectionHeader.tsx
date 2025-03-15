@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import {pl, py} from '../design/constants/spacing'
+import {theme} from '../theming/theme'
 
 const Container = styled.View`
-  background-color: ${({theme}) => theme.colors.background.primary};
+  background-color: ${theme.colors.background.primary};
   ${pl(2)};
   ${py(1)};
 `
 
 const Text = styled.Text`
-  color: ${({theme}) => theme.colors.text.header};
+  color: ${theme.colors.text.header};
 `
 
 type Props = {

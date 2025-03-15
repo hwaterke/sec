@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import {Text} from '../components/Text'
+import {theme} from '../theming/theme'
 
 const Row = styled.View`
   flex-direction: row;
 `
 
 const LightText = styled.Text`
-  color: ${({theme}) => theme.colors.text.secondary};
+  color: ${theme.colors.text.secondary};
 `
 
 type Props = {

@@ -11,13 +11,11 @@ import {
   ExerciseDetailScreenRouteProp,
   ExerciseStackParamList,
 } from './types'
-import {useTheme} from 'styled-components'
+import {theme} from '../../theming/theme'
 
 const Stack = createNativeStackNavigator<ExerciseStackParamList>()
 
 export const ExerciseNavigator = () => {
-  const theme = useTheme()
-
   return (
     <Stack.Navigator>
       <Stack.Screen
