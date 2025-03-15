@@ -76,7 +76,7 @@ export const HistoryDayScreen = () => {
         setWorkoutSets(data)
       }
       void main()
-    }, [])
+    }, [params.date])
   )
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const HistoryDayScreen = () => {
           : theme.navigation.colors.card,
       },
     })
-  }, [navigation, params.isEditing, theme])
+  }, [navigation, params.isEditing])
 
   if (workoutSets.length === 0) {
     return (

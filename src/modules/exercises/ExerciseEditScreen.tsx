@@ -49,7 +49,7 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
             })
             navigation.goBack()
           } catch (err) {
-            alert('Update exercise error ' + err)
+            alert(`Update exercise error ${error}`)
           }
         }}
       />

@@ -16,8 +16,8 @@ export const ExerciseAddScreen: React.FC<Props> = ({navigation}) => {
           try {
             await ExerciseService.create(values)
             navigation.goBack()
-          } catch (err) {
-            alert('Create exercise error ' + err)
+          } catch (error) {
+            alert(`Create exercise error ${error}`)
           }
         }}
       />
