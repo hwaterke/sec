@@ -41,7 +41,7 @@ export const WorkoutSetService = {
       .select()
       .from(workoutSetsTable)
       .where(eq(workoutSetsTable.exerciseId, exerciseId))
-      .orderBy(desc(workoutSetsTable.createdAt))
+      .orderBy(desc(workoutSetsTable.executedAt))
       .limit(10)
 
     return workoutSets

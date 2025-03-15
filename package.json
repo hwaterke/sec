@@ -20,6 +20,7 @@
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@tanstack/react-form": "^1.0.5",
     "drizzle-orm": "^0.38.2",
     "expo": "~52.0.38",
     "expo-crypto": "~14.0.2",
@@ -43,7 +44,8 @@
     "remeda": "^2.21.0",
     "styled-components": "^6.1.11",
     "tailwindcss": "^3.4.17",
-    "temporal-polyfill": "^0.2.5"
+    "temporal-polyfill": "^0.2.5",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

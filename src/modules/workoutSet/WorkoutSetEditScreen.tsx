@@ -9,6 +9,7 @@ import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {WorkoutSetWithExercise} from '../../database/schema'
 import {isNullish} from 'remeda'
 import {Temporal} from 'temporal-polyfill'
+import {epochFromDateAndTime} from '../../utils/formatters'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -32,14 +33,19 @@ export const WorkoutSetEditScreen = () => {
     return <Text>No data</Text>
   }
 
+  const executedAt = Temporal.Instant.fromEpochSeconds(
+    ws.executedAt
+  ).toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO().getTimeZone())
+
   return (
     <Screen withPadding>
       <WorkoutSetForm
         exercise={ws.exercise}
         initialValues={{
-          executedAt: Temporal.Instant.fromEpochSeconds(ws.executedAt)
-            .toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO().getTimeZone())
-            .toString(),
+          executionDate: executedAt.toPlainDate().toString(),
+          executionTime: executedAt
+            .toPlainTime()
+            .toString({fractionalSecondDigits: 0}),
           repetitions: isNullish(ws.repetitions) ? '' : `${ws.repetitions}`,
           weight: isNullish(ws.weight) ? '' : `${ws.weight}`,
           distance: isNullish(ws.distance) ? '' : `${ws.distance}`,
@@ -47,6 +53,11 @@ export const WorkoutSetEditScreen = () => {
           notes: ws.notes ?? '',
         }}
         onSubmit={async (v) => {
+          const epochSeconds = epochFromDateAndTime(
+            v.executionDate,
+            v.executionTime
+          )
+
           await WorkoutSetService.update({
             id: ws.id,
             data: {
@@ -56,8 +67,7 @@ export const WorkoutSetEditScreen = () => {
                 v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
               distance: v.distance === '' ? null : Number(v.distance),
               time: v.time === '' ? null : v.time,
-              executedAt: Temporal.ZonedDateTime.from(v.executedAt)
-                .epochSeconds,
+              executedAt: epochSeconds,
               notes: v.notes,
             },
           })

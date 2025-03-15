@@ -1,11 +1,13 @@
-import {Formik} from 'formik'
+import {useForm} from '@tanstack/react-form'
 import React from 'react'
-import {View} from 'react-native'
+import {Text} from 'react-native'
+import {z} from 'zod'
 import {Button} from '../../components/Button'
 import {TextInput} from '../../components/TextInput'
 
 export type WorkoutSetFormValues = {
-  executedAt: string
+  executionDate: string
+  executionTime: string
   repetitions: string
   weight: string
   distance: string
@@ -24,79 +26,233 @@ type Props = {
   onSubmit: (values: WorkoutSetFormValues) => Promise<any>
 }
 
+const schema = z.object({
+  executionDate: z
+    .string()
+    .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
+      message: 'Must be a valid date in the format YYYY-MM-DD',
+    }),
+  executionTime: z
+    .string()
+    .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
+      message: 'Must be a valid time in the format HH:MM:SS',
+    }),
+  repetitions: z.string().refine((value) => value === '' || /\d+/.test(value), {
+    message: 'Must be a number',
+  }),
+  weight: z.string().refine((value) => value === '' || /\d+/.test(value), {
+    message: 'Must be a number',
+  }),
+  distance: z.string().refine((value) => value === '' || /\d+/.test(value), {
+    message: 'Must be a number',
+  }),
+  time: z.string().refine((value) => value === '' || /\d+/.test(value), {
+    message: 'Must be a number',
+  }),
+  notes: z.string(),
+})
+
 export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
+  const form = useForm({
+    defaultValues: initialValues,
+    onSubmit: async ({value}) => {
+      await onSubmit(value)
+    },
+    validators: {
+      onBlur: schema,
+    },
+  })
+
   return (
-    <Formik<WorkoutSetFormValues>
-      onSubmit={onSubmit}
-      initialValues={initialValues}
-    >
-      {({handleChange, handleBlur, handleSubmit, values}) => (
-        <View>
-          <TextInput
-            onChangeText={handleChange('executedAt')}
-            onBlur={handleBlur('executedAt')}
-            value={values.executedAt}
-            placeholder="Executed at"
-            placeholderTextColor="grey"
-          />
+    <>
+      <form.Field
+        name="executionDate"
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Execution date"
+                placeholderTextColor="grey"
+              />
+              {field.state.meta.errors.length ? (
+                <Text>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </Text>
+              ) : null}
+            </>
+          )
+        }}
+      />
 
-          {exercise.hasRepetitions && (
-            <TextInput
-              onChangeText={handleChange('repetitions')}
-              onBlur={handleBlur('repetitions')}
-              value={values.repetitions}
-              placeholder="Repetitions"
-              keyboardType="numeric"
-              placeholderTextColor="grey"
-            />
-          )}
+      <form.Field
+        name="executionTime"
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Execution time"
+                placeholderTextColor="grey"
+              />
+              {field.state.meta.errors.length ? (
+                <Text>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </Text>
+              ) : null}
+            </>
+          )
+        }}
+      />
 
-          {exercise.hasWeight && (
-            <TextInput
-              onChangeText={handleChange('weight')}
-              onBlur={handleBlur('weight')}
-              value={values.weight}
-              placeholder="Weight"
-              keyboardType="numeric"
-              placeholderTextColor="grey"
-            />
-          )}
-
-          {exercise.hasDistance && (
-            <TextInput
-              onChangeText={handleChange('distance')}
-              onBlur={handleBlur('distance')}
-              value={values.distance}
-              placeholder="Distance"
-              keyboardType="numeric"
-              placeholderTextColor="grey"
-            />
-          )}
-
-          {exercise.hasTime && (
-            <TextInput
-              onChangeText={handleChange('time')}
-              onBlur={handleBlur('time')}
-              value={values.time}
-              placeholder="Time"
-              placeholderTextColor="grey"
-            />
-          )}
-
-          <TextInput
-            onChangeText={handleChange('notes')}
-            onBlur={handleBlur('notes')}
-            value={values.notes}
-            placeholder="Notes"
-            placeholderTextColor="grey"
-            multiline
-          />
-
-          <Button onPress={handleSubmit as any} withTopMargin>
-            Save
-          </Button>
-        </View>
+      {exercise.hasRepetitions && (
+        <form.Field
+          name="repetitions"
+          children={(field) => {
+            return (
+              <>
+                <TextInput
+                  onChangeText={field.handleChange}
+                  onBlur={field.handleBlur}
+                  value={field.state.value}
+                  placeholder="Repetitions"
+                  keyboardType="numeric"
+                  placeholderTextColor="grey"
+                />
+                {field.state.meta.errors.length ? (
+                  <Text>
+                    {field.state.meta.errors
+                      .map((error) => error?.message)
+                      .join(',')}
+                  </Text>
+                ) : null}
+              </>
+            )
+          }}
+        />
       )}
-    </Formik>
+
+      {exercise.hasWeight && (
+        <form.Field
+          name="weight"
+          children={(field) => {
+            return (
+              <>
+                <TextInput
+                  onChangeText={field.handleChange}
+                  onBlur={field.handleBlur}
+                  value={field.state.value}
+                  placeholder="Weight"
+                  keyboardType="numeric"
+                  placeholderTextColor="grey"
+                />
+                {field.state.meta.errors.length ? (
+                  <Text>
+                    {field.state.meta.errors
+                      .map((error) => error?.message)
+                      .join(',')}
+                  </Text>
+                ) : null}
+              </>
+            )
+          }}
+        />
+      )}
+
+      {exercise.hasDistance && (
+        <form.Field
+          name="distance"
+          children={(field) => {
+            return (
+              <>
+                <TextInput
+                  onChangeText={field.handleChange}
+                  onBlur={field.handleBlur}
+                  value={field.state.value}
+                  placeholder="Distance"
+                  keyboardType="numeric"
+                  placeholderTextColor="grey"
+                />
+                {field.state.meta.errors.length ? (
+                  <Text>
+                    {field.state.meta.errors
+                      .map((error) => error?.message)
+                      .join(',')}
+                  </Text>
+                ) : null}
+              </>
+            )
+          }}
+        />
+      )}
+
+      {exercise.hasTime && (
+        <form.Field
+          name="time"
+          children={(field) => {
+            return (
+              <>
+                <TextInput
+                  onChangeText={field.handleChange}
+                  onBlur={field.handleBlur}
+                  value={field.state.value}
+                  placeholder="Time"
+                  placeholderTextColor="grey"
+                />
+                {field.state.meta.errors.length ? (
+                  <Text>
+                    {field.state.meta.errors
+                      .map((error) => error?.message)
+                      .join(',')}
+                  </Text>
+                ) : null}
+              </>
+            )
+          }}
+        />
+      )}
+
+      <form.Field
+        name="notes"
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Notes"
+                placeholderTextColor="grey"
+                multiline
+              />
+              {field.state.meta.errors.length ? (
+                <Text>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </Text>
+              ) : null}
+            </>
+          )
+        }}
+      />
+
+      <Button
+        onPress={() => {
+          void form.handleSubmit()
+        }}
+        withTopMargin
+      >
+        Save
+      </Button>
+    </>
   )
 }

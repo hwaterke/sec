@@ -10,6 +10,7 @@ import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {HistoryStackParamList} from '../history/types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
+import {epochFromDateAndTime} from '../../utils/formatters'
 
 type WorkoutSetAddScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -33,7 +34,10 @@ export const WorkoutSetAddScreen: React.FC = () => {
       <WorkoutSetForm
         exercise={exercise}
         initialValues={{
-          executedAt: Temporal.Now.zonedDateTimeISO().toString(),
+          executionDate: Temporal.Now.plainDateISO().toString(),
+          executionTime: Temporal.Now.plainTimeISO().toString({
+            fractionalSecondDigits: 0,
+          }),
           repetitions: isNullish(params.repetitions)
             ? ''
             : `${params.repetitions}`,
@@ -43,6 +47,11 @@ export const WorkoutSetAddScreen: React.FC = () => {
           notes: params.notes ?? '',
         }}
         onSubmit={async (v) => {
+          const epochSeconds = epochFromDateAndTime(
+            v.executionDate,
+            v.executionTime
+          )
+
           await WorkoutSetService.create({
             exerciseId: params.exerciseId,
             repetitions: v.repetitions === '' ? null : Number(v.repetitions),
@@ -50,14 +59,12 @@ export const WorkoutSetAddScreen: React.FC = () => {
               v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
             distance: v.distance === '' ? null : Number(v.distance),
             time: v.time === '' ? null : v.time,
-            executedAt: Temporal.ZonedDateTime.from(v.executedAt).epochSeconds,
+            executedAt: epochSeconds,
             notes: v.notes,
           })
 
           navigation.navigate('HistoryDayScreen', {
-            date: Temporal.ZonedDateTime.from(v.executedAt)
-              .toPlainDate()
-              .toString(),
+            date: v.executionDate,
             isEditing: false,
           })
         }}
