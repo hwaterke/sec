@@ -2,7 +2,10 @@ import styled from 'styled-components/native'
 
 export const TextInput = styled.TextInput`
   height: 40px;
-  margin: 8px 8px;
-  border-bottom-color: gray;
-  border-bottom-width: 1px;
+  margin-vertical: 4px;
+  padding-left: 8px;
+  background-color: white;
+  border-color: #d0d0d0;
+  border-width: 1px;
+  border-radius: 8px;
 `
