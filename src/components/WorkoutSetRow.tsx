@@ -1,7 +1,7 @@
-import {DateTime} from 'luxon'
 import React from 'react'
 import {Text} from 'react-native'
 import styled from 'styled-components/native'
+import {formatEpochTimestamp} from '../utils/formatters'
 import {WorkoutSetMetrics} from './WorkoutSetMetrics'
 
 const View = styled.View`
@@ -15,7 +15,7 @@ const View = styled.View`
 
 type Props = {
   value: {
-    executedAt: string
+    executedAt: number
     repetitions?: number | null
     weight?: number | null
     distance?: number | null
@@ -24,15 +24,10 @@ type Props = {
   withDate?: boolean
 }
 
-export const WorkoutSetRow = ({value, withDate}: Props) => {
+export const WorkoutSetRow = ({value}: Props) => {
   return (
     <View>
-      <Text>
-        {DateTime.fromISO(value.executedAt).toLocaleString(
-          withDate ? DateTime.DATETIME_SHORT : DateTime.TIME_24_SIMPLE
-        )}
-      </Text>
-
+      <Text>{formatEpochTimestamp(value.executedAt)}</Text>
       <WorkoutSetMetrics
         repetitions={value.repetitions}
         weight={value.weight}

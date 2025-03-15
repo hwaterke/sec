@@ -1,29 +1,19 @@
-import {DateTime} from 'luxon'
 import {useEffect, useState} from 'react'
+import {Temporal} from 'temporal-polyfill'
+import {formatTimeBetween} from '../utils/formatters'
 
-export const TimeSince = ({date}: {date: DateTime}) => {
-  const [time, setTime] = useState(DateTime.local())
+export const TimeSince = ({timestamp}: {timestamp: number}) => {
+  const [now, setNow] = useState(() => Temporal.Now.instant())
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(DateTime.local())
+      setNow(Temporal.Now.instant())
     }, 1000)
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
 
-  const diff = time.diff(date, ['days', 'hours', 'minutes', 'seconds'])
-  const days = diff.days
-  const hours = diff.hours
-  const minutes = diff.minutes
-  const seconds = Math.round(diff.seconds)
-
-  if (days > 0) {
-    return `${days} days`
-  } else if (hours > 0) {
-    return `${hours} hours`
-  } else if (minutes > 0) {
-    return `${minutes}:${String(seconds).padStart(2, '0')}`
-  } else {
-    return `${seconds} seconds`
-  }
+  const timestampInstant = Temporal.Instant.fromEpochSeconds(timestamp)
+  return formatTimeBetween(timestampInstant.epochSeconds, now.epochSeconds)
 }

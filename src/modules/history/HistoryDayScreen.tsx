@@ -1,22 +1,26 @@
+import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
-import {DateTime} from 'luxon'
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react'
 import {SectionList, TouchableOpacity} from 'react-native'
+import {groupBy} from 'remeda'
 import {useTheme} from 'styled-components'
 import styled from 'styled-components/native'
 import {SectionHeader} from '../../components/SectionHeader'
 import {Text} from '../../components/Text'
+import {TimeSince} from '../../components/TimeSince'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
+import {WorkoutSetWithExercise} from '../../database/schema'
 import {py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
-import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {HistoryDayScreenRouteProp} from './types'
+import {globalScreenOptions} from '../../theming/globalScreenOption'
+import {
+  formatDate,
+  formatEpochTimestamp,
+  formatTimeBetween,
+} from '../../utils/formatters'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {NavigationProp} from '@react-navigation/core/src/types'
-import {WorkoutSetWithExercise} from '../../database/schema'
-import {TimeSince} from '../../components/TimeSince'
-import {groupBy} from 'remeda'
+import {HistoryDayScreenRouteProp} from './types'
 
 const SummaryView = styled.View`
   background-color: ${({theme}) => theme.colors.background.row};
@@ -52,6 +56,7 @@ const StatsValue = styled(Text)`
 
 export const HistoryDayScreen = () => {
   const {params} = useRoute<HistoryDayScreenRouteProp>()
+
   const navigation =
     useNavigation<NavigationProp<MainStackNavigatorParamList>>()
   const theme = useTheme()
@@ -106,12 +111,6 @@ export const HistoryDayScreen = () => {
     )
   }
 
-  const timeStart = DateTime.fromISO(workoutSets[0].executedAt)
-  const timeEnd = DateTime.fromISO(
-    workoutSets[workoutSets.length - 1].executedAt
-  )
-  const duration = Math.round(timeEnd.diff(timeStart, 'minutes').minutes)
-
   return (
     <Screen>
       <SectionList
@@ -119,30 +118,29 @@ export const HistoryDayScreen = () => {
           return (
             <SummaryView>
               <SummaryTitleView>
-                <SummaryTitle>
-                  {DateTime.fromISO(params.date).toLocaleString(
-                    DateTime.DATE_MED_WITH_WEEKDAY
-                  )}
-                </SummaryTitle>
+                <SummaryTitle>{formatDate(params.date)}</SummaryTitle>
 
                 <StatsTitle>
-                  {duration > 60
-                    ? `${Math.floor(duration / 60)}h ${duration % 60}m`
-                    : `${duration}m`}
+                  {formatTimeBetween(
+                    workoutSets[0].executedAt,
+                    workoutSets[workoutSets.length - 1].executedAt
+                  )}
                 </StatsTitle>
               </SummaryTitleView>
 
               <TimeView>
                 <Stats>
                   <StatsValue>
-                    {timeStart.toLocaleString(DateTime.TIME_24_SIMPLE)}
+                    {formatEpochTimestamp(workoutSets[0].executedAt)}
                   </StatsValue>
                   <StatsTitle>START</StatsTitle>
                 </Stats>
 
                 <Stats>
                   <StatsValue>
-                    {timeEnd.toLocaleString(DateTime.TIME_24_SIMPLE)}
+                    {formatEpochTimestamp(
+                      workoutSets[workoutSets.length - 1].executedAt
+                    )}
                   </StatsValue>
                   <StatsTitle>END</StatsTitle>
                 </Stats>
@@ -151,7 +149,9 @@ export const HistoryDayScreen = () => {
               <TimeView>
                 <Stats>
                   <StatsValue>
-                    <TimeSince date={timeEnd} />
+                    <TimeSince
+                      timestamp={workoutSets[workoutSets.length - 1].executedAt}
+                    />
                   </StatsValue>
                   <StatsTitle>Time since last exercise</StatsTitle>
                 </Stats>

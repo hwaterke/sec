@@ -26,13 +26,15 @@ export const exercisesTable = sqliteTable('exercise', {
     .notNull()
     .default(false),
   isBarbell: integer('is_barbell', {mode: 'boolean'}).notNull().default(false),
-  createdAt: text('created_at')
+  // Epoch timestamp (UTC)
+  createdAt: integer('created_at')
     .notNull()
-    .default(sql`(CURRENT_TIMESTAMP)`),
-  updatedAt: text('updated_at')
+    .default(sql`(strftime('%s', 'now'))`),
+  // Epoch timestamp (UTC)
+  updatedAt: integer('updated_at')
     .notNull()
-    .default(sql`(CURRENT_TIMESTAMP)`)
-    .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
+    .default(sql`(strftime('%s', 'now'))`)
+    .$onUpdate(() => sql`(strftime('%s', 'now'))`),
 })
 
 export const workoutSetsTable = sqliteTable(
@@ -49,19 +51,22 @@ export const workoutSetsTable = sqliteTable(
     time: text('time'),
     distance: real('distance'),
     notes: text('notes'),
-    executedAt: text('executed_at').notNull(),
+    // Epoch timestamp (UTC)
+    executedAt: integer('executed_at').notNull(),
     exerciseId: text('exercise_id', {
       length: 24,
     })
       .notNull()
       .references(() => exercisesTable.id),
-    createdAt: text('created_at')
+    // Epoch timestamp (UTC)
+    createdAt: integer('created_at')
       .notNull()
-      .default(sql`(CURRENT_TIMESTAMP)`),
-    updatedAt: text('updated_at')
+      .default(sql`(strftime('%s', 'now'))`),
+    // Epoch timestamp (UTC)
+    updatedAt: integer('updated_at')
       .notNull()
-      .default(sql`(CURRENT_TIMESTAMP)`)
-      .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
+      .default(sql`(strftime('%s', 'now'))`)
+      .$onUpdate(() => sql`(strftime('%s', 'now'))`),
   },
   (table) => [
     check('positive_repetitions', sql`${table.repetitions} > 0`),

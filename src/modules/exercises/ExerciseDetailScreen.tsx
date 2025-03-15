@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useCallback, useState} from 'react'
-import {Text, TouchableOpacity} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 import styled from 'styled-components/native'
 import {Button} from '../../components/Button'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
@@ -12,6 +12,8 @@ import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {ExerciseService} from '../../services/ExerciseService'
 import {ExerciseDetailScreenRouteProp} from './types'
+import {isNullish} from 'remeda'
+import {formatEpochTimestamp} from '../../utils/formatters'
 
 const Title = styled.Text`
   font-size: 24px;
@@ -48,6 +50,7 @@ export const ExerciseDetailScreen: React.FC = () => {
   return (
     <Screen withPadding>
       <Title>{exercise.name}</Title>
+      {!isNullish(exercise.description) && <Text>{exercise.description}</Text>}
 
       {lastSets.map((ws) => (
         <TouchableOpacity
@@ -63,7 +66,7 @@ export const ExerciseDetailScreen: React.FC = () => {
             })
           }}
         >
-          <WorkoutSetRow value={ws} withDate />
+          <WorkoutSetRow value={ws} />
         </TouchableOpacity>
       ))}
 
@@ -77,6 +80,15 @@ export const ExerciseDetailScreen: React.FC = () => {
       >
         Add a set
       </Button>
+
+      <View className="flex-row mt-2">
+        <Text>Created at:</Text>
+        <Text>{formatEpochTimestamp(exercise.createdAt)}</Text>
+      </View>
+      <View className="flex-row">
+        <Text>Updated at:</Text>
+        <Text>{formatEpochTimestamp(exercise.updatedAt)}</Text>
+      </View>
     </Screen>
   )
 }

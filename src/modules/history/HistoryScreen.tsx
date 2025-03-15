@@ -1,5 +1,5 @@
+import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
-import {DateTime} from 'luxon'
 import React, {useCallback, useLayoutEffect, useState} from 'react'
 import {FlatList, TouchableOpacity} from 'react-native'
 import {Calendar, DateData} from 'react-native-calendars'
@@ -9,8 +9,8 @@ import {TextButton} from '../../components/TextButton'
 import {px, py} from '../../design/constants/spacing'
 import {Screen} from '../../design/layout/Screen'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
+import {formatDate} from '../../utils/formatters'
 import {HistoryStackParamList} from './types'
-import {NavigationProp} from '@react-navigation/core/src/types'
 
 const Row = styled.View`
   flex-direction: row;
@@ -92,11 +92,7 @@ export const HistoryScreen: React.FC = () => {
               }}
             >
               <Row>
-                <Text>
-                  {DateTime.fromISO(date).toLocaleString(
-                    DateTime.DATE_MED_WITH_WEEKDAY
-                  )}
-                </Text>
+                <Text>{formatDate(date)}</Text>
                 <Text>{count}</Text>
               </Row>
             </TouchableOpacity>

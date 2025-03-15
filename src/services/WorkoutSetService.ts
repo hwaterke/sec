@@ -62,7 +62,11 @@ export const WorkoutSetService = {
   update: async ({id, data}: {id: string; data: InsertWorkoutSet}) => {
     return db
       .update(workoutSetsTable)
-      .set(data)
+      .set({
+        ...data,
+        time: nilAndEmptyToNull(data.time),
+        notes: nilAndEmptyToNull(data.notes),
+      })
       .where(eq(workoutSetsTable.id, id))
   },
 
@@ -73,11 +77,11 @@ export const WorkoutSetService = {
   workoutDays: async (): Promise<{date: string; count: number}[]> => {
     return db
       .select({
-        date: sql<string>`date(${workoutSetsTable.executedAt})`,
+        date: sql<string>`date(${workoutSetsTable.executedAt}, 'unixepoch')`,
         count: sql<number>`count(${workoutSetsTable.id})`,
       })
       .from(workoutSetsTable)
-      .groupBy(sql`date(${workoutSetsTable.executedAt})`)
+      .groupBy(sql`date(${workoutSetsTable.executedAt}, 'unixepoch')`)
   },
 
   workoutSetsForDay: async ({
@@ -92,7 +96,7 @@ export const WorkoutSetService = {
         exercisesTable,
         eq(exercisesTable.id, workoutSetsTable.exerciseId)
       )
-      .where(sql`date(${workoutSetsTable.executedAt}) = ${date}`)
+      .where(sql`date(${workoutSetsTable.executedAt}, 'unixepoch') = ${date}`)
       .orderBy(workoutSetsTable.executedAt)
 
     return results.map((result) => ({

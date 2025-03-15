@@ -8,6 +8,7 @@ import {WorkoutSetForm} from './WorkoutSetForm'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {WorkoutSetWithExercise} from '../../database/schema'
 import {isNullish} from 'remeda'
+import {Temporal} from 'temporal-polyfill'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -36,7 +37,9 @@ export const WorkoutSetEditScreen = () => {
       <WorkoutSetForm
         exercise={ws.exercise}
         initialValues={{
-          executedAt: ws.executedAt,
+          executedAt: Temporal.Instant.fromEpochSeconds(ws.executedAt)
+            .toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO().getTimeZone())
+            .toString(),
           repetitions: isNullish(ws.repetitions) ? '' : `${ws.repetitions}`,
           weight: isNullish(ws.weight) ? '' : `${ws.weight}`,
           distance: isNullish(ws.distance) ? '' : `${ws.distance}`,
@@ -53,7 +56,8 @@ export const WorkoutSetEditScreen = () => {
                 v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
               distance: v.distance === '' ? null : Number(v.distance),
               time: v.time === '' ? null : v.time,
-              executedAt: v.executedAt,
+              executedAt: Temporal.ZonedDateTime.from(v.executedAt)
+                .epochSeconds,
               notes: v.notes,
             },
           })

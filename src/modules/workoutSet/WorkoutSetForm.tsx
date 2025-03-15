@@ -21,7 +21,7 @@ type Props = {
     hasTime: boolean
   }
   initialValues: WorkoutSetFormValues
-  onSubmit: (values: WorkoutSetFormValues) => void | Promise<any>
+  onSubmit: (values: WorkoutSetFormValues) => Promise<any>
 }
 
 export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {

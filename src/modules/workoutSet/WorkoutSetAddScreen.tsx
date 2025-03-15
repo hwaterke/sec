@@ -1,15 +1,15 @@
+import {NavigationProp} from '@react-navigation/core/src/types'
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
-import {DateTime} from 'luxon'
 import React from 'react'
 import {Text} from 'react-native'
+import {isNullish} from 'remeda'
+import {Temporal} from 'temporal-polyfill'
 import {Screen} from '../../design/layout/Screen'
 import {useExercise} from '../../hooks/useExercise'
+import {WorkoutSetService} from '../../services/WorkoutSetService'
+import {HistoryStackParamList} from '../history/types'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
 import {WorkoutSetForm} from './WorkoutSetForm'
-import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {NavigationProp} from '@react-navigation/core/src/types'
-import {HistoryStackParamList} from '../history/types'
-import {isNullish} from 'remeda'
 
 type WorkoutSetAddScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -33,7 +33,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
       <WorkoutSetForm
         exercise={exercise}
         initialValues={{
-          executedAt: DateTime.now().toISO(),
+          executedAt: Temporal.Now.zonedDateTimeISO().toString(),
           repetitions: isNullish(params.repetitions)
             ? ''
             : `${params.repetitions}`,
@@ -50,12 +50,14 @@ export const WorkoutSetAddScreen: React.FC = () => {
               v.weight === '' ? null : Number(v.weight.replaceAll(',', '.')),
             distance: v.distance === '' ? null : Number(v.distance),
             time: v.time === '' ? null : v.time,
-            executedAt: v.executedAt,
+            executedAt: Temporal.ZonedDateTime.from(v.executedAt).epochSeconds,
             notes: v.notes,
           })
 
           navigation.navigate('HistoryDayScreen', {
-            date: DateTime.fromISO(v.executedAt).toISODate()!,
+            date: Temporal.ZonedDateTime.from(v.executedAt)
+              .toPlainDate()
+              .toString(),
             isEditing: false,
           })
         }}

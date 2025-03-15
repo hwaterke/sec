@@ -11,8 +11,8 @@ CREATE TABLE `exercise` (
 	`is_machine` integer DEFAULT false NOT NULL,
 	`is_dumbbell` integer DEFAULT false NOT NULL,
 	`is_barbell` integer DEFAULT false NOT NULL,
-	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
-	`updated_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL
+	`created_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL,
+	`updated_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `exercise_name_unique` ON `exercise` (`name`);--> statement-breakpoint
@@ -23,10 +23,10 @@ CREATE TABLE `workout_set` (
 	`time` text,
 	`distance` real,
 	`notes` text,
-	`executed_at` text NOT NULL,
+	`executed_at` integer NOT NULL,
 	`exercise_id` text(24) NOT NULL,
-	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
-	`updated_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
+	`created_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL,
+	`updated_at` integer DEFAULT (strftime('%s', 'now')) NOT NULL,
 	FOREIGN KEY (`exercise_id`) REFERENCES `exercise`(`id`) ON UPDATE no action ON DELETE no action,
 	CONSTRAINT "positive_repetitions" CHECK("workout_set"."repetitions" > 0),
 	CONSTRAINT "positive_distance" CHECK("workout_set"."distance" >= 0),
