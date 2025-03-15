@@ -1,8 +1,8 @@
 import {useForm} from '@tanstack/react-form'
 import React from 'react'
-import {Text} from 'react-native'
 import {z} from 'zod'
 import {Button} from '../../components/Button'
+import {ErrorText} from '../../components/Text'
 import {TextInput} from '../../components/TextInput'
 
 export type WorkoutSetFormValues = {
@@ -26,40 +26,11 @@ type Props = {
   onSubmit: (values: WorkoutSetFormValues) => Promise<any>
 }
 
-const schema = z.object({
-  executionDate: z
-    .string()
-    .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-      message: 'Must be a valid date in the format YYYY-MM-DD',
-    }),
-  executionTime: z
-    .string()
-    .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
-      message: 'Must be a valid time in the format HH:MM:SS',
-    }),
-  repetitions: z.string().refine((value) => value === '' || /\d+/.test(value), {
-    message: 'Must be a number',
-  }),
-  weight: z.string().refine((value) => value === '' || /\d+/.test(value), {
-    message: 'Must be a number',
-  }),
-  distance: z.string().refine((value) => value === '' || /\d+/.test(value), {
-    message: 'Must be a number',
-  }),
-  time: z.string().refine((value) => value === '' || /\d+/.test(value), {
-    message: 'Must be a number',
-  }),
-  notes: z.string(),
-})
-
 export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
   const form = useForm({
     defaultValues: initialValues,
     onSubmit: async ({value}) => {
       await onSubmit(value)
-    },
-    validators: {
-      onBlur: schema,
     },
   })
 
@@ -67,6 +38,13 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
     <>
       <form.Field
         name="executionDate"
+        validators={{
+          onBlur: z
+            .string()
+            .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
+              message: 'Must be a valid date in the format YYYY-MM-DD',
+            }),
+        }}
         children={(field) => {
           return (
             <>
@@ -78,11 +56,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 placeholderTextColor="grey"
               />
               {field.state.meta.errors.length ? (
-                <Text>
+                <ErrorText>
                   {field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </Text>
+                </ErrorText>
               ) : null}
             </>
           )
@@ -91,6 +69,13 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       <form.Field
         name="executionTime"
+        validators={{
+          onBlur: z
+            .string()
+            .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
+              message: 'Must be a valid time in the format HH:MM:SS',
+            }),
+        }}
         children={(field) => {
           return (
             <>
@@ -102,11 +87,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 placeholderTextColor="grey"
               />
               {field.state.meta.errors.length ? (
-                <Text>
+                <ErrorText>
                   {field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </Text>
+                </ErrorText>
               ) : null}
             </>
           )
@@ -116,6 +101,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
       {exercise.hasRepetitions && (
         <form.Field
           name="repetitions"
+          validators={{
+            onBlur: z.string().refine((value) => /\d+/.test(value), {
+              message: 'Must be a number',
+            }),
+          }}
           children={(field) => {
             return (
               <>
@@ -128,11 +118,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   placeholderTextColor="grey"
                 />
                 {field.state.meta.errors.length ? (
-                  <Text>
+                  <ErrorText>
                     {field.state.meta.errors
                       .map((error) => error?.message)
                       .join(',')}
-                  </Text>
+                  </ErrorText>
                 ) : null}
               </>
             )
@@ -143,6 +133,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
       {exercise.hasWeight && (
         <form.Field
           name="weight"
+          validators={{
+            onBlur: z.string().refine((value) => /\d+/.test(value), {
+              message: 'Must be a number',
+            }),
+          }}
           children={(field) => {
             return (
               <>
@@ -155,11 +150,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   placeholderTextColor="grey"
                 />
                 {field.state.meta.errors.length ? (
-                  <Text>
+                  <ErrorText>
                     {field.state.meta.errors
                       .map((error) => error?.message)
                       .join(',')}
-                  </Text>
+                  </ErrorText>
                 ) : null}
               </>
             )
@@ -170,6 +165,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
       {exercise.hasDistance && (
         <form.Field
           name="distance"
+          validators={{
+            onBlur: z.string().refine((value) => /\d+/.test(value), {
+              message: 'Must be a number',
+            }),
+          }}
           children={(field) => {
             return (
               <>
@@ -182,11 +182,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   placeholderTextColor="grey"
                 />
                 {field.state.meta.errors.length ? (
-                  <Text>
+                  <ErrorText>
                     {field.state.meta.errors
                       .map((error) => error?.message)
                       .join(',')}
-                  </Text>
+                  </ErrorText>
                 ) : null}
               </>
             )
@@ -197,6 +197,13 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
       {exercise.hasTime && (
         <form.Field
           name="time"
+          validators={{
+            onBlur: z
+              .string()
+              .refine((value) => /^\d{2}:\d{2}:\d{2}$/.test(value), {
+                message: 'Must be a valid time in the format HH:MM:SS',
+              }),
+          }}
           children={(field) => {
             return (
               <>
@@ -208,11 +215,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   placeholderTextColor="grey"
                 />
                 {field.state.meta.errors.length ? (
-                  <Text>
+                  <ErrorText>
                     {field.state.meta.errors
                       .map((error) => error?.message)
                       .join(',')}
-                  </Text>
+                  </ErrorText>
                 ) : null}
               </>
             )
@@ -222,6 +229,9 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
 
       <form.Field
         name="notes"
+        validators={{
+          onBlur: z.string(),
+        }}
         children={(field) => {
           return (
             <>
@@ -234,11 +244,11 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 multiline
               />
               {field.state.meta.errors.length ? (
-                <Text>
+                <ErrorText>
                   {field.state.meta.errors
                     .map((error) => error?.message)
                     .join(',')}
-                </Text>
+                </ErrorText>
               ) : null}
             </>
           )

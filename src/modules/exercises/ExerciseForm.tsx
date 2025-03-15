@@ -1,11 +1,12 @@
-import {Formik} from 'formik'
+import {useForm} from '@tanstack/react-form'
 import React from 'react'
-import {Switch, View} from 'react-native'
+import {Switch} from 'react-native'
 import styled from 'styled-components/native'
 import {Button} from '../../components/Button'
-import {Text} from '../../components/Text'
+import {ErrorText, Text} from '../../components/Text'
 import {TextInput} from '../../components/TextInput'
 import {py} from '../../design/constants/spacing'
+import {z} from 'zod'
 
 const SwitchRow = styled.View`
   ${py(1)};
@@ -30,7 +31,7 @@ export type FormValues = {
 
 type Props = {
   initialValues?: FormValues
-  onSubmit: (values: FormValues) => void | Promise<any>
+  onSubmit: (values: FormValues) => Promise<any>
 }
 
 export const ExerciseForm: React.FC<Props> = ({
@@ -49,118 +50,220 @@ export const ExerciseForm: React.FC<Props> = ({
     isBarbell: false,
   },
 }) => {
+  const form = useForm({
+    defaultValues: initialValues,
+    onSubmit: async ({value}) => {
+      await onSubmit(value)
+    },
+  })
+
   return (
-    <Formik<FormValues> initialValues={initialValues} onSubmit={onSubmit}>
-      {({handleChange, handleBlur, handleSubmit, setFieldValue, values}) => (
-        <View>
-          <TextInput
-            onChangeText={handleChange('name')}
-            onBlur={handleBlur('name')}
-            value={values.name}
-            placeholder="Name"
-            placeholderTextColor="grey"
-          />
-          <TextInput
-            onChangeText={handleChange('description')}
-            onBlur={handleBlur('description')}
-            value={values.description}
-            placeholder="Description"
-            placeholderTextColor="grey"
-            multiline
-          />
-          <TextInput
-            onChangeText={handleChange('muscle')}
-            onBlur={handleBlur('muscle')}
-            value={values.muscle}
-            placeholder="Muscle"
-            placeholderTextColor="grey"
-          />
+    <>
+      <form.Field
+        name="name"
+        validators={{
+          onBlur: z.string().min(1),
+        }}
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Name"
+                placeholderTextColor="grey"
+              />
+              {field.state.meta.errors.length ? (
+                <ErrorText>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </ErrorText>
+              ) : null}
+            </>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Repetitions</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('hasRepetitions', value)
-              }}
-              value={values.hasRepetitions}
-            />
-          </SwitchRow>
+      <form.Field
+        name="description"
+        validators={{
+          onBlur: z.string(),
+        }}
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Description"
+                placeholderTextColor="grey"
+                multiline
+              />
+              {field.state.meta.errors.length ? (
+                <ErrorText>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </ErrorText>
+              ) : null}
+            </>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Weight</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('hasWeight', value)
-              }}
-              value={values.hasWeight}
-            />
-          </SwitchRow>
+      <form.Field
+        name="muscle"
+        validators={{
+          onBlur: z.string(),
+        }}
+        children={(field) => {
+          return (
+            <>
+              <TextInput
+                onChangeText={field.handleChange}
+                onBlur={field.handleBlur}
+                value={field.state.value}
+                placeholder="Muscle"
+                placeholderTextColor="grey"
+              />
+              {field.state.meta.errors.length ? (
+                <ErrorText>
+                  {field.state.meta.errors
+                    .map((error) => error?.message)
+                    .join(',')}
+                </ErrorText>
+              ) : null}
+            </>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Time</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('hasTime', value)
-              }}
-              value={values.hasTime}
-            />
-          </SwitchRow>
+      <form.Field
+        name="hasRepetitions"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Repetitions</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
+      <form.Field
+        name="hasWeight"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Weight</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
+      <form.Field
+        name="hasTime"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Time</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
+      <form.Field
+        name="hasDistance"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Distance</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
+      <form.Field
+        name="isCardio"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Cardio</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
+      <form.Field
+        name="isMachine"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Machine</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Distance</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('hasDistance', value)
-              }}
-              value={values.hasDistance}
-            />
-          </SwitchRow>
+      <form.Field
+        name="isDumbbell"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Dumbbell</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Cardio</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('isCardio', value)
-              }}
-              value={values.isCardio}
-            />
-          </SwitchRow>
+      <form.Field
+        name="isBarbell"
+        children={(field) => {
+          return (
+            <SwitchRow>
+              <Text>Barbell</Text>
+              <Switch
+                onValueChange={field.handleChange}
+                value={field.state.value}
+              />
+            </SwitchRow>
+          )
+        }}
+      />
 
-          <SwitchRow>
-            <Text>Machine</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('isMachine', value)
-              }}
-              value={values.isMachine}
-            />
-          </SwitchRow>
-
-          <SwitchRow>
-            <Text>Dumbbell</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('isDumbbell', value)
-              }}
-              value={values.isDumbbell}
-            />
-          </SwitchRow>
-
-          <SwitchRow>
-            <Text>Barbell</Text>
-            <Switch
-              onValueChange={(value) => {
-                setFieldValue('isBarbell', value)
-              }}
-              value={values.isBarbell}
-            />
-          </SwitchRow>
-
-          <Button onPress={handleSubmit as any} withTopMargin>
-            Save
-          </Button>
-        </View>
-      )}
-    </Formik>
+      <Button
+        onPress={() => {
+          void form.handleSubmit()
+        }}
+        withTopMargin
+      >
+        Save
+      </Button>
+    </>
   )
 }
