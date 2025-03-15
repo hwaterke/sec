@@ -1,10 +1,9 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 import React from 'react'
-import {Text} from 'react-native'
+import {Text, View} from 'react-native'
 import {isNullish} from 'remeda'
 import {Temporal} from 'temporal-polyfill'
-import {Screen} from '../../design/layout/Screen'
 import {useExercise} from '../../hooks/useExercise'
 import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {HistoryStackParamList} from '../history/types'
@@ -30,7 +29,7 @@ export const WorkoutSetAddScreen: React.FC = () => {
   }
 
   return (
-    <Screen withPadding>
+    <View className="flex-1 bg-light-bg p-3">
       <WorkoutSetForm
         exercise={exercise}
         initialValues={{
@@ -69,6 +68,6 @@ export const WorkoutSetAddScreen: React.FC = () => {
           })
         }}
       />
-    </Screen>
+    </View>
   )
 }

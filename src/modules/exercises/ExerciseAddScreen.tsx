@@ -1,9 +1,8 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import React from 'react'
-import {Screen} from '../../design/layout/Screen'
-import {ScrollView} from '../../design/layout/ScrollView'
-import {ExerciseForm} from './ExerciseForm'
+import {ScrollView} from 'react-native'
 import {ExerciseService} from '../../services/ExerciseService'
+import {ExerciseForm} from './ExerciseForm'
 
 type Props = {
   navigation: NativeStackNavigationProp<{}>
@@ -11,19 +10,17 @@ type Props = {
 
 export const ExerciseAddScreen: React.FC<Props> = ({navigation}) => {
   return (
-    <ScrollView>
-      <Screen withPadding>
-        <ExerciseForm
-          onSubmit={async (values) => {
-            try {
-              await ExerciseService.create(values)
-              navigation.goBack()
-            } catch (err) {
-              alert('Create exercise error ' + err)
-            }
-          }}
-        />
-      </Screen>
+    <ScrollView className="flex-1 bg-light-bg p-3">
+      <ExerciseForm
+        onSubmit={async (values) => {
+          try {
+            await ExerciseService.create(values)
+            navigation.goBack()
+          } catch (err) {
+            alert('Create exercise error ' + err)
+          }
+        }}
+      />
     </ScrollView>
   )
 }

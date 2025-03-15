@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import React, {useCallback, useLayoutEffect, useState} from 'react'
-import {FlatList, TouchableOpacity} from 'react-native'
+import {FlatList, TouchableOpacity, View} from 'react-native'
 import {Calendar, DateData} from 'react-native-calendars'
 import styled from 'styled-components/native'
 import {Text} from '../../components/Text'
@@ -55,7 +55,7 @@ export const HistoryScreen: React.FC = () => {
   )
 
   return (
-    <Screen>
+    <View className="flex-1 bg-light-bg">
       {showCalendar ? (
         <Calendar
           enableSwipeMonths
@@ -100,6 +100,6 @@ export const HistoryScreen: React.FC = () => {
           keyExtractor={(item) => item.date}
         />
       )}
-    </Screen>
+    </View>
   )
 }

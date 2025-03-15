@@ -21,6 +21,11 @@ export const formatEpochTimestamp = (timestamp: number) => {
   }
 }
 
+export const formatEpochTime = (timestamp: number) => {
+  const instant = Temporal.Instant.fromEpochSeconds(timestamp)
+  return instant.toLocaleString(undefined, {timeStyle: 'short'})
+}
+
 export const formatDate = (isoDate: string) => {
   const date = Temporal.PlainDate.from(isoDate)
   return date.toLocaleString(undefined, {

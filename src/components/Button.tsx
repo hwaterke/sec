@@ -1,40 +1,22 @@
 import React, {PropsWithChildren} from 'react'
-import {GestureResponderEvent} from 'react-native'
-import styled from 'styled-components/native'
-import {mt} from '../design/constants/spacing'
-
-const Touchable = styled.TouchableOpacity<{withTopMargin?: boolean}>`
-  background-color: ${({theme}) => theme.colors.button.primary.background};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  height: 56px;
-  ${({withTopMargin}) => (withTopMargin ? mt(4) : undefined)}
-`
-
-const Text = styled.Text`
-  color: ${({theme}) => theme.colors.button.primary.text};
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 18px;
-  text-align: center;
-`
+import {GestureResponderEvent, Pressable, Text} from 'react-native'
 
 type Props = {
   onPress: (event: GestureResponderEvent) => void
-  withTopMargin?: boolean
+  className?: string
 }
 
 export const Button = ({
   onPress,
-  withTopMargin,
   children,
+  className,
 }: PropsWithChildren<Props>) => {
   return (
-    <Touchable onPress={onPress} withTopMargin={withTopMargin}>
-      <Text>{children}</Text>
-    </Touchable>
+    <Pressable
+      onPress={onPress}
+      className={`flex items-center justify-center bg-gray-600 rounded-lg p-4 ${className}`}
+    >
+      <Text className="text-white text-base font-bold">{children}</Text>
+    </Pressable>
   )
 }

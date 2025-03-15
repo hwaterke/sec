@@ -2,24 +2,15 @@ import {NavigationProp} from '@react-navigation/core/src/types'
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import React, {useCallback, useState} from 'react'
 import {Text, TouchableOpacity, View} from 'react-native'
-import styled from 'styled-components/native'
+import {isNullish} from 'remeda'
 import {Button} from '../../components/Button'
 import {WorkoutSetRow} from '../../components/WorkoutSetRow'
 import {Exercise, WorkoutSet} from '../../database/schema'
-import {mb, ml} from '../../design/constants/spacing'
-import {Screen} from '../../design/layout/Screen'
-import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {ExerciseService} from '../../services/ExerciseService'
-import {ExerciseDetailScreenRouteProp} from './types'
-import {isNullish} from 'remeda'
+import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {formatEpochTimestamp} from '../../utils/formatters'
-
-const Title = styled.Text`
-  font-size: 24px;
-  ${ml(2)};
-  ${mb(2)};
-`
+import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
+import {ExerciseDetailScreenRouteProp} from './types'
 
 export const ExerciseDetailScreen: React.FC = () => {
   const {params} = useRoute<ExerciseDetailScreenRouteProp>()
@@ -48,9 +39,13 @@ export const ExerciseDetailScreen: React.FC = () => {
   }
 
   return (
-    <Screen withPadding>
-      <Title>{exercise.name}</Title>
-      {!isNullish(exercise.description) && <Text>{exercise.description}</Text>}
+    <View className="flex-1 bg-light-bg p-6">
+      <View className="mb-2">
+        <Text className="text-2xl">{exercise.name}</Text>
+        {!isNullish(exercise.description) && (
+          <Text className="text-sm">{exercise.description}</Text>
+        )}
+      </View>
 
       {lastSets.map((ws) => (
         <TouchableOpacity
@@ -76,7 +71,7 @@ export const ExerciseDetailScreen: React.FC = () => {
             exerciseId: params.exerciseId,
           })
         }}
-        withTopMargin
+        className="mt-4"
       >
         Add a set
       </Button>
@@ -89,6 +84,6 @@ export const ExerciseDetailScreen: React.FC = () => {
         <Text>Updated at:</Text>
         <Text>{formatEpochTimestamp(exercise.updatedAt)}</Text>
       </View>
-    </Screen>
+    </View>
   )
 }

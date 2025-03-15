@@ -10,6 +10,7 @@ import {WorkoutSetWithExercise} from '../../database/schema'
 import {isNullish} from 'remeda'
 import {Temporal} from 'temporal-polyfill'
 import {epochFromDateAndTime} from '../../utils/formatters'
+import {View} from 'react-native'
 
 type WorkoutSetEditScreenNavigationProp = RouteProp<
   MainStackNavigatorParamList,
@@ -38,7 +39,7 @@ export const WorkoutSetEditScreen = () => {
   ).toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO().getTimeZone())
 
   return (
-    <Screen withPadding>
+    <View className="flex-1 bg-light-bg p-3">
       <WorkoutSetForm
         exercise={ws.exercise}
         initialValues={{
@@ -77,7 +78,7 @@ export const WorkoutSetEditScreen = () => {
       />
 
       <Button
-        withTopMargin
+        className="mt-4"
         onPress={async () => {
           await WorkoutSetService.remove({id: params.workoutSetId})
           navigation.goBack()
@@ -85,6 +86,6 @@ export const WorkoutSetEditScreen = () => {
       >
         Delete
       </Button>
-    </Screen>
+    </View>
   )
 }

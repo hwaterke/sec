@@ -260,7 +260,7 @@ export const ExerciseForm: React.FC<Props> = ({
         onPress={() => {
           void form.handleSubmit()
         }}
-        withTopMargin
+        className="mt-4"
       >
         Save
       </Button>

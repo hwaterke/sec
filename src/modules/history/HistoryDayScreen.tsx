@@ -16,7 +16,7 @@ import {WorkoutSetService} from '../../services/WorkoutSetService'
 import {globalScreenOptions} from '../../theming/globalScreenOption'
 import {
   formatDate,
-  formatEpochTimestamp,
+  formatEpochTime,
   formatTimeBetween,
 } from '../../utils/formatters'
 import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
@@ -131,14 +131,14 @@ export const HistoryDayScreen = () => {
               <TimeView>
                 <Stats>
                   <StatsValue>
-                    {formatEpochTimestamp(workoutSets[0].executedAt)}
+                    {formatEpochTime(workoutSets[0].executedAt)}
                   </StatsValue>
                   <StatsTitle>START</StatsTitle>
                 </Stats>
 
                 <Stats>
                   <StatsValue>
-                    {formatEpochTimestamp(
+                    {formatEpochTime(
                       workoutSets[workoutSets.length - 1].executedAt
                     )}
                   </StatsValue>

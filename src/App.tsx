@@ -1,3 +1,4 @@
+import 'react-native-reanimated'
 import {NavigationContainer} from '@react-navigation/native'
 import {useMigrations} from 'drizzle-orm/expo-sqlite/migrator'
 import React, {useState} from 'react'
@@ -10,7 +11,6 @@ import {theme, Theme} from './theming/theme'
 import {ThemeSetterContext} from './theming/ThemeSetterContext'
 // See https://github.com/expo/expo/issues/28618
 import {useDrizzleStudio} from 'expo-drizzle-studio-plugin'
-import 'react-native-reanimated'
 import {isNullish} from 'remeda'
 import './global.css'
 

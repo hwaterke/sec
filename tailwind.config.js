@@ -4,7 +4,11 @@ module.exports = {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'light-bg': '#f5f5f5',
+      },
+    },
   },
   plugins: [],
 }

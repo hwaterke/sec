@@ -36,6 +36,7 @@ export const theme = {
       primary: 'white',
       card: '#80CBC4',
       text: 'white',
+      background: '#f5f5f5',
     },
   },
 }
