@@ -61,10 +61,8 @@ export const formatTimeBetween = (
 }
 
 export const epochFromDateAndTime = (dateISO: string, timeISO: string) => {
-  const date = Temporal.PlainDate.from(dateISO)
-  const time = Temporal.PlainTime.from(timeISO)
-  const plainDateTime = date.toPlainDateTime(time)
-  const timeZone = Temporal.Now.zonedDateTimeISO().getTimeZone()
-  const zonedDateTime = plainDateTime.toZonedDateTime(timeZone)
+  const plainDateTime = Temporal.PlainDateTime.from(`${dateISO}T${timeISO}`)
+  const localTimeZone = Temporal.Now.timeZoneId()
+  const zonedDateTime = plainDateTime.toZonedDateTime(localTimeZone)
   return zonedDateTime.epochSeconds
 }

@@ -77,11 +77,13 @@ export const WorkoutSetService = {
   workoutDays: async (): Promise<{date: string; count: number}[]> => {
     return db
       .select({
-        date: sql<string>`date(${workoutSetsTable.executedAt}, 'unixepoch')`,
+        date: sql<string>`date(${workoutSetsTable.executedAt}, 'unixepoch', 'localtime')`,
         count: sql<number>`count(${workoutSetsTable.id})`,
       })
       .from(workoutSetsTable)
-      .groupBy(sql`date(${workoutSetsTable.executedAt}, 'unixepoch')`)
+      .groupBy(
+        sql`date(${workoutSetsTable.executedAt}, 'unixepoch', 'localtime')`
+      )
   },
 
   workoutSetsForDay: async ({
@@ -96,7 +98,9 @@ export const WorkoutSetService = {
         exercisesTable,
         eq(exercisesTable.id, workoutSetsTable.exerciseId)
       )
-      .where(sql`date(${workoutSetsTable.executedAt}, 'unixepoch') = ${date}`)
+      .where(
+        sql`date(${workoutSetsTable.executedAt}, 'unixepoch', 'localtime') = ${date}`
+      )
       .orderBy(workoutSetsTable.executedAt)
 
     return results.map((result) => ({
