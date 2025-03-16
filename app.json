@@ -28,6 +28,7 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "android": {}
+    "android": {},
+    "plugins": ["expo-router"]
   }
 }
