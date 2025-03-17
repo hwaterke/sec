@@ -1,22 +1,19 @@
-import {NavigationProp} from '@react-navigation/core/src/types'
-import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
+import {router, Stack, useFocusEffect, useLocalSearchParams} from 'expo-router'
 import React, {useCallback, useState} from 'react'
 import {Text, TouchableOpacity, View} from 'react-native'
 import {isNullish} from 'remeda'
-import {Button} from '../../components/Button'
-import {WorkoutSetRow} from '../../components/WorkoutSetRow'
-import {Exercise, WorkoutSet} from '../../database/schema'
-import {ExerciseService} from '../../services/ExerciseService'
-import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {formatEpochTimestamp} from '../../utils/formatters'
-import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {ExerciseDetailScreenRouteProp} from './types'
-import {Badge} from '../../components/Badge'
+import {Badge} from '../../../../../components/Badge'
+import {Button} from '../../../../../components/Button'
+import {WorkoutSetRow} from '../../../../../components/WorkoutSetRow'
+import {Exercise, WorkoutSet} from '../../../../../database/schema'
+import {ExerciseService} from '../../../../../services/ExerciseService'
+import {WorkoutSetService} from '../../../../../services/WorkoutSetService'
+import {formatEpochTimestamp} from '../../../../../utils/formatters'
+import {TextButton} from '../../../../../components/TextButton'
 
-export const ExerciseDetailScreen: React.FC = () => {
-  const {params} = useRoute<ExerciseDetailScreenRouteProp>()
-  const navigation =
-    useNavigation<NavigationProp<MainStackNavigatorParamList>>()
+export default function ExerciseDetailScreen() {
+  const params = useLocalSearchParams<{exerciseid: string}>()
+  const exerciseId = params.exerciseid
 
   const [exercise, setExercise] = useState<Exercise | null>(null)
   const [lastSets, setLastSets] = useState<WorkoutSet[]>([])
@@ -24,15 +21,14 @@ export const ExerciseDetailScreen: React.FC = () => {
   useFocusEffect(
     useCallback(() => {
       const main = async () => {
-        const data = await ExerciseService.getOne(params.exerciseId)
+        const data = await ExerciseService.getOne(exerciseId)
         setExercise(data)
-        const setData = await WorkoutSetService.getLastWorkoutSetsForExercise(
-          params.exerciseId
-        )
+        const setData =
+          await WorkoutSetService.getLastWorkoutSetsForExercise(exerciseId)
         setLastSets(setData)
       }
       void main()
-    }, [params.exerciseId])
+    }, [exerciseId])
   )
 
   if (!exercise) {
@@ -41,6 +37,19 @@ export const ExerciseDetailScreen: React.FC = () => {
 
   return (
     <View className="flex-1 bg-light-bg p-6 gap-2">
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <TextButton
+              title="Edit"
+              onPress={() => {
+                router.navigate(`/exercises/${exerciseId}/edit`)
+              }}
+            />
+          ),
+        }}
+      />
+
       <View>
         <Text className="text-2xl">{exercise.name}</Text>
         {!isNullish(exercise.description) && (
@@ -64,13 +73,16 @@ export const ExerciseDetailScreen: React.FC = () => {
             <TouchableOpacity
               key={ws.id}
               onPress={() => {
-                navigation.navigate('WorkoutSetAddScreen', {
-                  exerciseId: params.exerciseId,
-                  repetitions: ws.repetitions ?? undefined,
-                  weight: ws.weight ?? undefined,
-                  distance: ws.distance ?? undefined,
-                  time: ws.time ?? undefined,
-                  // Notes are not passed
+                router.navigate({
+                  pathname: '/workout-set/[exerciseid]/add',
+                  params: {
+                    exerciseid: exerciseId,
+                    repetitions: ws.repetitions ?? undefined,
+                    weight: ws.weight ?? undefined,
+                    distance: ws.distance ?? undefined,
+                    time: ws.time ?? undefined,
+                    // Notes are not passed
+                  },
                 })
               }}
             >
@@ -82,8 +94,11 @@ export const ExerciseDetailScreen: React.FC = () => {
 
       <Button
         onPress={() => {
-          navigation.navigate('WorkoutSetAddScreen', {
-            exerciseId: params.exerciseId,
+          router.navigate({
+            pathname: '/workout-set/[exerciseid]/add',
+            params: {
+              exerciseid: exerciseId,
+            },
           })
         }}
       >

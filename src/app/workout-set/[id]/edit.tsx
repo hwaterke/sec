@@ -1,32 +1,26 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
-import React, {useEffect, useState} from 'react'
-import {View, Text} from 'react-native'
+import {useLocalSearchParams, useRouter} from 'expo-router'
+import {useEffect, useState} from 'react'
+import {Text, View} from 'react-native'
 import {isNullish} from 'remeda'
 import {Temporal} from 'temporal-polyfill'
-import {Button} from '../../components/Button'
-import {WorkoutSetWithExercise} from '../../database/schema'
-import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {epochFromDateAndTime} from '../../utils/formatters'
-import {MainStackNavigatorParamList} from '../home/MainStackNavigator'
-import {WorkoutSetForm} from './WorkoutSetForm'
+import {Button} from '../../../components/Button'
+import {WorkoutSetWithExercise} from '../../../database/schema'
+import {WorkoutSetForm} from '../../../modules/workoutSet/WorkoutSetForm'
+import {WorkoutSetService} from '../../../services/WorkoutSetService'
+import {epochFromDateAndTime} from '../../../utils/formatters'
 
-type WorkoutSetEditScreenNavigationProp = RouteProp<
-  MainStackNavigatorParamList,
-  'WorkoutSetEditScreen'
->
-
-export const WorkoutSetEditScreen = () => {
-  const {params} = useRoute<WorkoutSetEditScreenNavigationProp>()
-  const navigation = useNavigation()
+export default function WorkoutSetEditScreen() {
+  const router = useRouter()
+  const params = useLocalSearchParams<{id: string}>()
   const [ws, setWorkoutSet] = useState<WorkoutSetWithExercise | null>(null)
 
   useEffect(() => {
     const main = async () => {
-      const data = await WorkoutSetService.getOne(params.workoutSetId)
+      const data = await WorkoutSetService.getOne(params.id)
       setWorkoutSet(data)
     }
     void main()
-  }, [params.workoutSetId])
+  }, [params.id])
 
   if (!ws) {
     return <Text>No data</Text>
@@ -71,15 +65,15 @@ export const WorkoutSetEditScreen = () => {
             },
           })
 
-          navigation.goBack()
+          router.back()
         }}
       />
 
       <Button
         className="mt-4"
         onPress={async () => {
-          await WorkoutSetService.remove({id: params.workoutSetId})
-          navigation.goBack()
+          await WorkoutSetService.remove({id: params.id})
+          router.back()
         }}
       >
         Delete

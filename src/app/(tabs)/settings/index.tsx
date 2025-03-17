@@ -1,14 +1,13 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React from 'react'
 import {View, Alert} from 'react-native'
-import {Button} from '../../components/Button'
-import {DatabaseService} from '../../database/database-service'
+import {Button} from '../../../components/Button'
+import {DatabaseService} from '../../../database/database-service'
+import {Stack} from 'expo-router'
 
-const Stack = createNativeStackNavigator()
-
-export const SettingsHome = () => {
+export default function SettingsHome() {
   return (
     <View className="flex-1 bg-light-bg p-6 gap-2">
+      <Stack.Screen options={{title: 'Settings'}} />
       <Button onPress={() => DatabaseService.exportDatabase()}>
         Export database
       </Button>
@@ -24,17 +23,5 @@ export const SettingsHome = () => {
         Reset database
       </Button>
     </View>
-  )
-}
-
-export const SettingsNavigator: React.FC = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="SettingsHome"
-        component={SettingsHome}
-        options={{title: 'Settings'}}
-      />
-    </Stack.Navigator>
   )
 }

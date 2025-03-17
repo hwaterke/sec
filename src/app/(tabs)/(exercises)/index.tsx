@@ -1,18 +1,17 @@
 import {Ionicons} from '@expo/vector-icons'
-import {useFocusEffect, useNavigation} from '@react-navigation/native'
+import {useFocusEffect, useRouter} from 'expo-router'
 import React, {useCallback, useEffect, useState} from 'react'
 import {SectionList, Text, TouchableOpacity, View} from 'react-native'
 import {groupBy, sortBy} from 'remeda'
-import {SectionHeader} from '../../components/SectionHeader'
-import {Input} from '../../components/TextInput'
-import {Exercise} from '../../database/schema'
-import {ExerciseService} from '../../services/ExerciseService'
-import {ExerciseListScreenNavigationProp} from './types'
+import {SectionHeader} from '../../../components/SectionHeader'
+import {Input} from '../../../components/TextInput'
+import {Exercise} from '../../../database/schema'
+import {ExerciseService} from '../../../services/ExerciseService'
 
-export const ExerciseListScreen: React.FC = () => {
+export default function ExerciseListScreen() {
+  const router = useRouter()
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [searchText, setSearchText] = useState('')
-  const navigation = useNavigation<ExerciseListScreenNavigationProp>()
   const [exercisesByMuscle, setExercisesByMuscle] = useState<
     {title: string; data: Exercise[]}[]
   >([])
@@ -76,9 +75,7 @@ export const ExerciseListScreen: React.FC = () => {
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ExerciseDetailScreen', {
-                exerciseId: item.id,
-              })
+              router.navigate(`/exercises/${item.id}`)
             }}
           >
             <View className="flex flex-row items-center p-4 bg-white border-b border-gray-200">

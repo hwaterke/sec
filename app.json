@@ -29,6 +29,9 @@
       "policy": "sdkVersion"
     },
     "android": {},
-    "plugins": ["expo-router"]
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

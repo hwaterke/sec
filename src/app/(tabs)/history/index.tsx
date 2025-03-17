@@ -1,33 +1,17 @@
-import {NavigationProp} from '@react-navigation/core/src/types'
-import {useFocusEffect, useNavigation} from '@react-navigation/native'
-import React, {useCallback, useLayoutEffect, useState} from 'react'
+import {router, Stack, useFocusEffect} from 'expo-router'
+import React, {useCallback, useState} from 'react'
 import {FlatList, Text, TouchableOpacity, View} from 'react-native'
 import {Calendar, DateData} from 'react-native-calendars'
-import {TextButton} from '../../components/TextButton'
-import {WorkoutSetService} from '../../services/WorkoutSetService'
-import {formatDate} from '../../utils/formatters'
-import {HistoryStackParamList} from './types'
+import {TextButton} from '../../../components/TextButton'
+import {WorkoutSetService} from '../../../services/WorkoutSetService'
+import {formatDate} from '../../../utils/formatters'
 
-export const HistoryScreen: React.FC = () => {
+export default function HistoryScreen() {
   const [showCalendar, setShowCalendar] = useState(true)
-  const navigation = useNavigation<NavigationProp<HistoryStackParamList>>()
 
   const [workoutDays, setWorkoutDays] = useState<
     {date: string; count: number}[]
   >([])
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TextButton
-          onPress={() => {
-            setShowCalendar(!showCalendar)
-          }}
-          title={showCalendar ? 'List' : 'Calendar'}
-        />
-      ),
-    })
-  }, [navigation, showCalendar, setShowCalendar])
 
   useFocusEffect(
     useCallback(() => {
@@ -41,6 +25,19 @@ export const HistoryScreen: React.FC = () => {
 
   return (
     <View className="flex-1 bg-light-bg">
+      <Stack.Screen
+        options={{
+          title: 'History',
+          headerRight: () => (
+            <TextButton
+              onPress={() => {
+                setShowCalendar(!showCalendar)
+              }}
+              title={showCalendar ? 'List' : 'Calendar'}
+            />
+          ),
+        }}
+      />
       {showCalendar ? (
         <Calendar
           enableSwipeMonths
@@ -57,10 +54,7 @@ export const HistoryScreen: React.FC = () => {
               ({date}) => date === day.dateString
             )
             if (workoutDay) {
-              navigation.navigate('HistoryDayScreen', {
-                date: workoutDay.date,
-                isEditing: false,
-              })
+              router.navigate(`/history/${workoutDay.date}`)
             }
           }}
         />
@@ -70,10 +64,7 @@ export const HistoryScreen: React.FC = () => {
           renderItem={({item: {date, count}}) => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('HistoryDayScreen', {
-                  date,
-                  isEditing: false,
-                })
+                router.navigate(`/history/${date}`)
               }}
             >
               <View className="flex flex-row justify-between items-center p-4 bg-white border-b border-gray-200">

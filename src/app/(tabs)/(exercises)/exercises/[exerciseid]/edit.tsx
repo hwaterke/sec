@@ -1,22 +1,18 @@
 import React from 'react'
 import {ScrollView, Text} from 'react-native'
-import {Button} from '../../components/Button'
-import {useExercise} from '../../hooks/useExercise'
-import {ExerciseService} from '../../services/ExerciseService'
-import {ExerciseForm} from './ExerciseForm'
-import {
-  ExerciseEditScreenNavigationProp,
-  ExerciseEditScreenRouteProp,
-} from './types'
+import {Button} from '../../../../../components/Button'
+import {useExercise} from '../../../../../hooks/useExercise'
+import {ExerciseService} from '../../../../../services/ExerciseService'
+import {ExerciseForm} from '../../../../../modules/exercises/ExerciseForm'
+import {useLocalSearchParams, useRouter} from 'expo-router'
 
-type Props = {
-  navigation: ExerciseEditScreenNavigationProp
-  route: ExerciseEditScreenRouteProp
-}
+export default function ExerciseEditScreen() {
+  const router = useRouter()
+  const params = useLocalSearchParams<{exerciseid: string}>()
+  const exerciseId = params.exerciseid
 
-export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
   const [exercise] = useExercise({
-    id: route.params.exerciseId,
+    id: exerciseId,
     refreshOnFocus: false,
   })
 
@@ -44,10 +40,10 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
         onSubmit={async (values) => {
           try {
             await ExerciseService.update({
-              id: route.params.exerciseId,
+              id: exerciseId,
               data: values,
             })
-            navigation.goBack()
+            router.back()
           } catch (err) {
             alert(`Update exercise error ${error}`)
           }
@@ -57,8 +53,8 @@ export const ExerciseEditScreen: React.FC<Props> = ({navigation, route}) => {
       <Button
         className="mt-4"
         onPress={async () => {
-          await ExerciseService.remove({id: route.params.exerciseId})
-          navigation.replace('ExerciseListScreen')
+          await ExerciseService.remove({id: exerciseId})
+          router.replace('/exercises')
         }}
       >
         Delete
