@@ -6,7 +6,7 @@ import {
 } from 'expo-router'
 import React, {useCallback, useEffect, useState} from 'react'
 import {SectionList, Text, TouchableOpacity, View} from 'react-native'
-import {groupBy} from 'remeda'
+import {groupBy, isNullish} from 'remeda'
 import {SectionHeader} from '../../../components/SectionHeader'
 import {TimeSince} from '../../../components/TimeSince'
 import {WorkoutSetRow} from '../../../components/WorkoutSetRow'
@@ -67,6 +67,16 @@ export default function HistoryDayScreen() {
     )
   }
 
+  const firstWorkoutSet = workoutSets[0]
+  const lastWorkoutSet = workoutSets[workoutSets.length - 1]
+  const startTime = isNullish(firstWorkoutSet.time)
+    ? firstWorkoutSet.executedAt
+    : firstWorkoutSet.executedAt -
+      firstWorkoutSet.time
+        .split(':')
+        .map(Number)
+        .reduce((acc, curr) => acc * 60 + curr, 0)
+
   return (
     <>
       <Stack.Screen
@@ -97,31 +107,24 @@ export default function HistoryDayScreen() {
                 <View className="flex-row">
                   <Text className="text-gray-500">Total time: </Text>
                   <Text className="font-bold">
-                    {formatTimeBetween(
-                      workoutSets[0].executedAt,
-                      workoutSets[workoutSets.length - 1].executedAt
-                    )}
+                    {formatTimeBetween(startTime, lastWorkoutSet.executedAt)}
                   </Text>
                 </View>
                 <View className="flex-row">
                   <Text className="text-gray-500">From </Text>
                   <Text className="font-bold">
-                    {formatEpochTime(workoutSets[0].executedAt)}
+                    {formatEpochTime(startTime)}
                   </Text>
                   <Text className="text-gray-500"> to </Text>
                   <Text className="font-bold">
-                    {formatEpochTime(
-                      workoutSets[workoutSets.length - 1].executedAt
-                    )}
+                    {formatEpochTime(lastWorkoutSet.executedAt)}
                   </Text>
                 </View>
               </View>
 
               <View className="items-center justify-around">
                 <Text className="text-2xl font-bold">
-                  <TimeSince
-                    timestamp={workoutSets[workoutSets.length - 1].executedAt}
-                  />
+                  <TimeSince timestamp={lastWorkoutSet.executedAt} />
                 </Text>
                 <Text className="text-gray-500">Time since last exercise</Text>
               </View>
