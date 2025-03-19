@@ -52,7 +52,7 @@ export default function HistoryDayScreen() {
     const byExercise = groupBy(workoutSets, (ws) => ws.exerciseId)
 
     setSetByExercise(
-      Object.entries(byExercise).map(([exerciseId, workoutSets]) => ({
+      Object.entries(byExercise).map(([_, workoutSets]) => ({
         title: workoutSets[0].exercise.name,
         data: workoutSets,
       }))

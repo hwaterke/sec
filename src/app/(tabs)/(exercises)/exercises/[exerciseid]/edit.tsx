@@ -44,7 +44,7 @@ export default function ExerciseEditScreen() {
               data: values,
             })
             router.back()
-          } catch (err) {
+          } catch (error) {
             alert(`Update exercise error ${error}`)
           }
         }}

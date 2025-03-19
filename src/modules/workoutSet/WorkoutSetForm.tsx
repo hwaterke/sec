@@ -52,7 +52,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   message: 'Must be a valid date in the format YYYY-MM-DD',
                 }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -72,7 +73,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
 
         <View className="flex-1">
@@ -86,7 +87,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   message: 'Must be a valid time in the format HH:MM:SS',
                 }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -106,7 +108,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
       </View>
 
@@ -120,7 +122,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 message: 'Must be a number',
               }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -141,7 +144,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
       )}
 
@@ -155,7 +158,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 message: 'Must be a number',
               }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -176,7 +180,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
       )}
 
@@ -190,7 +194,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 message: 'Must be a number',
               }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -211,7 +216,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
       )}
 
@@ -227,7 +232,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                   message: 'Must be a valid time in the format HH:MM:SS',
                 }),
             }}
-            children={(field) => {
+          >
+            {(field) => {
               return (
                 <>
                   <Input
@@ -247,7 +253,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
                 </>
               )
             }}
-          />
+          </form.Field>
         </View>
       )}
 
@@ -258,7 +264,8 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
           validators={{
             onBlur: z.string(),
           }}
-          children={(field) => {
+        >
+          {(field) => {
             return (
               <>
                 <Textarea
@@ -279,7 +286,7 @@ export const WorkoutSetForm = ({exercise, onSubmit, initialValues}: Props) => {
               </>
             )
           }}
-        />
+        </form.Field>
       </View>
 
       <Button

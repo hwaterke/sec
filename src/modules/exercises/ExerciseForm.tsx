@@ -55,7 +55,8 @@ export const ExerciseForm: React.FC<Props> = ({
         validators={{
           onBlur: z.string().min(1),
         }}
-        children={(field) => {
+      >
+        {(field) => {
           return (
             <View>
               <Label text="Name" />
@@ -76,14 +77,15 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
       <form.Field
         name="description"
         validators={{
           onBlur: z.string(),
         }}
-        children={(field) => {
+      >
+        {(field) => {
           return (
             <View>
               <Label text="Description" />
@@ -105,14 +107,15 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
       <form.Field
         name="muscle"
         validators={{
           onBlur: z.string(),
         }}
-        children={(field) => {
+      >
+        {(field) => {
           return (
             <View>
               <Label text="Muscle" />
@@ -133,11 +136,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
-      <form.Field
-        name="hasRepetitions"
-        children={(field) => {
+      <form.Field name="hasRepetitions">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Repetitions</Text>
@@ -148,10 +150,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
-      <form.Field
-        name="hasWeight"
-        children={(field) => {
+      </form.Field>
+
+      <form.Field name="hasWeight">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Weight</Text>
@@ -162,10 +164,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
-      <form.Field
-        name="hasTime"
-        children={(field) => {
+      </form.Field>
+
+      <form.Field name="hasTime">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Time</Text>
@@ -176,10 +178,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
-      <form.Field
-        name="hasDistance"
-        children={(field) => {
+      </form.Field>
+
+      <form.Field name="hasDistance">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Distance</Text>
@@ -190,10 +192,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
-      <form.Field
-        name="isCardio"
-        children={(field) => {
+      </form.Field>
+
+      <form.Field name="isCardio">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Cardio</Text>
@@ -204,10 +206,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
-      <form.Field
-        name="isMachine"
-        children={(field) => {
+      </form.Field>
+
+      <form.Field name="isMachine">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Machine</Text>
@@ -218,11 +220,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
-      <form.Field
-        name="isDumbbell"
-        children={(field) => {
+      <form.Field name="isDumbbell">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Dumbbell</Text>
@@ -233,11 +234,10 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
-      <form.Field
-        name="isBarbell"
-        children={(field) => {
+      <form.Field name="isBarbell">
+        {(field) => {
           return (
             <View className="flex-row justify-between items-center">
               <Text>Barbell</Text>
@@ -248,7 +248,7 @@ export const ExerciseForm: React.FC<Props> = ({
             </View>
           )
         }}
-      />
+      </form.Field>
 
       <Button
         onPress={() => {
