@@ -38,7 +38,7 @@ export default function ExercisesLayout() {
           },
         }}
       />
-      <Stack.Screen name="add" options={{title: 'New Exercise'}} />
+      <Stack.Screen name="exercises/add" options={{title: 'New Exercise'}} />
     </Stack>
   )
 }

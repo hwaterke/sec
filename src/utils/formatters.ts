@@ -1,12 +1,10 @@
 import {Temporal} from 'temporal-polyfill'
 
 export const formatEpochTimestamp = (timestamp: number) => {
-  const instant = Temporal.Instant.fromEpochSeconds(timestamp)
+  const instant = Temporal.Instant.fromEpochMilliseconds(timestamp * 1_000)
   const now = Temporal.Now.zonedDateTimeISO()
 
-  const timestampDate = instant
-    .toZonedDateTimeISO(now.getTimeZone())
-    .toPlainDate()
+  const timestampDate = instant.toZonedDateTimeISO(now.timeZoneId).toPlainDate()
   const todayDate = now.toPlainDate()
 
   if (Temporal.PlainDate.compare(timestampDate, todayDate) === 0) {
@@ -22,7 +20,7 @@ export const formatEpochTimestamp = (timestamp: number) => {
 }
 
 export const formatEpochTime = (timestamp: number) => {
-  const instant = Temporal.Instant.fromEpochSeconds(timestamp)
+  const instant = Temporal.Instant.fromEpochMilliseconds(timestamp * 1_000)
   return instant.toLocaleString(undefined, {timeStyle: 'short'})
 }
 
@@ -41,7 +39,7 @@ export const formatTimeBetween = (
   timestampEnd: number
 ) => {
   // Calculate the absolute difference in seconds
-  const diffSeconds = Math.abs(timestampEnd - timestampStart)
+  const diffSeconds = Math.floor(Math.abs(timestampEnd - timestampStart))
 
   // Compute hours, minutes, seconds
   const days = Math.floor(diffSeconds / 86400)
@@ -64,5 +62,5 @@ export const epochFromDateAndTime = (dateISO: string, timeISO: string) => {
   const plainDateTime = Temporal.PlainDateTime.from(`${dateISO}T${timeISO}`)
   const localTimeZone = Temporal.Now.timeZoneId()
   const zonedDateTime = plainDateTime.toZonedDateTime(localTimeZone)
-  return zonedDateTime.epochSeconds
+  return zonedDateTime.epochMilliseconds / 1_000
 }

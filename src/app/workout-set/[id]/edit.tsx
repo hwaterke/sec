@@ -26,9 +26,9 @@ export default function WorkoutSetEditScreen() {
     return <Text>No data</Text>
   }
 
-  const executedAt = Temporal.Instant.fromEpochSeconds(
-    ws.executedAt
-  ).toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO().getTimeZone())
+  const executedAt = Temporal.Instant.fromEpochMilliseconds(
+    ws.executedAt * 1_000
+  ).toZonedDateTimeISO(Temporal.Now.zonedDateTimeISO())
 
   return (
     <View className="flex-1 bg-light-bg p-3">

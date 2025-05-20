@@ -2,6 +2,7 @@
   "expo": {
     "name": "Sec",
     "slug": "sec",
+    "scheme": "sec",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",

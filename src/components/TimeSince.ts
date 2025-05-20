@@ -14,6 +14,11 @@ export const TimeSince = ({timestamp}: {timestamp: number}) => {
     }
   }, [])
 
-  const timestampInstant = Temporal.Instant.fromEpochSeconds(timestamp)
-  return formatTimeBetween(timestampInstant.epochSeconds, now.epochSeconds)
+  const timestampInstant = Temporal.Instant.fromEpochMilliseconds(
+    timestamp * 1_000
+  )
+  return formatTimeBetween(
+    timestampInstant.epochMilliseconds / 1_000,
+    now.epochMilliseconds / 1_000
+  )
 }

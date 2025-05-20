@@ -54,7 +54,7 @@ export default function ExerciseEditScreen() {
         className="mt-4"
         onPress={async () => {
           await ExerciseService.remove({id: exerciseId})
-          router.replace('/exercises')
+          router.replace('/(tabs)/(exercises)')
         }}
       >
         Delete
