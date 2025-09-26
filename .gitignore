@@ -3,7 +3,7 @@
 node_modules
 graphql.schema.json
 
-.expo/*
+.expo/
 npm-debug.*
 *.jks
 *.p8

@@ -1,15 +1,15 @@
 import * as DocumentPicker from 'expo-document-picker'
-import * as FileSystem from 'expo-file-system'
+import {File, Directory, Paths} from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 import {DATABASE_NAME} from './constants'
 import {isNullish} from 'remeda'
 
 const databaseFolder = () => {
-  return `${FileSystem.documentDirectory}SQLite`
+  return new Directory(Paths.document, 'SQLite')
 }
 
 const databaseFile = () => {
-  return `${databaseFolder()}/${DATABASE_NAME}`
+  return new File(databaseFolder(), DATABASE_NAME)
 }
 
 export const DatabaseService = {
@@ -19,21 +19,17 @@ export const DatabaseService = {
     })
 
     if (!isNullish(file.assets) && file.assets.length > 0) {
-      if (!(await FileSystem.getInfoAsync(databaseFolder())).exists) {
-        await FileSystem.makeDirectoryAsync(databaseFolder())
+      if (!databaseFolder().exists) {
+        databaseFolder().create()
       }
-      await FileSystem.copyAsync({
-        from: file.assets[0].uri,
-        to: databaseFile(),
-      })
+      const sourceFile = new File(file.assets[0].uri)
+      sourceFile.copy(databaseFile())
     }
   },
 
   exportDatabase: (): Promise<void> => {
-    return Sharing.shareAsync(databaseFile())
+    return Sharing.shareAsync(databaseFile().uri)
   },
 
-  resetDatabase: async (): Promise<void> => {
-    await FileSystem.deleteAsync(databaseFile())
-  },
+  resetDatabase: () => databaseFile().delete(),
 }
