@@ -1,40 +1,22 @@
-import {Tabs} from 'expo-router'
-import {Ionicons} from '@expo/vector-icons'
+import {Icon, Label, NativeTabs} from 'expo-router/unstable-native-tabs'
 
 export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen
-        name="(exercises)"
-        options={{
-          title: 'Exercises',
-          tabBarIcon: ({color}) => (
-            <Ionicons size={26} name="list" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="history"
-        options={{
-          title: 'History',
-          tabBarIcon: ({color}) => (
-            <Ionicons size={26} name="calendar-outline" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: 'Settings',
-          tabBarIcon: ({color}) => (
-            <Ionicons size={26} name="cog" color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    <NativeTabs>
+      <NativeTabs.Trigger name="(exercises)">
+        <Label>Exercises</Label>
+        <Icon sf="list.dash" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="history">
+        <Label>History</Label>
+        <Icon sf="calendar" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="settings">
+        <Label>Settings</Label>
+        <Icon sf="gear" />
+      </NativeTabs.Trigger>
+    </NativeTabs>
   )
 }

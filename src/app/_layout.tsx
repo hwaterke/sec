@@ -1,16 +1,15 @@
 import 'react-native-reanimated'
 import {ThemeProvider} from '@react-navigation/native'
 import {useMigrations} from 'drizzle-orm/expo-sqlite/migrator'
+import {useDrizzleStudio} from 'expo-drizzle-studio-plugin'
 import {Stack} from 'expo-router'
 import {StatusBar} from 'expo-status-bar'
-import React from 'react'
-import {SafeAreaView, Text} from 'react-native'
+import {Text} from 'react-native'
+import {SafeAreaView} from 'react-native-safe-area-context'
+import {isNullish} from 'remeda'
 import {db, expoDb} from '../database/datasource'
 import migrations from '../database/drizzle/migrations'
 import {theme} from '../theming/theme'
-// See https://github.com/expo/expo/issues/28618
-import {useDrizzleStudio} from 'expo-drizzle-studio-plugin'
-import {isNullish} from 'remeda'
 import '../global.css'
 
 export default function RootLayout() {
