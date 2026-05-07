@@ -11,7 +11,22 @@ export default function SettingsHome() {
       <Button onPress={() => DatabaseService.exportDatabase()}>
         Export database
       </Button>
-      <Button onPress={() => DatabaseService.importDatabase()}>
+      <Button
+        onPress={() => {
+          async function importDb() {
+            try {
+              await DatabaseService.importDatabase()
+              Alert.alert('Success', 'Database has been imported')
+            } catch (error) {
+              Alert.alert(
+                'Error',
+                `Failed to import database: ${error instanceof Error ? error.message : error}`
+              )
+            }
+          }
+          void importDb()
+        }}
+      >
         Import database
       </Button>
       <Button
