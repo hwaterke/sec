@@ -20,7 +20,10 @@
     "ios": {
       "icon": "./assets/sec.icon",
       "supportsTablet": true,
-      "bundleIdentifier": "com.nauktis.sec"
+      "bundleIdentifier": "com.nauktis.sec",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "experiments": {
       "typedRoutes": true,
@@ -35,6 +38,7 @@
       "policy": "sdkVersion"
     },
     "android": {},
-    "plugins": ["expo-router", "expo-sharing", "expo-sqlite"]
+    "plugins": ["expo-router", "expo-sharing", "expo-sqlite"],
+    "owner": "nauktis"
   }
 }
