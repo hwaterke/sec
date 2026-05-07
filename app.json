@@ -14,13 +14,17 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/963a7810-f528-11e6-80b5-fb64c6334b8c"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "icon": "./assets/sec.icon",
       "supportsTablet": true,
       "bundleIdentifier": "com.nauktis.sec"
+    },
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
     },
     "extra": {
       "eas": {
@@ -31,9 +35,6 @@
       "policy": "sdkVersion"
     },
     "android": {},
-    "plugins": ["expo-router"],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "plugins": ["expo-router", "expo-sharing", "expo-sqlite"]
   }
 }
