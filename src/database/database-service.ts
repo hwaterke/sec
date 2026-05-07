@@ -23,7 +23,11 @@ export const DatabaseService = {
         databaseFolder().create()
       }
       const sourceFile = new File(file.assets[0].uri)
-      sourceFile.copy(databaseFile())
+      const destFile = databaseFile()
+      if (destFile.exists) {
+        destFile.delete()
+      }
+      sourceFile.copy(destFile)
     }
   },
 
